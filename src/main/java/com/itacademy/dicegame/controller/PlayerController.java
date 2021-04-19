@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,18 +43,24 @@ public class PlayerController {
 		return playerService.modifyPlayer(player);
 	}
 
+	//get Player List
 	@GetMapping("")
+	@ResponseStatus(HttpStatus.OK)  // 200
 	public List<Player> getPlayersList() {
-		return null;
+		return playerService.getAll();
 	}
 	
+	//get Player by id
 	@GetMapping("/{id}")
-	public Player getPlayerById() {
-		return null;
+	@ResponseStatus(HttpStatus.OK)  // 200
+	public Player getPlayerById(@PathVariable("id") long idPlayer) {
+		return playerService.getPlayerById(idPlayer);
 	}
-	
+		
+	//delete Player by id
 	@DeleteMapping("/{id}")
-	public String deletePlayerById() {
-		return null;
+	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
+	public String deletePlayerById(@PathVariable("id") long idPlayer) {
+		return playerService.deleteById(idPlayer);
 	}
 }

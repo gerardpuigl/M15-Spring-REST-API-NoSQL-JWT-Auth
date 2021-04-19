@@ -1,5 +1,7 @@
 package com.itacademy.dicegame.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,17 @@ public class PlayerService {
 	// get One Player by id
 	public Player getPlayerById(long id_Player) {
 		return playerRepository.findById(id_Player).get();		
+	}
+
+	// get all players
+	public List<Player> getAll() {
+		return playerRepository.findAll();
+	}
+
+	// delete player
+	public String deleteById(long idPlayer) {
+		playerRepository.delete(getPlayerById(idPlayer));
+		return "Usuari eliminat correctament";
 	}
 	
 	
