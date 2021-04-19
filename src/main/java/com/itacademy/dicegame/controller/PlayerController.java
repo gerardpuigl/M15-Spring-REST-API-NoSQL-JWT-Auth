@@ -28,15 +28,18 @@ public class PlayerController {
 	@Autowired
 	PlayerService playerService;
 	
+	//create new Player
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)  // 201
 	public Player createplayer(@Valid @RequestBody Player player) {
 		return playerService.createPlayer(player);
 	}
 	
+	//modify Player
 	@PutMapping("")
-	public Player modifyPlayer() {
-		return null;
+	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
+	public Player modifyPlayer(@Valid @RequestBody Player player) {
+		return playerService.modifyPlayer(player);
 	}
 
 	@GetMapping("")
