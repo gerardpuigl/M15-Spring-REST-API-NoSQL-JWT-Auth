@@ -30,7 +30,7 @@ public class Player {
 	private String name;
 	
 	@CreationTimestamp
-	@Column(name="picture_registrationdate",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Column(name="picture_registrationdate",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
 	private Date registrationDate;
 	
 	public Player() {
@@ -60,5 +60,5 @@ public class Player {
 	public void setRegistrationDate(Date registrationDate) {
 		this.registrationDate = registrationDate;
 	}
-		
+	
 }
