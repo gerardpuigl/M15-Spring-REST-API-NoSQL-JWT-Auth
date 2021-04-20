@@ -33,6 +33,10 @@ public class Player {
 	@Column(name="picture_registrationdate",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
 	private Date registrationDate;
 	
+	//TODO % Success Games
+	
+	//TODO List of the DiceGames played List<DiceGame>
+	
 	public Player() {
 		this.name="ANÒNIM";
 	}
@@ -61,4 +65,5 @@ public class Player {
 		this.registrationDate = registrationDate;
 	}
 	
+
 }

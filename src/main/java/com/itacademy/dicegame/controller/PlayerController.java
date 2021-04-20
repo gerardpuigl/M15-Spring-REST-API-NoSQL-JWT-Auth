@@ -44,6 +44,7 @@ public class PlayerController {
 	}
 
 	//get Player List
+	//TODO [POR IMPLEMENTAR] DEBE DEVOLVER % DE EXITOS!!!!!!
 	@GetMapping("")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	public List<Player> getPlayersList() {
@@ -62,5 +63,23 @@ public class PlayerController {
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
 	public String deletePlayerById(@PathVariable("id") int idPlayer) {
 		return playerService.deleteById(idPlayer);
+	}
+	
+	//TODO get Players Ranking
+	@GetMapping("/ranking")
+	public List<Player> getRankingList(){
+		return null;
+	}
+	
+	//TODO get Players Ranking
+	@GetMapping("/ranking/loser")
+	public Player getLoser(){
+		return null;
+	}
+	
+	//TODO get Players Ranking
+	@GetMapping("/ranking/winner")
+	public Player getWinner(){
+		return null;
 	}
 }
