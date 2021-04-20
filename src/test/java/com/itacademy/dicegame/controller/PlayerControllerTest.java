@@ -1,10 +1,12 @@
 package com.itacademy.dicegame.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,6 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itacademy.dicegame.domain.Player;
+import com.itacademy.dicegame.persistence.PlayerRepository;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class PlayerControllerTest {
@@ -21,9 +27,17 @@ public class PlayerControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	
+	@Autowired
+	private PlayerRepository repository;
+	
+	@BeforeEach
+	public void cretateTestPlayer() throws Exception {
+		addPlayer();
+	}
+	
 	//test add one player
 	@Test
-	public void createPlayer() throws Exception {
+	public void addPlayer() throws Exception {
 		
 		//Given
 		String uri = "/players";
@@ -36,6 +50,57 @@ public class PlayerControllerTest {
 		result.andExpect(status().isCreated());
 		result.andExpect(jsonPath("$.name",is("testPlayer")));
 		result.andExpect(jsonPath("$.id",notNullValue()));
+	}
+	
+	//test get one player
+	@Test
+	public void getPlayer() throws Exception {
+		
+		//Given
+		int id= repository.findTopByOrderByRegistrationDateDesc().getId();
+		String uri = "/players/" + id;
+
+		//When
+		ResultActions result =	getActions(mockMvc, uri);
+		
+		//Then
+		result.andExpect(status().isOk());
+		result.andExpect(jsonPath("$.name",is("testPlayer")));
+		result.andExpect(jsonPath("$.id",is(id)));
+	}
+	
+	//test delete one player
+	@Test
+	public void modifyPlayer() throws Exception {
+
+		//Given
+		String uri = "/players";
+		Player player= repository.findTopByOrderByRegistrationDateDesc();
+		player.setName("testPlayerModified");
+		String json= new ObjectMapper().writeValueAsString(player);
+
+		//When
+		ResultActions result =	putActions(mockMvc, uri, json);
+		
+		//Then
+		result.andExpect(status().isAccepted());
+		result.andExpect(jsonPath("$.name",is("testPlayerModified")));
+	}
+	
+	//test delete one player
+	@Test
+	public void deletePlayer() throws Exception {
+	
+		//Given
+		int id= repository.findTopByOrderByRegistrationDateDesc().getId();
+		String uri = "/players/"+id;
+
+		//When
+		ResultActions result =	deleteActions(mockMvc, uri);
+		
+		//Then
+		result.andExpect(status().isAccepted());
+		assertThat(repository.findById(id)==null);
 	}
 	
 	//post Json and return Json

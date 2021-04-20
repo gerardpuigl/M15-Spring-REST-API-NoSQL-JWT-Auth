@@ -20,7 +20,8 @@ public class PlayerRepositoryTest {
 		Player player=new Player("test");
 		repository.save(player);
 	}
-	
+		
+	//test autoincrement
 	@Test
 	public void icrementId() {
 		Player player1=new Player("test1");
@@ -29,5 +30,4 @@ public class PlayerRepositoryTest {
 		assertThat(player1.getId()+1==player2.getId());
 	}
 	
-
 }
