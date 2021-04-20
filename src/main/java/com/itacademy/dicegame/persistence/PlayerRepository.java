@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import com.itacademy.dicegame.domain.Player;
 
 @Repository
-public interface PlayerRepository extends JpaRepository<Player, Long> {
+public interface PlayerRepository extends JpaRepository<Player, Integer> {
+	
+	public Player findTopByOrderByRegistrationDateDesc();
 
 }

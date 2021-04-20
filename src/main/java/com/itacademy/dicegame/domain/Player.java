@@ -1,5 +1,7 @@
 package com.itacademy.dicegame.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 
 
@@ -19,11 +23,15 @@ public class Player {
 	@NotNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="player_id")
-	private long id;
+	private int id;
 	
 	@NotBlank
 	@Column(name="name")
 	private String name;
+	
+	@CreationTimestamp
+	@Column(name="picture_registrationdate",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private Date registrationDate;
 	
 	public Player() {
 		this.name="ANÒNIM";
@@ -41,8 +49,16 @@ public class Player {
 		this.name = name;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
+	}
+	
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+	
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 		
 }

@@ -27,7 +27,7 @@ public class PlayerService {
 	}
 
 	// get One Player by id
-	public Player getPlayerById(long id_Player) {
+	public Player getPlayerById(int id_Player) {
 		return playerRepository.findById(id_Player).get();		
 	}
 
@@ -37,7 +37,7 @@ public class PlayerService {
 	}
 
 	// delete player
-	public String deleteById(long idPlayer) {
+	public String deleteById(int idPlayer) {
 		playerRepository.delete(getPlayerById(idPlayer));
 		return "Usuari eliminat correctament";
 	}
