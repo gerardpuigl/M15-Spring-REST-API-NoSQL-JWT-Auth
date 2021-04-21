@@ -3,18 +3,22 @@ package com.itacademy.dicegame.controller;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itacademy.dicegame.domain.Player;
@@ -30,107 +34,95 @@ public class PlayerControllerTest {
 	@Autowired
 	private PlayerRepository repository;
 	
+	private Player testPlayer;
+	
+	//addTestPlayer
 	@BeforeEach
-	public void cretateTestPlayer() throws Exception {
-		addPlayer();
+	public void createTestPlayer() {
+		testPlayer = new Player("TestPlayer");
+		repository.save(testPlayer);
 	}
 	
+	//deleteTestPlayer
+	@AfterEach
+	public void deleteTestPlayer() {
+		repository.delete(testPlayer);
+	}
+		
 	//test add one player
 	@Test
-	public void addPlayer() throws Exception {
+	@DisplayName("Check add Player: HTTP POST Request + json")
+	public void postPlayer() throws Exception {
 		
 		//Given
-		String uri = "/players";
-		String json= "{\"name\":\"testPlayer\"}";
+		String uri = "/players";											//request with body
+		String json= "{\"name\":\"addTestPlayer\"}";						//json
 
 		//When
-		ResultActions result =	postActions(mockMvc, uri, json);
+		mockMvc.perform(post(uri)											
+				.contentType(MediaType.APPLICATION_JSON).content(json) 		//data send
+				.accept(MediaType.APPLICATION_JSON_VALUE)) 					//data received
 		
 		//Then
-		result.andExpect(status().isCreated());
-		result.andExpect(jsonPath("$.name",is("testPlayer")));
-		result.andExpect(jsonPath("$.id",notNullValue()));
+		.andExpect(status().isCreated())									//check status code
+		.andExpect(jsonPath("$.name",is("addTestPlayer")))					//check name
+		.andExpect(jsonPath("$.id",notNullValue()));						//check id is not null
+		
+		repository.delete(repository.findTopByOrderByRegistrationDateDesc());
 	}
 	
 	//test get one player
 	@Test
+	@DisplayName("Check get Player: HTTP GET Request")
 	public void getPlayer() throws Exception {
 		
 		//Given
-		int id= repository.findTopByOrderByRegistrationDateDesc().getId();
-		String uri = "/players/" + id;
-
-		//When
-		ResultActions result =	getActions(mockMvc, uri);
+		String uri = "/players/" + testPlayer.getId();						//Request by Id
 		
+		//When
+		mockMvc.perform(get(uri).accept(MediaType.APPLICATION_JSON_VALUE))	//data received
+							
 		//Then
-		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$.name",is("testPlayer")));
-		result.andExpect(jsonPath("$.id",is(id)));
+		.andExpect(status().isOk())											//check status code	
+		.andExpect(jsonPath("$.name",is("TestPlayer")))						//check name
+		.andExpect(jsonPath("$.id",is(testPlayer.getId())));				//check return same id reference
 	}
 	
 	//test delete one player
 	@Test
+	@DisplayName("Check modify Player: HTTP PUT Request + json")
 	public void modifyPlayer() throws Exception {
 
 		//Given
 		String uri = "/players";
-		Player player= repository.findTopByOrderByRegistrationDateDesc();
-		player.setName("testPlayerModified");
-		String json= new ObjectMapper().writeValueAsString(player);
+		testPlayer.setName("TestPlayerModifiedName");
+		String json= new ObjectMapper().writeValueAsString(testPlayer); 
 
 		//When
-		ResultActions result =	putActions(mockMvc, uri, json);
+		mockMvc.perform(
+				put(uri)		
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json)
+				.accept(MediaType.APPLICATION_JSON_VALUE))
 		
 		//Then
-		result.andExpect(status().isAccepted());
-		result.andExpect(jsonPath("$.name",is("testPlayerModified")));
+		.andExpect(status().isAccepted())
+		.andExpect(jsonPath("$.name",is("TestPlayerModifiedName")));
 	}
-	
+
 	//test delete one player
 	@Test
+	@DisplayName("Check delete Player: HTTP DELETE Request")
 	public void deletePlayer() throws Exception {
 	
 		//Given
-		int id= repository.findTopByOrderByRegistrationDateDesc().getId();
-		String uri = "/players/"+id;
+		String uri = "/players/"+testPlayer.getId();
 
 		//When
-		ResultActions result =	deleteActions(mockMvc, uri);
+		mockMvc.perform(delete(uri))
 		
 		//Then
-		result.andExpect(status().isAccepted());
-		assertThat(repository.findById(id)==null);
-	}
-	
-	//post Json and return Json
-	public ResultActions postActions(MockMvc mockMvc, String uri, String json) throws Exception {
-		return mockMvc.perform(
-				MockMvcRequestBuilders.post(uri)		
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json)
-				.accept(MediaType.APPLICATION_JSON_VALUE));
-	}
-	
-	//get and return Json
-	public ResultActions getActions(MockMvc mockMvc, String uri) throws Exception {
-		return mockMvc.perform(
-				MockMvcRequestBuilders.get(uri)
-				.accept(MediaType.APPLICATION_JSON_VALUE));
-	}
-	
-	//put Json
-	public ResultActions putActions(MockMvc mockMvc, String uri, String json) throws Exception {
-		return mockMvc.perform(
-				MockMvcRequestBuilders.put(uri)		
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json)
-				.accept(MediaType.APPLICATION_JSON_VALUE));
-	}
-	
-	//delete request
-	public ResultActions deleteActions(MockMvc mockMvc, String uri) throws Exception {
-		return mockMvc.perform(
-				MockMvcRequestBuilders.delete(uri));
+		.andExpect(status().isAccepted());
+		assertThat(repository.findById(testPlayer.getId())==null);
 	}
 }
