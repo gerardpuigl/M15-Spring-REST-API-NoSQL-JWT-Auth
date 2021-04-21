@@ -36,14 +36,14 @@ public class PlayerControllerTest {
 	
 	private Player testPlayer;
 	
-	//addTestPlayer
+	//add Test Player
 	@BeforeEach
 	public void createTestPlayer() {
 		testPlayer = new Player("TestPlayer");
 		repository.save(testPlayer);
 	}
 	
-	//deleteTestPlayer
+	//delete Test Player
 	@AfterEach
 	public void deleteTestPlayer() {
 		repository.delete(testPlayer);
@@ -54,21 +54,22 @@ public class PlayerControllerTest {
 	@DisplayName("Check add Player: HTTP POST Request + json")
 	public void postPlayer() throws Exception {
 		
-		//Given
-		String uri = "/players";											//request with body
+		// request preparation
+		String uri = "/players";											//request uri
 		String json= "{\"name\":\"addTestPlayer\"}";						//json
 
-		//When
+		// request
 		mockMvc.perform(post(uri)											
 				.contentType(MediaType.APPLICATION_JSON).content(json) 		//data send
 				.accept(MediaType.APPLICATION_JSON_VALUE)) 					//data received
 		
-		//Then
+		// check results
 		.andExpect(status().isCreated())									//check status code
 		.andExpect(jsonPath("$.name",is("addTestPlayer")))					//check name
 		.andExpect(jsonPath("$.id",notNullValue()));						//check id is not null
 		
-		repository.delete(repository.findTopByOrderByRegistrationDateDesc());
+		// remove added entity
+		repository.delete(repository.findTopByOrderByCreationDateDesc());
 	}
 	
 	//test get one player
@@ -76,13 +77,13 @@ public class PlayerControllerTest {
 	@DisplayName("Check get Player: HTTP GET Request")
 	public void getPlayer() throws Exception {
 		
-		//Given
-		String uri = "/players/" + testPlayer.getId();						//Request by Id
+		// request preparation
+		String uri = "/players/" + testPlayer.getId();						//request uri by Id
 		
-		//When
+		// request
 		mockMvc.perform(get(uri).accept(MediaType.APPLICATION_JSON_VALUE))	//data received
 							
-		//Then
+		// check results
 		.andExpect(status().isOk())											//check status code	
 		.andExpect(jsonPath("$.name",is("TestPlayer")))						//check name
 		.andExpect(jsonPath("$.id",is(testPlayer.getId())));				//check return same id reference
@@ -93,21 +94,19 @@ public class PlayerControllerTest {
 	@DisplayName("Check modify Player: HTTP PUT Request + json")
 	public void modifyPlayer() throws Exception {
 
-		//Given
-		String uri = "/players";
-		testPlayer.setName("TestPlayerModifiedName");
-		String json= new ObjectMapper().writeValueAsString(testPlayer); 
+		// request preparation
+		String uri = "/players";											//request uri
+		testPlayer.setName("TestPlayerModifiedName");						
+		String json= new ObjectMapper().writeValueAsString(testPlayer); 	//json with modified name
 
-		//When
-		mockMvc.perform(
-				put(uri)		
-				.contentType(MediaType.APPLICATION_JSON)
-				.content(json)
-				.accept(MediaType.APPLICATION_JSON_VALUE))
+		// request
+		mockMvc.perform(put(uri)		
+				.contentType(MediaType.APPLICATION_JSON).content(json) 		//data send
+				.accept(MediaType.APPLICATION_JSON_VALUE)) 					//data received
 		
-		//Then
-		.andExpect(status().isAccepted())
-		.andExpect(jsonPath("$.name",is("TestPlayerModifiedName")));
+		// check results
+		.andExpect(status().isAccepted())									//check status code	
+		.andExpect(jsonPath("$.name",is("TestPlayerModifiedName")));		//check modification
 	}
 
 	//test delete one player
@@ -115,14 +114,14 @@ public class PlayerControllerTest {
 	@DisplayName("Check delete Player: HTTP DELETE Request")
 	public void deletePlayer() throws Exception {
 	
-		//Given
-		String uri = "/players/"+testPlayer.getId();
+		// request preparation
+		String uri = "/players/"+testPlayer.getId();						//request uri by Id
 
-		//When
-		mockMvc.perform(delete(uri))
+		// request
+		mockMvc.perform(delete(uri))										//delete request
 		
-		//Then
-		.andExpect(status().isAccepted());
-		assertThat(repository.findById(testPlayer.getId())==null);
+		// check results
+		.andExpect(status().isAccepted());									//check status code	
+		assertThat(repository.findById(testPlayer.getId())==null);			//check if delete
 	}
 }

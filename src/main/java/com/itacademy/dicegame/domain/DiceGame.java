@@ -1,5 +1,7 @@
 package com.itacademy.dicegame.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name="DiceGames")
@@ -32,6 +36,10 @@ public class DiceGame {
 	// Result (boolean)
 	@Column(name="result")
 	private boolean result;
+	
+	@CreationTimestamp
+	@Column(name="picture_registrationdate",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
+	private Date creationDate;
 
 	// Player who played
 	@ManyToOne
@@ -40,6 +48,12 @@ public class DiceGame {
 
 	@Transient
 	private Dice dice = new Dice();
+	
+	public DiceGame() {
+		firstRoll = dice.roll();
+		secondRoll = dice.roll();
+		result = result();
+	}
 	
 	public DiceGame(Player player) {
 		firstRoll = dice.roll();
@@ -75,5 +89,9 @@ public class DiceGame {
 
 	public Dice getDice() {
 		return dice;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
 	}
 }

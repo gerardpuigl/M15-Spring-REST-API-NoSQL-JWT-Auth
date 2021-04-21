@@ -8,4 +8,6 @@ import com.itacademy.dicegame.domain.DiceGame;
 @Repository
 public interface DiceGameRepository extends JpaRepository<DiceGame, Integer> {
 
+	public DiceGame findTopByOrderByCreationDateDesc();
+
 }
