@@ -31,18 +31,17 @@ public class DiceGameController {
 	public DiceGame throwTheDices(@PathVariable("id") int idPlayer) {
 		return diceGameService.newGame(idPlayer);
 	}
+	//get all player's games
+	@GetMapping("/games")
+	@ResponseStatus(HttpStatus.OK)  // 200
+	public List<DiceGame> getAllGames(@PathVariable("id") int idPlayer) {
+		return diceGameService.getAllGames(idPlayer);
+	}
 	
 	//TODO delete all player's games
 	@DeleteMapping("/games")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
 	public String deleteAllGames() {
-		return null;
-	}
-	
-	//TODO get all player's games
-	@GetMapping("/games")
-	@ResponseStatus(HttpStatus.OK)  // 200
-	public List<DiceGame> getAllGames() {
 		return null;
 	}
 	

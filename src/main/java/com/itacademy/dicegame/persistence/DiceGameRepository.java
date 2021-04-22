@@ -1,5 +1,7 @@
 package com.itacademy.dicegame.persistence;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,5 +11,7 @@ import com.itacademy.dicegame.domain.DiceGame;
 public interface DiceGameRepository extends JpaRepository<DiceGame, Integer> {
 
 	public DiceGame findTopByOrderByCreationDateDesc();
+	
+	public List<DiceGame> findByPlayer_idIs(int idPlayer);
 
 }

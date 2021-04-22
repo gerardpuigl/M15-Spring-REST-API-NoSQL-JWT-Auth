@@ -1,5 +1,7 @@
 package com.itacademy.dicegame.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,10 @@ public class DiceGameService {
 		DiceGame game=new DiceGame(playerRepository.findById(idPlayer).get());
 		gamesRepository.save(game);
 		return game;
+	}
+
+	// get all games from a player
+	public List<DiceGame> getAllGames(int idPlayer) {
+		return gamesRepository.findByPlayer_idIs(idPlayer);
 	}
 }
