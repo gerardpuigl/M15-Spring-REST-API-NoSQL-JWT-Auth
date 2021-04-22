@@ -29,4 +29,10 @@ public class DiceGameService {
 	public List<DiceGame> getAllGames(int idPlayer) {
 		return gamesRepository.findByPlayer_idIs(idPlayer);
 	}
+
+	// delete all games from a player
+	public String deleteAllGames(int idPlayer) {
+		gamesRepository.deleteAll(getAllGames(idPlayer));
+		return "S'han eliminat totes les partides del jugador amb id: " + idPlayer;
+	}
 }

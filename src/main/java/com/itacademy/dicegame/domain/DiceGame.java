@@ -15,6 +15,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name="DiceGames")
 public class DiceGame {
@@ -44,9 +49,12 @@ public class DiceGame {
 	// Player who played
 	@ManyToOne
 	@JoinColumn(name = "player_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id") //retorna només id
+    @JsonIdentityReference(alwaysAsId = true) //retorna només id
 	private Player player;
 
 	@Transient
+	@JsonIgnore
 	private Dice dice = new Dice();
 	
 	public DiceGame() {
@@ -87,11 +95,8 @@ public class DiceGame {
 		return player;
 	}
 
-	public Dice getDice() {
-		return dice;
-	}
-
 	public Date getCreationDate() {
 		return creationDate;
 	}
+
 }

@@ -121,6 +121,6 @@ public class DiceGameControllerTest {
 		
 		// check results
 		.andExpect(status().isAccepted());											//check status
-		assertThat(testPlayer.getDiceGameList().size() == 0);						//check if all games are deleted
+		assertThat(gamesRepository.findByPlayer_idIs(testPlayer.getId()).size() == 0);						//check if all games are deleted
 	}
 }

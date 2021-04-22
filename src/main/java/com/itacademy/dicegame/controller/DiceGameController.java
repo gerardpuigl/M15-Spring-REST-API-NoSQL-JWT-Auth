@@ -23,7 +23,10 @@ public class DiceGameController {
 	 */
 	
 	@Autowired
-	DiceGameService diceGameService;
+	private DiceGameService diceGameService;
+	public DiceGameController() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	//add new throw the dices
 	@PostMapping("/games")
@@ -31,6 +34,7 @@ public class DiceGameController {
 	public DiceGame throwTheDices(@PathVariable("id") int idPlayer) {
 		return diceGameService.newGame(idPlayer);
 	}
+	
 	//get all player's games
 	@GetMapping("/games")
 	@ResponseStatus(HttpStatus.OK)  // 200
@@ -38,11 +42,11 @@ public class DiceGameController {
 		return diceGameService.getAllGames(idPlayer);
 	}
 	
-	//TODO delete all player's games
+	//delete all player's games
 	@DeleteMapping("/games")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
-	public String deleteAllGames() {
-		return null;
+	public String deleteAllGames(@PathVariable("id") int idPlayer) {
+		return diceGameService.deleteAllGames(idPlayer);
 	}
 	
 }
