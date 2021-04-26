@@ -66,8 +66,8 @@ public class PlayerController {
 	
 	//TODO get Players Ranking
 	@GetMapping("/ranking")
-	public List<Player> getRankingList(){
-		return null;
+	public double getRankingList(){
+		return playerService.getPlayersWinPercentage();
 	}
 	
 	//TODO get Players Ranking

@@ -13,7 +13,7 @@ import com.itacademy.dicegame.persistence.PlayerRepository;
 public class DiceGameService {
 	
 	@Autowired
-	DiceGameRepository gamesRepository;
+	DiceGameRepository diceGameRepository;
 
 	@Autowired
 	PlayerRepository playerRepository;
@@ -21,18 +21,18 @@ public class DiceGameService {
 	// create new game and play
 	public DiceGame newGame(int idPlayer) {
 		DiceGame game=new DiceGame(playerRepository.findById(idPlayer).get());
-		gamesRepository.save(game);
+		diceGameRepository.save(game);
 		return game;
 	}
 
 	// get all games from a player
 	public List<DiceGame> getAllGames(int idPlayer) {
-		return gamesRepository.findByPlayer_idIs(idPlayer);
+		return diceGameRepository.findByPlayer_idIs(idPlayer);
 	}
 
 	// delete all games from a player
 	public String deleteAllGames(int idPlayer) {
-		gamesRepository.deleteAll(getAllGames(idPlayer));
+		diceGameRepository.deleteAll(getAllGames(idPlayer));
 		return "S'han eliminat totes les partides del jugador amb id: " + idPlayer;
 	}
 }
