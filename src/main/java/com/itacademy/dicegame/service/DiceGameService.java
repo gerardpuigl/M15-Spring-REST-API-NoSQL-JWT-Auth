@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itacademy.dicegame.domain.DiceGame;
+import com.itacademy.dicegame.domain.Player;
 import com.itacademy.dicegame.persistence.DiceGameRepository;
 import com.itacademy.dicegame.persistence.PlayerRepository;
 
@@ -20,7 +21,9 @@ public class DiceGameService {
 	
 	// create new game and play
 	public DiceGame newGame(int idPlayer) {
-		DiceGame game=new DiceGame(playerRepository.findById(idPlayer).get());
+		Player player = playerRepository.findById(idPlayer).get();
+		DiceGame game=new DiceGame(player);
+		player.setWinPercentage();
 		diceGameRepository.save(game);
 		return game;
 	}

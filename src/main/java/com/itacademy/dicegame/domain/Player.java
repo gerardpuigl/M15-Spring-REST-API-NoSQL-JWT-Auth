@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -38,7 +37,7 @@ public class Player {
 	private Date creationDate;
 	
 	//% Success Games
-	@Transient
+	@Column(name="winPercentage")
 	private double winPercentage;
 	
 	//List of the DiceGames played List<DiceGame>
@@ -78,7 +77,8 @@ public class Player {
 		return diceGameList;
 	}
 
-	public double getWinPercentage() {
+	public void setWinPercentage() {
+		double winPercentage;
 		if(diceGameList != null) {
 			double wins = diceGameList.stream().filter(dg -> dg.getResult()==true).count();
 			double total = diceGameList.size();
@@ -86,7 +86,11 @@ public class Player {
 		}else {
 			winPercentage=0;
 		}
-		return DoubleRounder.round(winPercentage, 2);
+		this.winPercentage =  DoubleRounder.round(winPercentage, 2);
 	}
-
+	
+	public double getWinPercentage() {
+		return this.winPercentage;
+	}
+	
 }
