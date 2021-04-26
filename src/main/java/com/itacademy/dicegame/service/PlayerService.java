@@ -58,7 +58,7 @@ public class PlayerService {
 	}
 	
 	// return total Win Average
-	public double getPlayersWinPercentage() {
+	public double getPlayersWinPercentage() {		
 		double winPercentage = 0;
 		List<DiceGame> diceGameList = diceGameRepository.findAll();
 		if(diceGameList != null) {
@@ -69,4 +69,13 @@ public class PlayerService {
 		return DoubleRounder.round(winPercentage, 2);
 	}
 
+	// get player with worse win percentage
+	public Player getLoser() {
+		return playerRepository.findTopByOrderByWinPercentage();
+	}
+	
+	// get player the best win percentage
+	public Player getWinner() {
+		return playerRepository.findTopByOrderByWinPercentageDesc();
+	}
 }

@@ -10,4 +10,8 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
 	
 	public Player findTopByOrderByCreationDateDesc();
 
+	public Player findTopByOrderByWinPercentage();
+	
+	public Player findTopByOrderByWinPercentageDesc();
+
 }

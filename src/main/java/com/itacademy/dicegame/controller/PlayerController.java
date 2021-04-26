@@ -64,21 +64,21 @@ public class PlayerController {
 		return playerService.deleteById(idPlayer);
 	}
 	
-	//TODO get Players Ranking
+	//get Players Ranking
 	@GetMapping("/ranking")
 	public double getRankingList(){
 		return playerService.getPlayersWinPercentage();
 	}
 	
-	//TODO get Players Ranking
+	//get player with worse win percentage
 	@GetMapping("/ranking/loser")
 	public Player getLoser(){
-		return null;
+		return playerService.getLoser();
 	}
 	
-	//TODO get Players Ranking
+	//get Players Ranking
 	@GetMapping("/ranking/winner")
 	public Player getWinner(){
-		return null;
+		return playerService.getWinner();
 	}
 }
