@@ -23,8 +23,9 @@ public class DiceGameService {
 	public DiceGame newGame(int idPlayer) {
 		Player player = playerRepository.findById(idPlayer).get();
 		DiceGame game=new DiceGame(player);
-		player.setWinPercentage();
 		diceGameRepository.save(game);
+		player.setWinPercentage();
+		playerRepository.save(player);
 		return game;
 	}
 
