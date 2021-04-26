@@ -1,49 +1,40 @@
 package com.itacademy.dicegame.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.decimal4j.util.DoubleRounder;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table(name="Players")
+//@Entity
+//@Table(name="Players")
+@Document(collection = "Players")
 public class Player {
 
 	@Id
-	@NotNull
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="player_id")
-	private int id;
+	private String id;
 	
 	@NotBlank
-	@Column(name="name")
 	private String name;
 	
-	@CreationTimestamp
-	@Column(name="picture_registrationdate",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
+	@CreatedDate
 	private Date creationDate;
 	
 	//% Success Games
-	@Column(name="winPercentage")
 	private double winPercentage;
 	
 	//List of the DiceGames played List<DiceGame>
-	@OneToMany(mappedBy = "player")
-	private List<DiceGame> diceGameList;
-	
+	@DBRef
+	private List<DiceGame> diceGameList = new ArrayList<DiceGame>();
+
 	public Player() {
 		this.name="ANÒNIM";
 	}
@@ -60,7 +51,7 @@ public class Player {
 		this.name = name;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
@@ -69,7 +60,7 @@ public class Player {
 	}
 	
 	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
+		this.creationDate=creationDate;
 	}
 	
 	@JsonIgnore
@@ -77,6 +68,10 @@ public class Player {
 		return diceGameList;
 	}
 
+	public void addGame(DiceGame game) {
+		diceGameList.add(game);
+	}
+	
 	public void setWinPercentage() {
 		double winPercentage;
 		if(diceGameList != null) {

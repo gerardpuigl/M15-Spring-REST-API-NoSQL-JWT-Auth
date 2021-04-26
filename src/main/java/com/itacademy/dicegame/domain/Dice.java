@@ -2,8 +2,6 @@ package com.itacademy.dicegame.domain;
 
 import java.util.Random;
 
-import javassist.tools.reflect.CannotCreateException;
-
 public class Dice {
 
 	private int sides;
@@ -16,8 +14,8 @@ public class Dice {
 	}
 	
 	//other dices
-	public Dice(int sides) throws CannotCreateException {
-		if(sides<=1) throw new CannotCreateException("the minimal dice sides are 2");
+	public Dice(int sides) throws Exception {
+		if(sides<=1) throw new Exception("the minimal dice sides are 2");
 		this.sides=sides;		
 	}
 		

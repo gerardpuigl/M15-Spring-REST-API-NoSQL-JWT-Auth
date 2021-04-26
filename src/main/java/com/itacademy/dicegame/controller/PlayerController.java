@@ -53,14 +53,14 @@ public class PlayerController {
 	//get Player by id
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)  // 200
-	public Player getPlayerById(@PathVariable("id") int idPlayer) {
+	public Player getPlayerById(@PathVariable("id") String idPlayer) {
 		return playerService.getPlayerById(idPlayer);
 	}
 		
 	//delete Player by id
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
-	public String deletePlayerById(@PathVariable("id") int idPlayer) {
+	public String deletePlayerById(@PathVariable("id") String idPlayer) {
 		return playerService.deleteById(idPlayer);
 	}
 	

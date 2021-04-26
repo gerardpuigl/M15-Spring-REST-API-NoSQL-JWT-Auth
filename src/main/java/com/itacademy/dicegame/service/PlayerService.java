@@ -2,8 +2,7 @@ package com.itacademy.dicegame.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 
 import org.decimal4j.util.DoubleRounder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,10 @@ import com.itacademy.dicegame.persistence.PlayerRepository;
 public class PlayerService {
 
 	@Autowired
-	PlayerRepository playerRepository;
+	private PlayerRepository playerRepository;
 	
 	@Autowired
-	DiceGameRepository diceGameRepository;
-
-	@PersistenceContext
-	private EntityManager entityManager;
+	private DiceGameRepository diceGameRepository;
 
 	// create Player
 	public Player createPlayer(Player player) {
@@ -34,15 +30,14 @@ public class PlayerService {
 
 	// modify Player
 	public Player modifyPlayer(Player player) {
-		playerRepository.save(player);
-		//clean the Hibernate entityManager and force to take updated entity from Repository
-		//without this, "registrationDate" returns null
-		entityManager.clear();
+		Player playerDb = playerRepository.findById(player.getId()).get();
+		playerDb.setName(player.getName());
+		playerRepository.save(playerDb);
 		return getPlayerById(player.getId());
 	}
 
 	// get One Player by id
-	public Player getPlayerById(int id_Player) {
+	public Player getPlayerById(String id_Player) {
 		return playerRepository.findById(id_Player).get();
 	}
 
@@ -52,7 +47,7 @@ public class PlayerService {
 	}
 
 	// delete player
-	public String deleteById(int idPlayer) {
+	public String deleteById(String idPlayer) {
 		playerRepository.delete(getPlayerById(idPlayer));
 		return "Usuari eliminat correctament";
 	}

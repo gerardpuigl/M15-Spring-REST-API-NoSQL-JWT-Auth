@@ -24,28 +24,28 @@ public class DiceGameController {
 	
 	@Autowired
 	private DiceGameService diceGameService;
+	
 	public DiceGameController() {
-
 	}
 	
 	//add new throw the dices
 	@PostMapping("/games")
 	@ResponseStatus(HttpStatus.CREATED)  // 201
-	public DiceGame throwTheDices(@PathVariable("id") int idPlayer) {
+	public DiceGame throwTheDices(@PathVariable("id") String idPlayer) {
 		return diceGameService.newGame(idPlayer);
 	}
 	
 	//get all player's games
 	@GetMapping("/games")
 	@ResponseStatus(HttpStatus.OK)  // 200
-	public List<DiceGame> getAllGames(@PathVariable("id") int idPlayer) {
+	public List<DiceGame> getAllGames(@PathVariable("id") String idPlayer) {
 		return diceGameService.getAllGames(idPlayer);
 	}
 	
 	//delete all player's games
 	@DeleteMapping("/games")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
-	public String deleteAllGames(@PathVariable("id") int idPlayer) {
+	public String deleteAllGames(@PathVariable("id") String idPlayer) {
 		return diceGameService.deleteAllGames(idPlayer);
 	}
 	

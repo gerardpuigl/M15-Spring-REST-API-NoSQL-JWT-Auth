@@ -14,28 +14,29 @@ import com.itacademy.dicegame.persistence.PlayerRepository;
 public class DiceGameService {
 	
 	@Autowired
-	DiceGameRepository diceGameRepository;
+	private DiceGameRepository diceGameRepository;
 
 	@Autowired
-	PlayerRepository playerRepository;
+	private PlayerRepository playerRepository;
 	
 	// create new game and play
-	public DiceGame newGame(int idPlayer) {
+	public DiceGame newGame(String idPlayer) {
 		Player player = playerRepository.findById(idPlayer).get();
 		DiceGame game=new DiceGame(player);
 		diceGameRepository.save(game);
+		player.addGame(game);
 		player.setWinPercentage();
 		playerRepository.save(player);
 		return game;
 	}
 
 	// get all games from a player
-	public List<DiceGame> getAllGames(int idPlayer) {
+	public List<DiceGame> getAllGames(String idPlayer) {
 		return diceGameRepository.findByPlayer_idIs(idPlayer);
 	}
 
 	// delete all games from a player
-	public String deleteAllGames(int idPlayer) {
+	public String deleteAllGames(String idPlayer) {
 		diceGameRepository.deleteAll(getAllGames(idPlayer));
 		return "S'han eliminat totes les partides del jugador amb id: " + idPlayer;
 	}
