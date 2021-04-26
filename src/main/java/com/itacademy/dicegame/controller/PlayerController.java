@@ -44,7 +44,6 @@ public class PlayerController {
 	}
 
 	//get Player List
-	//TODO [POR IMPLEMENTAR] DEBE DEVOLVER % DE EXITOS!!!!!!
 	@GetMapping("")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	public List<Player> getPlayersList() {

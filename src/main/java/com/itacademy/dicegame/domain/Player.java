@@ -10,9 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.decimal4j.util.DoubleRounder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,11 +37,13 @@ public class Player {
 	@Column(name="picture_registrationdate",  columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
 	private Date creationDate;
 	
-	//TODO % Success Games
+	//% Success Games
+	@Transient
+	private double winPercentage;
 	
-	//TODO List of the DiceGames played List<DiceGame>
-	@OneToMany(mappedBy = "id")
-	private List<DiceGame> DiceGameList;
+	//List of the DiceGames played List<DiceGame>
+	@OneToMany(mappedBy = "player")
+	private List<DiceGame> diceGameList;
 	
 	public Player() {
 		this.name="ANÒNIM";
@@ -71,7 +75,18 @@ public class Player {
 	
 	@JsonIgnore
 	public List<DiceGame> getDiceGameList() {
-		return DiceGameList;
+		return diceGameList;
+	}
+
+	public double getWinPercentage() {
+		if(diceGameList != null) {
+			double wins = diceGameList.stream().filter(dg -> dg.getResult()==true).count();
+			double total = diceGameList.size();
+			winPercentage = (wins/total)*100;
+		}else {
+			winPercentage=0;
+		}
+		return DoubleRounder.round(winPercentage, 2);
 	}
 
 }

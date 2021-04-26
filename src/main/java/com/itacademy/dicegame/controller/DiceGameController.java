@@ -25,7 +25,7 @@ public class DiceGameController {
 	@Autowired
 	private DiceGameService diceGameService;
 	public DiceGameController() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	//add new throw the dices
