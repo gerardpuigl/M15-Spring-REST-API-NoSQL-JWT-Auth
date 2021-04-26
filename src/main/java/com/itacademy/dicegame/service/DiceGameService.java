@@ -37,7 +37,11 @@ public class DiceGameService {
 
 	// delete all games from a player
 	public String deleteAllGames(String idPlayer) {
+		Player player = playerRepository.findById(idPlayer).get();
 		diceGameRepository.deleteAll(getAllGames(idPlayer));
+		player.getDiceGameList().clear();
+		player.setWinPercentage();
+		playerRepository.save(player);
 		return "S'han eliminat totes les partides del jugador amb id: " + idPlayer;
 	}
 }
