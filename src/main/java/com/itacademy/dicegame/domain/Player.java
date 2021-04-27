@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.validation.constraints.NotBlank;
-
 import org.decimal4j.util.DoubleRounder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -22,7 +20,6 @@ public class Player {
 	@Id
 	private String id;
 	
-	@NotBlank
 	private String name;
 	
 	@CreatedDate
@@ -40,7 +37,11 @@ public class Player {
 	}
 	
 	public Player(String name) {
-		this.name=name;
+		if(name.equals("") || name==null) {
+			this.name="ANÒNIM";
+		}else {
+			this.name=name;		
+		}
 	}
 
 	public String getName() {
@@ -48,7 +49,11 @@ public class Player {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if(name.equals("") || name==null) {
+			this.name="ANÒNIM";
+		}else {
+			this.name=name;		
+		}
 	}
 
 	public String getId() {
