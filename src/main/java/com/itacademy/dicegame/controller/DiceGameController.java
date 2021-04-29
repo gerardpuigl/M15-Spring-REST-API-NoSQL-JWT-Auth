@@ -1,6 +1,7 @@
 package com.itacademy.dicegame.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class DiceGameController {
 	@PostMapping("/games")
 	@ResponseStatus(HttpStatus.CREATED)  // 201
 	@PreAuthorize("hasAuthority('create:game')")
-	public DiceGame throwTheDices(@PathVariable("id") String idPlayer) {
+	public DiceGame throwTheDices(@PathVariable("id") UUID idPlayer) {
 		return diceGameService.newGame(idPlayer);
 	}
 	
@@ -41,7 +42,7 @@ public class DiceGameController {
 	@GetMapping("/games")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:game')")
-	public List<DiceGame> getAllGames(@PathVariable("id") String idPlayer) {
+	public List<DiceGame> getAllGames(@PathVariable("id") UUID idPlayer) {
 		return diceGameService.getAllGames(idPlayer);
 	}
 	
@@ -49,7 +50,7 @@ public class DiceGameController {
 	@DeleteMapping("/games")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
 	@PreAuthorize("hasAuthority('delete:game')")
-	public String deleteAllGames(@PathVariable("id") String idPlayer) {
+	public String deleteAllGames(@PathVariable("id") UUID idPlayer) {
 		return diceGameService.deleteAllGames(idPlayer);
 	}
 	

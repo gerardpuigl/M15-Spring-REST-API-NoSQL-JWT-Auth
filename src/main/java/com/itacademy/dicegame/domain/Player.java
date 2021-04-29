@@ -3,6 +3,7 @@ package com.itacademy.dicegame.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.decimal4j.util.DoubleRounder;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,13 +13,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-//@Entity
-//@Table(name="Players")
 @Document(collection = "Players")
 public class Player {
 
 	@Id
-	private String id;
+	private UUID _id;
 	
 	private String name;
 	
@@ -33,6 +32,7 @@ public class Player {
 	private List<DiceGame> diceGameList = new ArrayList<DiceGame>();
 
 	public Player() {
+		this._id = UUID.randomUUID();
 		this.name="ANÒNIM";
 	}
 	
@@ -56,16 +56,12 @@ public class Player {
 		}
 	}
 
-	public String getId() {
-		return id;
+	public UUID getId() {
+		return _id;
 	}
 	
 	public Date getCreationDate() {
 		return creationDate;
-	}
-	
-	public void setCreationDate(Date creationDate) {
-		this.creationDate=creationDate;
 	}
 	
 	@JsonIgnore

@@ -27,7 +27,7 @@ public class PlayerRepositoryTest {
 		Player player1=new Player("test1");
 		Player player2=new Player("test2");
 		
-		assertThat(player1.getId()+1==player2.getId());
+		assertThat(player1.getId()!=player2.getId());
 	}
 	
 }

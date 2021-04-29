@@ -1,6 +1,7 @@
 package com.itacademy.dicegame.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -58,7 +59,7 @@ public class PlayerController {
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:player')")
-	public Player getPlayerById(@PathVariable("id") String idPlayer) {
+	public Player getPlayerById(@PathVariable("id") UUID idPlayer) {
 		return playerService.getPlayerById(idPlayer);
 	}
 		
@@ -66,7 +67,7 @@ public class PlayerController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
 	@PreAuthorize("hasAuthority('delete:player')")
-	public String deletePlayerById(@PathVariable("id") String idPlayer) {
+	public String deletePlayerById(@PathVariable("id") UUID idPlayer) {
 		return playerService.deleteById(idPlayer);
 	}
 	

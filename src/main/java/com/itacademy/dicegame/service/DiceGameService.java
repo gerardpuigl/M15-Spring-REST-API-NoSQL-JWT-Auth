@@ -1,6 +1,7 @@
 package com.itacademy.dicegame.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class DiceGameService {
 	private PlayerRepository playerRepository;
 	
 	// create new game and play
-	public DiceGame newGame(String idPlayer) {
+	public DiceGame newGame(UUID idPlayer) {
 		Player player = playerRepository.findById(idPlayer).get();
 		DiceGame game=new DiceGame(player);
 		diceGameRepository.save(game);
@@ -31,12 +32,12 @@ public class DiceGameService {
 	}
 
 	// get all games from a player
-	public List<DiceGame> getAllGames(String idPlayer) {
+	public List<DiceGame> getAllGames(UUID idPlayer) {
 		return diceGameRepository.findByPlayer_idIs(idPlayer);
 	}
 
 	// delete all games from a player
-	public String deleteAllGames(String idPlayer) {
+	public String deleteAllGames(UUID idPlayer) {
 		Player player = playerRepository.findById(idPlayer).get();
 		diceGameRepository.deleteAll(getAllGames(idPlayer));
 		player.getDiceGameList().clear();

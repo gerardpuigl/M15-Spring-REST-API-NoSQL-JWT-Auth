@@ -1,8 +1,7 @@
 package com.itacademy.dicegame.service;
 
 import java.util.List;
-
-
+import java.util.UUID;
 
 import org.decimal4j.util.DoubleRounder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,8 @@ public class PlayerService {
 	}
 
 	// get One Player by id
-	public Player getPlayerById(String id_Player) {
-		return playerRepository.findById(id_Player).get();
+	public Player getPlayerById(UUID idPlayer) {
+		return playerRepository.findById(idPlayer).get();
 	}
 
 	// get all players
@@ -47,7 +46,7 @@ public class PlayerService {
 	}
 
 	// delete player
-	public String deleteById(String idPlayer) {
+	public String deleteById(UUID idPlayer) {
 		playerRepository.delete(getPlayerById(idPlayer));
 		return "Usuari eliminat correctament";
 	}

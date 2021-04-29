@@ -1,6 +1,7 @@
 package com.itacademy.dicegame.domain;
 
 import java.util.Date;
+import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +21,7 @@ public class DiceGame {
 
 	@Id
 	@NotNull
-	private String id;
+	private UUID _id;
 
 	// First Dice Roll
 	private int firstRoll;
@@ -31,6 +32,7 @@ public class DiceGame {
 	// Result (boolean)
 	private boolean result;
 	
+	//TODO the date is null when you create new @Document. It happens for the manually id entrance.
 	@CreatedDate
 	private Date creationDate;
 
@@ -45,12 +47,14 @@ public class DiceGame {
 	private Dice dice = new Dice();
 	
 	public DiceGame() {
+		this._id = UUID.randomUUID();
 		firstRoll = dice.roll();
 		secondRoll = dice.roll();
 		result = result();
 	}
 	
 	public DiceGame(Player player) {
+		this._id = UUID.randomUUID();
 		firstRoll = dice.roll();
 		secondRoll = dice.roll();
 		result = result();
@@ -62,10 +66,10 @@ public class DiceGame {
 		return false;
 	}
 
-	public String getId() {
-		return id;
+	public UUID getId() {
+		return _id;
 	}
-	
+		
 	public int getFirstRoll() {
 		return firstRoll;
 	}
