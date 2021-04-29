@@ -12,10 +12,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
@@ -23,12 +29,14 @@ import com.itacademy.dicegame.domain.DiceGame;
 import com.itacademy.dicegame.domain.Player;
 import com.itacademy.dicegame.persistence.DiceGameRepository;
 import com.itacademy.dicegame.persistence.PlayerRepository;
+import com.itacademy.dicegame.security.Auth0Token;
+import com.itacademy.dicegame.security.SecurityConfig;
 
 @SpringBootTest
+//@AutoConfigureMockMvc(addFilters = false) //Remove security filters to use the tests
 @AutoConfigureMockMvc
-@EnableGlobalMethodSecurity
 public class DiceGameControllerTest {
-
+	
 	@Autowired
 	private MockMvc mockMvc;
 		
@@ -38,7 +46,10 @@ public class DiceGameControllerTest {
 	@Autowired
 	private DiceGameRepository gamesRepository;
 	
-	private Player testPlayer;	
+	private Player testPlayer;
+	
+	//Return a authorization token
+	private String accessToken = new Auth0Token().getToken();
 	
 	private DiceGame testDiceGame1;
 	private DiceGame testDiceGame2;
@@ -75,7 +86,8 @@ public class DiceGameControllerTest {
 		String uri = "/players/" + testPlayer.getId() + "/games";					//request uri
 
 		// request
-		mockMvc.perform(post(uri) 													//request
+		mockMvc.perform(post(uri)													//request
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) 		//Auth0 token authoritzation
 				.accept(MediaType.APPLICATION_JSON_VALUE)) 							//data received
 		
 		// check results
@@ -102,6 +114,7 @@ public class DiceGameControllerTest {
 		
 		// request
 		mockMvc.perform(get(uri) 													//request
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) 		//Auth0 token authoritzation
 				.accept(MediaType.APPLICATION_JSON_VALUE)) 							//data received
 							
 		// check results
@@ -119,10 +132,11 @@ public class DiceGameControllerTest {
 		String uri = "/players/" + testPlayer.getId() + "/games";					//request uri with id
 
 		// request
-		mockMvc.perform(delete(uri))												//delete request
+		mockMvc.perform(delete(uri)													//delete request
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken))		//Auth0 token authoritzation
 		
 		// check results
 		.andExpect(status().isAccepted());											//check status
-		assertThat(gamesRepository.findByPlayer_idIs(testPlayer.getId()).size() == 0);						//check if all games are deleted
+		assertThat(gamesRepository.findByPlayer_idIs(testPlayer.getId()).size() == 0);	//check if all games are deleted
 	}
 }
