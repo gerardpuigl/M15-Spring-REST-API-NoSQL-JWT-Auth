@@ -78,6 +78,30 @@ public class PlayerControllerTest {
 		// remove added entity
 		repository.delete(repository.findTopByOrderByCreationDateDesc());
 	}
+	
+	// test anonimus player
+	@Test
+	@DisplayName("Check anonimus Player: HTTP POST Request + json")
+	public void postAnonimusPlayer() throws Exception {
+
+		// request preparation
+		String uri = "/players"; // request uri
+		String json = "{\"name\":\"addTestPlayer\",\"anonimus\":true}"; // json
+
+		// request
+		mockMvc.perform(post(uri)
+				.header(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken) // Auth0 token authoritzation
+				.contentType(MediaType.APPLICATION_JSON).content(json) // data send
+				.accept(MediaType.APPLICATION_JSON_VALUE)) // data received
+
+				// check results
+				.andExpect(status().isCreated()) // check status code
+				.andExpect(jsonPath("$.name", is("anònim"))) // check name
+				.andExpect(jsonPath("$.id", notNullValue())); // check id is not null
+
+		// remove added entity
+		repository.delete(repository.findTopByOrderByCreationDateDesc());
+	}
 
 	// test get one player
 	@Test
