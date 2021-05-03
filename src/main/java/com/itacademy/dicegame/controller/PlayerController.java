@@ -70,28 +70,4 @@ public class PlayerController {
 	public String deletePlayerById(@PathVariable("id") UUID idPlayer) {
 		return playerService.deleteById(idPlayer);
 	}
-	
-	//get Players Ranking
-	@GetMapping("/ranking")
-	@PreAuthorize("hasAuthority('get:player')")
-	@ResponseStatus(HttpStatus.OK)  // 200
-	public double getRankingList(){
-		return playerService.getPlayersWinPercentage();
-	}
-	
-	//get player with worse win percentage
-	@GetMapping("/ranking/loser")
-	@PreAuthorize("hasAuthority('get:player')")
-	@ResponseStatus(HttpStatus.OK)  // 200
-	public Player getLoser(){
-		return playerService.getLoser();
-	}
-	
-	//get Players Ranking
-	@GetMapping("/ranking/winner")
-	@ResponseStatus(HttpStatus.OK)  // 200
-	@PreAuthorize("hasAuthority('get:player')")
-	public Player getWinner(){
-		return playerService.getWinner();
-	}
 }

@@ -3,6 +3,7 @@ package com.itacademy.dicegame.service;
 import java.util.List;
 import java.util.UUID;
 
+import org.decimal4j.util.DoubleRounder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,27 @@ public class DiceGameService {
 		player.setWinPercentage();
 		playerRepository.save(player);
 		return "S'han eliminat totes les partides del jugador amb id: " + idPlayer;
+	}
+	
+	// return total Win Average
+	public double getPlayersWinPercentage() {		
+		double winPercentage = 0;
+		List<DiceGame> diceGameList = diceGameRepository.findAll();
+		if(diceGameList != null) {
+			double wins = diceGameList.stream().filter(dg -> dg.getResult()==true).count();
+			double total = diceGameList.size();
+			winPercentage = (wins/total)*100;
+		}
+		return DoubleRounder.round(winPercentage, 2);
+	}
+
+	// get player with worse win percentage
+	public Player getLoser() {
+		return playerRepository.findTopByOrderByWinPercentage();
+	}
+	
+	// get player the best win percentage
+	public Player getWinner() {
+		return playerRepository.findTopByOrderByWinPercentageDesc();
 	}
 }

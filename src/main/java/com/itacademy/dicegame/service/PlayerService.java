@@ -51,25 +51,5 @@ public class PlayerService {
 		return "Usuari eliminat correctament";
 	}
 	
-	// return total Win Average
-	public double getPlayersWinPercentage() {		
-		double winPercentage = 0;
-		List<DiceGame> diceGameList = diceGameRepository.findAll();
-		if(diceGameList != null) {
-			double wins = diceGameList.stream().filter(dg -> dg.getResult()==true).count();
-			double total = diceGameList.size();
-			winPercentage = (wins/total)*100;
-		}
-		return DoubleRounder.round(winPercentage, 2);
-	}
 
-	// get player with worse win percentage
-	public Player getLoser() {
-		return playerRepository.findTopByOrderByWinPercentage();
-	}
-	
-	// get player the best win percentage
-	public Player getWinner() {
-		return playerRepository.findTopByOrderByWinPercentageDesc();
-	}
 }
