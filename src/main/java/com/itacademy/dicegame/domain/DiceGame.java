@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.annotation.Version;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,7 +22,7 @@ public class DiceGame {
 
 	@Id
 	@NotNull
-	private UUID _id;
+	private UUID id;
 
 	// First Dice Roll
 	private int firstRoll;
@@ -32,10 +33,12 @@ public class DiceGame {
 	// Result (boolean)
 	private boolean result;
 	
-	//TODO the date is null when you create new @Document. It happens for the manually id entrance.
 	@CreatedDate
 	private Date creationDate;
 
+	@Version 
+	private int version;
+	
 	// Player who played
 	@DBRef
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id") //retorna només id
@@ -47,14 +50,9 @@ public class DiceGame {
 	private Dice dice = new Dice();
 	
 	public DiceGame() {
-		this._id = UUID.randomUUID();
-		firstRoll = dice.roll();
-		secondRoll = dice.roll();
-		result = result();
 	}
 	
 	public DiceGame(Player player) {
-		this._id = UUID.randomUUID();
 		firstRoll = dice.roll();
 		secondRoll = dice.roll();
 		result = result();
@@ -67,7 +65,11 @@ public class DiceGame {
 	}
 
 	public UUID getId() {
-		return _id;
+		return id;
+	}
+	
+	public void setId(UUID id) {
+		this.id = id;
 	}
 		
 	public int getFirstRoll() {
@@ -89,5 +91,9 @@ public class DiceGame {
 	public Date getCreationDate() {
 		return creationDate;
 	}
-
+	
+	@JsonIgnore
+	public boolean isNew() {
+		return (getId() == null);
+	}
 }

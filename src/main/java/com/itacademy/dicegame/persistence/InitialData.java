@@ -18,7 +18,7 @@ public class InitialData {
 		private DiceGameRepository diceGameRepository;
 		
 		// populate the repository if it's empty
-	    //@PostConstruct
+	    @PostConstruct
 	    public void populateIfEmpty() {
 	    	if(playerRepository.findAll().size() == 0) {
 	    		createTestPlayer("TestPlayer1",10);
