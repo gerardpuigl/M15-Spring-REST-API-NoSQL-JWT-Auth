@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.constraints.NotBlank;
+
 import org.decimal4j.util.DoubleRounder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -20,7 +22,10 @@ public class Player {
 	@Id
 	private UUID id;
 
+	@NotBlank
 	private String name;
+	
+	private boolean anonimus;
 
 	@CreatedDate
 	private Date creationDate;
@@ -39,23 +44,28 @@ public class Player {
 	}
 
 	public Player(String name) {
-		if (name.equals("") || name == null) {
-			this.name = "ANÒNIM";
-		} else {
 			this.name = name;
-		}
+			anonimus=false;
 	}
 
+	public Player(String name, boolean anonimus) {
+		this.name = name;
+		this.anonimus=anonimus;
+	}
+	
 	public String getName() {
+		if (anonimus) {
+			return "anònim";
+		}
 		return name;
 	}
 
 	public void setName(String name) {
-		if (name.equals("") || name == null) {
-			this.name = "ANÒNIM";
-		} else {
 			this.name = name;
-		}
+	}
+
+	public void setAnonimus(boolean anonimus) {
+		this.anonimus = anonimus;
 	}
 
 	public UUID getId() {
