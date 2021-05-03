@@ -1,12 +1,36 @@
 package com.itacademy.dicegame.security;
 
+import java.util.HashMap;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.client.RestTemplate;
+
 public class Auth0Token {
 
-	//token from Test tab in your Auth0 API
-	private String accessToken= "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlAwdEdzX1Jhdk4wRWR2NGw3V3dYMCJ9.eyJpc3MiOiJodHRwczovL2dwaXRhY2FkZW15LmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJzaTJOV0xjSXBhQXd3dGlCbXI2TFJzdTlxTE5pOWtieUBjbGllbnRzIiwiYXVkIjoibTE1RGljZUdhbWUiLCJpYXQiOjE2MTk3MjAxODMsImV4cCI6MTYxOTgwNjU4MywiYXpwIjoic2kyTldMY0lwYUF3d3RpQm1yNkxSc3U5cUxOaTlrYnkiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6W119.bPJFRdDODizRjQGlVZLKmqI1VT1jCNoD1ETKtvypvYbetD67pHu6XeacjdC92egJbPI0zPNdb76V9RBE--EsrutcEeSIyDGf4skFtfyxlq5Ux2PVEPgp5qnvomvc8P1XZc8VDSOLFBbAn07_Q7sMTbDdqxX4SXkM4__y2yM_JJkH-4uBAhIvF1TR88ZO0bQhzoxf6YBwaPgj3BVfZpYWKSX2xIPpT3AbytEztF2Mt4Esj7KHztuZPOwXNifNNuCKHz05-KFQBu3rHPk3IyKAaBeYJ0Za_injh6Ekk3VJmss5JXWrhd_0YV61YF2KQffFId0d-XJH-qFAjSbAZ6BEEA";
-
 	public String getToken() {
-		return accessToken;
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		JSONObject requestBody = new JSONObject();
+		try {
+			requestBody.put("client_id", "si2NWLcIpaAwwtiBmr6LRsu9qLNi9kby");
+			requestBody.put("client_secret", "zI5MHkGgjPqJLxp7fEiiSnQMwRCTdqshEmyVNqoX-wR_R7u-cVvg0VUhmLX5A0R_");
+			requestBody.put("audience", "m15DiceGame");
+			requestBody.put("grant_type", "client_credentials");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		HttpEntity<String> request = new HttpEntity<String>(requestBody.toString(), headers);
+
+		RestTemplate restTemplate = new RestTemplate();
+		HashMap<String, String> result = restTemplate.postForObject("https://gpitacademy.eu.auth0.com/oauth/token",
+				request, HashMap.class);
+		
+		return result.get("access_token");
 	}
 
 }

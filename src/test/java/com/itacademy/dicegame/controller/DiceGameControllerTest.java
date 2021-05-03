@@ -12,16 +12,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
@@ -30,7 +24,6 @@ import com.itacademy.dicegame.domain.Player;
 import com.itacademy.dicegame.persistence.DiceGameRepository;
 import com.itacademy.dicegame.persistence.PlayerRepository;
 import com.itacademy.dicegame.security.Auth0Token;
-import com.itacademy.dicegame.security.SecurityConfig;
 
 @SpringBootTest
 //@AutoConfigureMockMvc(addFilters = false) //Remove security filters to use the tests
@@ -49,6 +42,7 @@ public class DiceGameControllerTest {
 	private Player testPlayer;
 	
 	//Return a authorization token
+	
 	private String accessToken = new Auth0Token().getToken();
 	
 	private DiceGame testDiceGame1;
@@ -71,10 +65,10 @@ public class DiceGameControllerTest {
 	@AfterEach
 	public void deleteTestDiceGame() {
 		
-		gamesRepository.delete(testDiceGame1);
-		gamesRepository.delete(testDiceGame2);
+		gamesRepository.deleteById(testDiceGame1.getId());
+		gamesRepository.deleteById(testDiceGame2.getId());
 		
-		playerRepository.delete(testPlayer);
+		playerRepository.deleteById(testPlayer.getId());
 	}
 		
 	//test create one Play

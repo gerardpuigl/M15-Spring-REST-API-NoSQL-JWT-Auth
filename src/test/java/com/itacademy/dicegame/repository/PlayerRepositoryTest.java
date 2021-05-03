@@ -2,6 +2,8 @@ package com.itacademy.dicegame.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
@@ -18,7 +20,10 @@ public class PlayerRepositoryTest {
 	@Test
 	public void createPlayer() {
 		Player player=new Player("test");
+		player.setId(UUID.randomUUID());
 		repository.save(player);
+		
+		assertThat(repository.findById(player.getId()).get()==player);
 	}
 		
 	//test autoincrement

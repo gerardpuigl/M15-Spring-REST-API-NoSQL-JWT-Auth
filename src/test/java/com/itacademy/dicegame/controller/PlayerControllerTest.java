@@ -52,7 +52,7 @@ public class PlayerControllerTest {
 	// delete Test Player
 	@AfterEach
 	public void deleteTestPlayer() {
-		repository.delete(testPlayer);
+			repository.deleteById(testPlayer.getId());
 	}
 
 	// test add one player
@@ -95,7 +95,7 @@ public class PlayerControllerTest {
 				// check results
 				.andExpect(status().isOk()) // check status code
 				.andExpect(jsonPath("$.name", is("TestPlayer"))) // check name
-				.andExpect(jsonPath("$.id", is(testPlayer.getId()))); // check return same id reference
+				.andExpect(jsonPath("$.id", is( testPlayer.getId().toString()))); // check return same id reference
 	}
 
 	// test delete one player
