@@ -1,4 +1,4 @@
-package com.itacademy.dicegame.domain;
+package com.itacademy.dicegame.domain.diceGame;
 
 import java.util.Date;
 import java.util.UUID;
@@ -16,9 +16,10 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.itacademy.dicegame.domain.player.Player;
 
-@Document(collection = "DiceGames")
-public class DiceGame {
+@Document(collection = "TwoDiceGames")
+public class TwoDiceGame implements DiceGame {
 
 	@Id
 	@NotNull
@@ -49,10 +50,10 @@ public class DiceGame {
 	@JsonIgnore
 	private Dice dice = new Dice();
 	
-	public DiceGame() {
+	public TwoDiceGame() {
 	}
 	
-	public DiceGame(Player player) {
+	public TwoDiceGame(Player player) {
 		firstRoll = dice.roll();
 		secondRoll = dice.roll();
 		result = result();

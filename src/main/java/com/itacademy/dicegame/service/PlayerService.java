@@ -3,13 +3,10 @@ package com.itacademy.dicegame.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.decimal4j.util.DoubleRounder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itacademy.dicegame.domain.DiceGame;
-import com.itacademy.dicegame.domain.Player;
-import com.itacademy.dicegame.persistence.DiceGameRepository;
+import com.itacademy.dicegame.domain.player.Player;
 import com.itacademy.dicegame.persistence.PlayerRepository;
 
 @Service
@@ -18,9 +15,6 @@ public class PlayerService {
 	@Autowired
 	private PlayerRepository playerRepository;
 	
-	@Autowired
-	private DiceGameRepository diceGameRepository;
-
 	// create Player
 	public Player createPlayer(Player player) {
 		playerRepository.save(player);

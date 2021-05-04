@@ -1,4 +1,4 @@
-package com.itacademy.dicegame.domain;
+package com.itacademy.dicegame.domain.diceGame;
 
 import java.util.Random;
 

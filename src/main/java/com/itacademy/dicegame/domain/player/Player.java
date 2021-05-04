@@ -1,4 +1,4 @@
-package com.itacademy.dicegame.domain;
+package com.itacademy.dicegame.domain.player;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.itacademy.dicegame.domain.diceGame.DiceGame;
 
 @Document(collection = "Players")
 public class Player {

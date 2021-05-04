@@ -22,7 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itacademy.dicegame.domain.Player;
+import com.itacademy.dicegame.domain.player.Player;
 import com.itacademy.dicegame.persistence.PlayerRepository;
 import com.itacademy.dicegame.security.Auth0Token;
 

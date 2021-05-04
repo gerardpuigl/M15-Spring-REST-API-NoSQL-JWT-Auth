@@ -5,8 +5,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.itacademy.dicegame.domain.DiceGame;
-import com.itacademy.dicegame.domain.Player;
+import com.itacademy.dicegame.domain.diceGame.DiceGame;
+import com.itacademy.dicegame.domain.diceGame.DiceGameFactory;
+import com.itacademy.dicegame.domain.player.Player;
 
 @Component
 public class InitialData {
@@ -16,6 +17,9 @@ public class InitialData {
 
 		@Autowired
 		private DiceGameRepository diceGameRepository;
+		
+		@Autowired
+		private DiceGameFactory diceGameFactory;
 		
 		// populate the repository if it's empty
 	    @PostConstruct
@@ -32,7 +36,17 @@ public class InitialData {
 			Player player = new Player(name);
 			playerRepository.save(player);
 			for (int i = 0; i < initialGames; i++) {
-				DiceGame game = new DiceGame(player);
+				DiceGame game =diceGameFactory.getGame(player, "OneDiceGame");
+				diceGameRepository.save(game);
+				player.addGame(game);
+			}
+			for (int i = 0; i < initialGames; i++) {
+				DiceGame game =diceGameFactory.getGame(player, "TwoDiceGame");
+				diceGameRepository.save(game);
+				player.addGame(game);
+			}
+			for (int i = 0; i < initialGames; i++) {
+				DiceGame game =diceGameFactory.getGame(player, "ThreeDiceGame");
 				diceGameRepository.save(game);
 				player.addGame(game);
 			}

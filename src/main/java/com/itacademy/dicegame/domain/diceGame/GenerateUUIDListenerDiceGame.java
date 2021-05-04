@@ -1,4 +1,4 @@
-package com.itacademy.dicegame.domain;
+package com.itacademy.dicegame.domain.diceGame;
 
 import java.util.UUID;
 
@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 
 //MongoDB don't create properly UUID and we override it's function
 @Component
-public class GenerateUUIDListenerPlayer extends AbstractMongoEventListener<Player> {
+public class GenerateUUIDListenerDiceGame extends AbstractMongoEventListener<DiceGame> {
 	
 	@Override
-	public void onBeforeConvert(BeforeConvertEvent<Player> event) {
-		Player player = event.getSource();
-		if (player.isNew()) {
-			player.setId(UUID.randomUUID());
+	public void onBeforeConvert(BeforeConvertEvent<DiceGame> event) {
+		DiceGame diceGame = event.getSource();
+		if (diceGame.isNew()) {
+			diceGame.setId(UUID.randomUUID());
 		}
 	}
 }

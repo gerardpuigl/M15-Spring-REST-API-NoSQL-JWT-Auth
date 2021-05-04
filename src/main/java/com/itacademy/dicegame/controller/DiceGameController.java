@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itacademy.dicegame.domain.DiceGame;
-import com.itacademy.dicegame.domain.Player;
+import com.itacademy.dicegame.domain.diceGame.DiceGame;
+import com.itacademy.dicegame.domain.player.Player;
 import com.itacademy.dicegame.service.DiceGameService;
 
 @RestController
@@ -32,49 +32,50 @@ public class DiceGameController {
 	}
 	
 	//add new throw the dices
-	@PostMapping("/{id}/games")
+	@PostMapping("/{id}/games/{gameType}")
 	@ResponseStatus(HttpStatus.CREATED)  // 201
 	@PreAuthorize("hasAuthority('create:game')")
-	public DiceGame throwTheDices(@PathVariable("id") UUID idPlayer) {
-		return diceGameService.newGame(idPlayer);
+	public DiceGame throwTheDices(@PathVariable("id") UUID idPlayer, @PathVariable("gameType") String gameType) {
+		return diceGameService.newGame(idPlayer, gameType);
 	}
 	
 	//get all player's games
-	@GetMapping("/{id}/games")
+	@GetMapping("/{id}/games/{gameType}")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:game')")
-	public List<DiceGame> getAllGames(@PathVariable("id") UUID idPlayer) {
-		return diceGameService.getAllGames(idPlayer);
+	public List<DiceGame> getAllGames(@PathVariable("id") UUID idPlayer,@PathVariable("gameType") String gameType) {
+		return diceGameService.getAllGames(idPlayer, gameType);
 	}
 	
 	//delete all player's games
-	@DeleteMapping("/{id}/games")
+	@DeleteMapping("/{id}/games/{gameType}")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
 	@PreAuthorize("hasAuthority('delete:game')")
-	public String deleteAllGames(@PathVariable("id") UUID idPlayer) {
-		return diceGameService.deleteAllGames(idPlayer);
+	public String deleteAllGames(@PathVariable("id") UUID idPlayer,@PathVariable("gameType") String gameType) {
+		return diceGameService.deleteAllGames(idPlayer, gameType);
 	}
+	
 	//get Players Ranking
-	@GetMapping("/ranking")
+	@GetMapping("/ranking/{gameType}")
 	@PreAuthorize("hasAuthority('get:player')")
 	@ResponseStatus(HttpStatus.OK)  // 200
-	public double getRankingList(){
-		return diceGameService.getPlayersWinPercentage();
+	public double getRankingList(@PathVariable("gameType") String gameType){
+		return diceGameService.getPlayersWinPercentage(gameType);
 	}
 	
 	//get player with worse win percentage
-	@GetMapping("/ranking/loser")
+	@GetMapping("/ranking/loser/{gameType}")
 	@PreAuthorize("hasAuthority('get:player')")
 	@ResponseStatus(HttpStatus.OK)  // 200
-	public Player getLoser(){
-		return diceGameService.getLoser();
+	public Player getLoser(@PathVariable("gameType") String gameType){
+		return diceGameService.getLoser(gameType);
 	}
 	
 	//get Players Ranking
-	@GetMapping("/ranking/winner")
+	@GetMapping("/ranking/winner/{gameType}")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:player')")
-	public Player getWinner(){
-		return diceGameService.getWinner();
+	public Player getWinner(@PathVariable("gameType") String gameType){
+		return diceGameService.getWinner(gameType);
 	}
 }
