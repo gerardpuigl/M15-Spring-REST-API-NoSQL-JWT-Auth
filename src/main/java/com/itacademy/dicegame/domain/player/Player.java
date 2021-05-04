@@ -38,7 +38,7 @@ public class Player {
 	private double winPercentage;
 
 	// List of the DiceGames played List<DiceGame>
-	@DBRef
+	@DBRef(lazy=true)
 	private List<DiceGame> diceGameList = new ArrayList<DiceGame>();
 
 	public Player() {

@@ -17,21 +17,56 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.itacademy.dicegame.domain.player.Player;
 
-@Document
-public interface DiceGame {
+@Document(collection = "diceGame")
+public class DiceGame {
+	
+	@Id
+	@NotNull
+	private UUID id;
 
-	public UUID getId();
-	
-	public void setId(UUID id);
-		
-	public int getFirstRoll();
-	
-	public boolean getResult();
-	
-	public Player getPlayer();
+	@CreatedDate
+	private Date creationDate;
 
-	public Date getCreationDate();
+	@Version 
+	private int version;
+	
+	// Player who played
+	@DBRef
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id") //retorna només id
+    @JsonIdentityReference(alwaysAsId = true) //retorna només id
+	private Player player;
+
+
+	public DiceGame() {
+	}
+	
+	public DiceGame(Player player) {
+		this.player=player;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+	
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	
+	public boolean getResult() {
+		return false;
+	}
 	
 	@JsonIgnore
-	public boolean isNew();
+	public boolean isNew() {
+		return (getId() == null);
+	}
+	
 }

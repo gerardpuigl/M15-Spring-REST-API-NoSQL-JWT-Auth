@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
 import com.itacademy.dicegame.domain.diceGame.DiceGameFactory;
+import com.itacademy.dicegame.domain.diceGame.TwoDiceGame;
 import com.itacademy.dicegame.domain.player.Player;
 
 @Component
@@ -35,21 +36,13 @@ public class InitialData {
 		private void createTestPlayer(String name, int initialGames) {
 			Player player = new Player(name);
 			playerRepository.save(player);
+
 			for (int i = 0; i < initialGames; i++) {
-				DiceGame game =diceGameFactory.getGame(player, "OneDiceGame");
+				DiceGame game = new DiceGame();
 				diceGameRepository.save(game);
-				player.addGame(game);
+				player.addGame((TwoDiceGame) game);
 			}
-			for (int i = 0; i < initialGames; i++) {
-				DiceGame game =diceGameFactory.getGame(player, "TwoDiceGame");
-				diceGameRepository.save(game);
-				player.addGame(game);
-			}
-			for (int i = 0; i < initialGames; i++) {
-				DiceGame game =diceGameFactory.getGame(player, "ThreeDiceGame");
-				diceGameRepository.save(game);
-				player.addGame(game);
-			}
+
 			player.setWinPercentage();
 			playerRepository.save(player);
 		}

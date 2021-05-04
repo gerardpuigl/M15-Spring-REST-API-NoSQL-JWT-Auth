@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
 import com.itacademy.dicegame.domain.diceGame.DiceGameFactory;
+import com.itacademy.dicegame.domain.diceGame.TwoDiceGame;
 import com.itacademy.dicegame.domain.player.Player;
 import com.itacademy.dicegame.persistence.DiceGameRepository;
 import com.itacademy.dicegame.persistence.PlayerRepository;
@@ -30,7 +31,7 @@ public class DiceGameService {
 		Player player = playerRepository.findById(idPlayer).get();
 		DiceGame game = diceGameFactory.getGame(player, typeGame);
 		diceGameRepository.save(game);
-		player.addGame(game);
+		player.addGame((TwoDiceGame) game);
 		player.setWinPercentage();
 		playerRepository.save(player);
 		return game;
