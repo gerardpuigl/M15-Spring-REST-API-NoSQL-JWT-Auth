@@ -1,12 +1,26 @@
 {
 	"info": {
-		"_postman_id": "c02426b7-8dcf-42e3-ab6d-e74b515ad0ef",
-		"name": "M15-Spring-Rest_API",
+		"_postman_id": "426639bb-8556-49c2-a34d-16c870011e46",
+		"name": "M15-Spring-Rest_API Mongodb",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "New Request",
+			"name": "New Player",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -32,13 +46,39 @@
 			"response": []
 		},
 		{
+			"name": "New Anonim Player",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"name\":\"testPlayer\",\n     \"anonimus\":true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ip}}{{port}}/players",
+					"host": [
+						"{{ip}}{{port}}"
+					],
+					"path": [
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Modify Player",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 1,\n    \"name\":\"testPlayerModified\"\n}",
+					"raw": "{\n    \"id\": \"a1280a2b-f45f-4aa1-a9ff-41aee46bb134\",\n    \"name\":\"testPlayerModified\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -80,13 +120,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/1",
+					"raw": "{{ip}}{{port}}/players/{{id}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
-						"1"
+						"{{id}}"
 					]
 				}
 			},
@@ -98,13 +138,13 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/1",
+					"raw": "{{ip}}{{port}}/players/{{id}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
-						"1"
+						"{{id}}"
 					]
 				}
 			},
@@ -116,14 +156,15 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/1/games",
+					"raw": "{{ip}}{{port}}/players/{{id}}/games/{{diceGame}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
-						"1",
-						"games"
+						"{{id}}",
+						"games",
+						"{{diceGame}}"
 					]
 				}
 			},
@@ -135,14 +176,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/1/games",
+					"raw": "{{ip}}{{port}}/players/{{id}}/games/{{diceGame}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
-						"1",
-						"games"
+						"{{id}}",
+						"games",
+						"{{diceGame}}"
 					]
 				}
 			},
@@ -154,14 +196,15 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/1/games",
+					"raw": "{{ip}}{{port}}/players/{{id}}/games/{{diceGame}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
-						"1",
-						"games"
+						"{{id}}",
+						"games",
+						"{{diceGame}}"
 					]
 				}
 			},
@@ -173,13 +216,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/ranking",
+					"raw": "{{ip}}{{port}}/players/ranking/{{diceGame}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
-						"ranking"
+						"ranking",
+						"{{diceGame}}"
 					]
 				}
 			},
@@ -191,14 +235,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/ranking/loser",
+					"raw": "{{ip}}{{port}}/players/ranking/loser/{{diceGame}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
 						"ranking",
-						"loser"
+						"loser",
+						"{{diceGame}}"
 					]
 				}
 			},
@@ -210,18 +255,49 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{ip}}{{port}}/players/ranking/winner",
+					"raw": "{{ip}}{{port}}/players/ranking/winner/{{diceGame}}",
 					"host": [
 						"{{ip}}{{port}}"
 					],
 					"path": [
 						"players",
 						"ranking",
-						"winner"
+						"winner",
+						"{{diceGame}}"
 					]
 				}
 			},
 			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{Auth0_Token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
