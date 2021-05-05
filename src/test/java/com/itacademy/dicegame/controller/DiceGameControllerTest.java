@@ -42,7 +42,6 @@ public class DiceGameControllerTest {
 	private Player testPlayer;
 	
 	//Return a authorization token
-	
 	private String accessToken = new Auth0Token().getToken();
 	
 	private DiceGame testDiceGame1;
@@ -77,7 +76,7 @@ public class DiceGameControllerTest {
 	public void postDiceGame() throws Exception {
 		
 		// request preparation
-		String uri = "/players/" + testPlayer.getId() + "/games";					//request uri
+		String uri = "/players/" + testPlayer.getId() + "/games/OneDiceGame";					//request uri
 
 		// request
 		mockMvc.perform(post(uri)													//request
@@ -88,7 +87,6 @@ public class DiceGameControllerTest {
 		.andExpect(status().isCreated())											//check status
 		.andExpect(jsonPath("$.id").isNotEmpty())									//check all param are not empty
 		.andExpect(jsonPath("$.firstRoll").isNotEmpty())					
-		.andExpect(jsonPath("$.secondRoll").isNotEmpty())
 		.andExpect(jsonPath("$.result").isNotEmpty())
 		.andExpect(jsonPath("$.creationDate").isNotEmpty())
 		.andExpect(jsonPath("$.player").isNotEmpty());						
@@ -104,7 +102,7 @@ public class DiceGameControllerTest {
 	public void getDiceGame() throws Exception {
 		
 		// request preparation
-		String uri = "/players/" + testPlayer.getId() + "/games";					//request uri
+		String uri = "/players/" + testPlayer.getId() + "/games/OneDiceGame";					//request uri
 		
 		// request
 		mockMvc.perform(get(uri) 													//request
@@ -123,7 +121,7 @@ public class DiceGameControllerTest {
 	public void deleteDiceGame() throws Exception {
 	
 		// request preparation
-		String uri = "/players/" + testPlayer.getId() + "/games";					//request uri with id
+		String uri = "/players/" + testPlayer.getId() + "/games/OneDiceGame";					//request uri with id
 
 		// request
 		mockMvc.perform(delete(uri)													//delete request
