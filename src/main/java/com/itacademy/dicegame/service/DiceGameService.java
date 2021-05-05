@@ -2,17 +2,21 @@ package com.itacademy.dicegame.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-import org.decimal4j.util.DoubleRounder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
 import com.itacademy.dicegame.domain.diceGame.DiceGameFactory;
+import com.itacademy.dicegame.domain.diceGame.GameType;
+import com.itacademy.dicegame.domain.diceGame.OneDiceGame;
+import com.itacademy.dicegame.domain.diceGame.ThreeDiceGame;
 import com.itacademy.dicegame.domain.diceGame.TwoDiceGame;
 import com.itacademy.dicegame.domain.player.Player;
 import com.itacademy.dicegame.persistence.DiceGameRepository;
 import com.itacademy.dicegame.persistence.PlayerRepository;
+import com.itacademy.dicegame.utils.CalculateWinPercentage;
 
 @Service
 public class DiceGameService {
@@ -25,6 +29,9 @@ public class DiceGameService {
 	
 	@Autowired
 	private DiceGameFactory diceGameFactory;
+	
+	@Autowired
+	private CalculateWinPercentage calculateWinPercentage;
 	
 	// create new game and play
 	public DiceGame newGame(UUID idPlayer, String typeGame) {
@@ -53,24 +60,43 @@ public class DiceGameService {
 	}
 	
 	// return total Win Average
-	public double getPlayersWinPercentage(String typeGame) {		
-		double winPercentage = 0;
+	public double getPlayersWinPercentage(String typeGame) {
+
 		List<DiceGame> diceGameList = diceGameRepository.findAll();
-		if(diceGameList != null) {
-			double wins = diceGameList.stream().filter(dg -> dg.getResult()==true).count();
-			double total = diceGameList.size();
-			winPercentage = (wins/total)*100;
+
+		if (typeGame.equals(GameType.OneDiceGame)) {
+			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == OneDiceGame.class).collect(Collectors.toList());
+		} else if (typeGame.equals(GameType.TwoDiceGame)) {
+			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == TwoDiceGame.class).collect(Collectors.toList());
+		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
+			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == ThreeDiceGame.class).collect(Collectors.toList());
 		}
-		return DoubleRounder.round(winPercentage, 2);
+
+		return calculateWinPercentage.fromList(diceGameList);
 	}
 
 	// get player with worse win percentage
 	public Player getLoser(String typeGame) {
-		return playerRepository.findTopByOrderByWinPercentage();
+		if (typeGame.equals(GameType.OneDiceGame)) {
+			return playerRepository.findTopByOrderByWinPercentageOneDice();
+		} else if (typeGame.equals(GameType.TwoDiceGame)) {
+			return playerRepository.findTopByOrderByWinPercentageTwoDice();
+		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
+			return playerRepository.findTopByOrderByWinPercentageThreeDice();
+		}
+		return null;
 	}
 	
 	// get player the best win percentage
 	public Player getWinner(String typeGame) {
-		return playerRepository.findTopByOrderByWinPercentageDesc();
+		if (typeGame.equals(GameType.OneDiceGame)) {
+			return playerRepository.findTopByOrderByWinPercentageOneDiceDesc();
+		} else if (typeGame.equals(GameType.TwoDiceGame)) {
+			return playerRepository.findTopByOrderByWinPercentageOneDiceDesc();
+		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
+			return playerRepository.findTopByOrderByWinPercentageThreeDiceDesc();
+		}
+		return null;
+		
 	}
 }

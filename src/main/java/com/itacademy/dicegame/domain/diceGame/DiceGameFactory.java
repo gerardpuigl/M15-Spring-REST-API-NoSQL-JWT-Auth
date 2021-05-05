@@ -11,11 +11,11 @@ public class DiceGameFactory {
 	}
 
 	public DiceGame getGame(Player player, String typeGame) {
-		if (typeGame.equals("OneDiceGame")) {
+		if (typeGame.equals(GameType.OneDiceGame)) {
 			return new OneDiceGame(player);
-		} else if (typeGame.equals("TwoDiceGame")) {
+		} else if (typeGame.equals(GameType.TwoDiceGame)) {
 			return new TwoDiceGame(player);
-		} else if (typeGame.equals("ThreeDiceGame")) {
+		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
 			return new ThreeDiceGame(player);
 		}
 		return null;

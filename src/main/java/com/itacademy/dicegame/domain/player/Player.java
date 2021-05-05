@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 
-import org.decimal4j.util.DoubleRounder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -16,44 +16,54 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
+import com.itacademy.dicegame.domain.diceGame.OneDiceGame;
+import com.itacademy.dicegame.domain.diceGame.ThreeDiceGame;
+import com.itacademy.dicegame.domain.diceGame.TwoDiceGame;
+import com.itacademy.dicegame.utils.CalculateWinPercentage;
 
 @Document(collection = "Players")
 public class Player {
 
+	CalculateWinPercentage calculateWinPercentage = new CalculateWinPercentage();
+	
 	@Id
 	private UUID id;
 
 	@NotBlank
 	private String name;
-	
+
 	private boolean anonimus;
 
 	@CreatedDate
 	private Date creationDate;
 
-	@Version 
+	@Version
 	private int version;
-	
+
 	// % Success Games
-	private double winPercentage;
+	private double winPercentageOneDice;
+
+	private double winPercentageTwoDice;
+
+	private double winPercentageThreeDice;
 
 	// List of the DiceGames played List<DiceGame>
-	@DBRef(lazy=true)
+	@DBRef(lazy = true)
 	private List<DiceGame> diceGameList = new ArrayList<DiceGame>();
 
 	public Player() {
 	}
 
 	public Player(String name) {
-			this.name = name;
-			anonimus=false;
+		this.name = name;
+		anonimus = false;
 	}
 
 	public Player(String name, boolean anonimus) {
 		this.name = name;
-		this.anonimus=anonimus;
+		this.anonimus = anonimus;
 	}
-	
+
 	public String getName() {
 		if (anonimus) {
 			return "anònim";
@@ -62,7 +72,7 @@ public class Player {
 	}
 
 	public void setName(String name) {
-			this.name = name;
+		this.name = name;
 	}
 
 	public void setAnonimus(boolean anonimus) {
@@ -91,19 +101,26 @@ public class Player {
 	}
 
 	public void setWinPercentage() {
-		double winPercentage;
-		if (diceGameList != null) {
-			double wins = diceGameList.stream().filter(dg -> dg.getResult() == true).count();
-			double total = diceGameList.size();
-			winPercentage = (wins / total) * 100;
-		} else {
-			winPercentage = 0;
-		}
-		this.winPercentage = DoubleRounder.round(winPercentage, 2);
+
+		List<DiceGame> oneDiceGameList = diceGameList.stream().filter(dg -> dg.getClass() == OneDiceGame.class).collect(Collectors.toList());
+		List<DiceGame> twoDiceGameList = diceGameList.stream().filter(dg -> dg.getClass() == TwoDiceGame.class).collect(Collectors.toList());
+		List<DiceGame> threeDiceGameList = diceGameList.stream().filter(dg -> dg.getClass() == ThreeDiceGame.class).collect(Collectors.toList());
+
+		winPercentageOneDice = calculateWinPercentage.fromList(oneDiceGameList);
+		winPercentageTwoDice = calculateWinPercentage.fromList(twoDiceGameList);
+		winPercentageThreeDice = calculateWinPercentage.fromList(threeDiceGameList);
 	}
 
-	public double getWinPercentage() {
-		return this.winPercentage;
+	public double getWinPercentageOneDice() {
+		return winPercentageOneDice;
+	}
+
+	public double getWinPercentageTwoDice() {
+		return winPercentageTwoDice;
+	}
+
+	public double getWinPercentageThreeDice() {
+		return winPercentageThreeDice;
 	}
 
 	@JsonIgnore

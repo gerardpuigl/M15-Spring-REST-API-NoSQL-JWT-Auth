@@ -12,8 +12,15 @@ public interface PlayerRepository extends MongoRepository<Player, UUID> {
 	
 	public Player findTopByOrderByCreationDateDesc();
 
-	public Player findTopByOrderByWinPercentage();
+	public Player findTopByOrderByWinPercentageOneDice();
 	
-	public Player findTopByOrderByWinPercentageDesc();
-
+	public Player findTopByOrderByWinPercentageOneDiceDesc();
+	
+	public Player findTopByOrderByWinPercentageTwoDice();
+	
+	public Player findTopByOrderByWinPercentageTwoDiceDesc();
+	
+	public Player findTopByOrderByWinPercentageThreeDice();
+	
+	public Player findTopByOrderByWinPercentageThreeDiceDesc();	
 }

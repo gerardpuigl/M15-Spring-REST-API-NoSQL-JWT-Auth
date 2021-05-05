@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.itacademy.dicegame.domain.player.Player;
 
-@Document(collection = "diceGame")
+@Document(collection = "DiceGame")
 public class DiceGame {
 	
 	@Id
