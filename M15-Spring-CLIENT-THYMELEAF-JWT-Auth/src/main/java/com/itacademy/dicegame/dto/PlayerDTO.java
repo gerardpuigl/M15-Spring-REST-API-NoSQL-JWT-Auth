@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 public class PlayerDTO {
 	

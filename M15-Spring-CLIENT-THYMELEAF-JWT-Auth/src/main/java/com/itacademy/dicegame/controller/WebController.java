@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itacademy.dicegame.dto.PlayerDTO;
+import com.itacademy.dicegame.service.WebService;
 
 @Controller
 public class WebController {
@@ -21,15 +24,30 @@ public class WebController {
 	 * Done with RestTemplate to simulate and independent APP that request info to the Rest API.
 	 * 
 	 */
+	@Autowired
+	WebService webservice;
 
 	@GetMapping("/")
 	public String home(Model model, @AuthenticationPrincipal OidcUser principal) {
         if (principal != null) {
             model.addAttribute("profile", principal.getClaims());
+            PlayerDTO player = webservice.getPlayerByIdAuth0(principal);
+            if(player==null) return "redirect:/newplayer";
+            model.addAttribute("player", player);
         }
         return "index";
 	}
 	
+	@GetMapping("/newplayer")
+	public String newPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser) {
+        model.addAttribute("profile", oidcUser.getClaims());
+        PlayerDTO player = new PlayerDTO();
+        player.setAuth0_id(oidcUser.getSubject());
+        player.setAuth0_email(oidcUser.getEmail());
+        model.addAttribute("player", player);
+        return "newplayer";
+    }
+		
 	@GetMapping("/diceGames")
 	public String diceGames(Model model, @AuthenticationPrincipal OidcUser principal) {
         if (principal != null) {
