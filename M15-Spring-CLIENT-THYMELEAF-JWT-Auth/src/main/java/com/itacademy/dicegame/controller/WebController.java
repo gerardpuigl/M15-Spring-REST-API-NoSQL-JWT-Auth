@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,12 +44,19 @@ public class WebController {
 	public String newPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser) {
         model.addAttribute("profile", oidcUser.getClaims());
         PlayerDTO player = new PlayerDTO();
-        player.setAuth0_id(oidcUser.getSubject());
-        player.setAuth0_email(oidcUser.getEmail());
+        player.setAuth0id(oidcUser.getSubject());
+        player.setAuth0email(oidcUser.getEmail());
         model.addAttribute("player", player);
         return "newplayer";
     }
-		
+
+	@PostMapping("/newplayer")
+	public String postNewPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser, PlayerDTO player) {
+        model.addAttribute("profile", oidcUser.getClaims());
+        webservice.postPlayerByIdAuth0(player, oidcUser);
+        return "redirect:/";
+    }
+	
 	@GetMapping("/diceGames")
 	public String diceGames(Model model, @AuthenticationPrincipal OidcUser principal) {
         if (principal != null) {
@@ -56,6 +65,10 @@ public class WebController {
         return "diceGames";
 	}
 	
+	
+	
+	
+	//TODO investigar aquest LOG?
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @GetMapping("/profile")

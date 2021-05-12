@@ -7,40 +7,34 @@
             <h1 class="mb-4">Nou usuari</h1>
             <p>Sembla que és el primer cop que entres. Sisplau completa aquest formulari per continuar:</p>
 
-            <form th:object="${player}" method="put"
-            th:action="@{'/newplayer'}">
- 
-            <div class="input-group mt-3 mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Auth0_id</span>
+            <form th:object="${player}" method="POST" th:action="@{'/newplayer'}">
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text w-100">Auth0_id</span>
+                    </div>
+                    <input class="form-control" type="text" th:value="${player.auth0id}" name="auth0id" readonly>
                 </div>
-                <input class="form-control" type="text"
-                    th:value="${player.auth0_id}" name="player.auth0_id" disabled>
-            </div>
-            <div class="input-group mt-3 mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Email</span>
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text w-100">Email</span>
+                    </div>
+                    <input class="form-control" type="text" th:value="${player.auth0email}" name="auth0email" readonly>
                 </div>
-                <input class="form-control" type="text"
-                    th:value="${player.auth0_email}" name="auth0_email" disabled>
-            </div>
-            <div class="input-group mt-3 mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Nom</span>
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text w-100">Nom</span>
+                    </div>
+                    <input class="form-control" type="text" th:value="${player.name}" name="name" required>
                 </div>
-                <input class="form-control" type="text"
-                    th:value="${player.name}" name="name" required>
-            </div>
-            <div class="input-group mt-3 mb-3">
-                <div class="input-group-prepend w-25">
-                    <span class="input-group-text w-100">Voleu ser anonim?</span>
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text w-100">Voleu ser anonim?</span>
+                    </div>
+                    <input class="form-control" type="checkbox" th:value="${player.anonimus}" name="anonimus">
                 </div>
-                <input class="form-control" type="checkbox"
-                    th:value="${player.anonimus}" name="name" >
-            </div>
-            <button type="button" class="btn btn-secondary">Cancel·lar</button>
-            <button type="submit" class="btn btn-success">Guardar</button>
-        </form>
+                <button type="button" class="btn btn-secondary">Cancel·lar</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
         </div>
     </div>
 </div>

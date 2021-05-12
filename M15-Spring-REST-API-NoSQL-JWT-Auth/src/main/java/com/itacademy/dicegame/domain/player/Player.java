@@ -61,15 +61,11 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 		anonimus = false;
-		auth0id = "auth0|608979c0b9ad5300697d26ae";
-		auth0email = "auth0|608979c0b9ad5300697d26ae";
 	}
 
 	public Player(String name, boolean anonimus) {
 		this.name = name;
 		this.anonimus = anonimus;
-		auth0id = "auth0|608979c0b9ad5300697d26ae";
-		auth0email = "auth0|608979c0b9ad5300697d26ae";
 	}
 
 	public String getName() {

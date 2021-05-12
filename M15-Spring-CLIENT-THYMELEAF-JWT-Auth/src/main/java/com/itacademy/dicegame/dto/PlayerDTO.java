@@ -14,9 +14,9 @@ public class PlayerDTO {
 	@Id
 	private UUID id;
 	
-	private String auth0_id;
+	private String auth0id;
 	
-	private String auth0_email;	
+	private String auth0email;	
 
 	@NotBlank
 	private String name;
@@ -46,20 +46,20 @@ public class PlayerDTO {
 		this.id = id;
 	}
 
-	public String getAuth0_id() {
-		return auth0_id;
+	public String getAuth0id() {
+		return auth0id;
 	}
 
-	public void setAuth0_id(String auth0_id) {
-		this.auth0_id = auth0_id;
+	public void setAuth0id(String auth0id) {
+		this.auth0id = auth0id;
 	}
 
-	public String getAuth0_email() {
-		return auth0_email;
+	public String getAuth0email() {
+		return auth0email;
 	}
 
-	public void setAuth0_email(String auth0_email) {
-		this.auth0_email = auth0_email;
+	public void setAuth0email(String auth0email) {
+		this.auth0email = auth0email;
 	}
 
 	public String getName() {
@@ -117,5 +117,4 @@ public class PlayerDTO {
 	public void setWinPercentageThreeDice(double winPercentageThreeDice) {
 		this.winPercentageThreeDice = winPercentageThreeDice;
 	}
-
 }

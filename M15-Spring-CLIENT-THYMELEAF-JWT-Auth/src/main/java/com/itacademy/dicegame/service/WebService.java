@@ -1,76 +1,45 @@
 package com.itacademy.dicegame.service;
 
-import java.util.Arrays;
-
-import org.springframework.http.HttpEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.itacademy.dicegame.dto.PlayerDTO;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class WebService {
 
-	String host = "http://localhost:8080/";
+	@Value("${host.api.url}")
+	private String host;
+	
+    @Autowired
+    WebClient webClient;
 	
 	public PlayerDTO getPlayerByIdAuth0(OidcUser principal) {
-		RestTemplate restTemplate = new RestTemplate();
-		PlayerDTO player = null;
-		try {
-		System.out.println(principal.getIdToken().getTokenValue());
-			 player = restTemplate.exchange
-			 (host + "players/auth0/" + principal.getSubject(), HttpMethod.GET, createEntityFromToken(principal), PlayerDTO.class).getBody();
-
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return null;
-		}
+		PlayerDTO player = webClient.get()
+		.uri("/players/auth0/" + principal.getSubject())
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + principal.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToMono(PlayerDTO.class).block();
 		return player;
 	}
 	
 	public void postPlayerByIdAuth0(PlayerDTO player,OidcUser principal) {
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.postForEntity(host + "player/"  ,player, PlayerDTO.class).getBody();
-		
-		System.out.println(principal.getIdToken().getTokenValue());
-		 ResponseEntity<PlayerDTO> response = restTemplate.exchange
-		 (host + "player/" + principal.getSubject(), HttpMethod.POST, createEntityFromToken(principal), PlayerDTO.class);
-
-		 System.out.println(response.getBody());
-		
-		
-	}
-	
-	
-	public HttpEntity<PlayerDTO> createEntityFromToken(OidcUser principal){
-	
-	return createHttpEntity(createHeaders(principal.getIdToken().getTokenValue()));
-	}
-	
-	private HttpHeaders createHeaders(String accessToken){
-		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken);
-		   return headers;
-		}
-	
-	private HttpEntity<PlayerDTO> createHttpEntity(HttpHeaders headers ){
-		HttpEntity request = new HttpEntity<PlayerDTO>(headers);
-		return request;
+		PlayerDTO playerdb = webClient.post()
+		.uri("/players")
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + principal.getIdToken().getTokenValue())
+		.body(Mono.just(player), PlayerDTO.class)
+		.retrieve()
+		.bodyToMono(PlayerDTO.class).block();
 	}
 
-
-
-
-	
-	
-	
-	
-	
-	
 }
