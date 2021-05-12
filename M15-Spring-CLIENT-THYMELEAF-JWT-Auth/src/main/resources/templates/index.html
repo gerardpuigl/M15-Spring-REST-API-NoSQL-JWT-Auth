@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<div id="page" layout:fragment="content">
+    <div class="container">
+        <div class="mt-5">
+            <div class="text-center hero my-5" sec:authorize="!isAuthenticated()">
+                <h1 class="mb-4">Benvinguts a la pàgina de Dice Games</h1>
+            </div>
+
+            <div class="mt-5">
+                <div class="text-center hero my-5" sec:authorize="isAuthenticated()">
+                    <h1 class="mb-4" th:text="'Benvingut ' +${profile.get('nickname')} + '.'"></h1>
+                    <p>Acabes d'entrar al teu espai personal autenticat amb una plataforma externa,<br>
+                        les jugades que realitzis en aquest espai seran registrades dins el teu compte.</p>
+                    <p>Per jugar ves a la secció corresponent al menú superior.</p>
+                    
+                </div>
+            </div>
+            <div class="text-center hero my-5" >
+                <img src="images/Rolling-Dice-772x603.jpeg">
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
