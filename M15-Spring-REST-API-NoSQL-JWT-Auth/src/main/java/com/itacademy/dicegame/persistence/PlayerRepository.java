@@ -22,5 +22,7 @@ public interface PlayerRepository extends MongoRepository<Player, UUID> {
 	
 	public Player findTopByOrderByWinPercentageThreeDice();
 	
-	public Player findTopByOrderByWinPercentageThreeDiceDesc();	
+	public Player findTopByOrderByWinPercentageThreeDiceDesc();
+	
+	public Player findByAuth0id(String auth0_id);
 }

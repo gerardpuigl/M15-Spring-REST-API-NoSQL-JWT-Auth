@@ -33,6 +33,11 @@ public class PlayerService {
 	public Player getPlayerById(UUID idPlayer) {
 		return playerRepository.findById(idPlayer).get();
 	}
+	
+	// get One Player by auth0_id
+	public Player getPlayerByAuthid(String auth0_id) {
+		return playerRepository.findByAuth0id(auth0_id);
+	}
 
 	// get all players
 	public List<Player> getAll() {

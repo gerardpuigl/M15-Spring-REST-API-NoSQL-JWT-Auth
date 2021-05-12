@@ -43,16 +43,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	http.authorizeRequests()
-			//.mvcMatchers(HttpMethod.GET, "/api/menu/items/**").permitAll() // GET requests don't need auth
 			.anyRequest().authenticated()
-			.and()
-			.cors()
-			.configurationSource(corsConfigurationSource())
+//TODO	INVESTIGAR PERQUE NO DEIXA PASSAR SI TÉ CORS ACTIVAT?????
+//			.and()
+//			.cors()
+//			.configurationSource(corsConfigurationSource())
 			.and()
 			.oauth2ResourceServer()
 			.jwt()
-			.decoder(jwtDecoder())
-			.jwtAuthenticationConverter(jwtAuthenticationConverter());
+//			.decoder(jwtDecoder())
+//			.jwtAuthenticationConverter(jwtAuthenticationConverter())
+			;
 }
 
 	/**

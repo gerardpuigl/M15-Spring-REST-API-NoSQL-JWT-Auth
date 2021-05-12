@@ -62,7 +62,15 @@ public class PlayerController {
 	public Player getPlayerById(@PathVariable("id") UUID idPlayer) {
 		return playerService.getPlayerById(idPlayer);
 	}
-		
+	
+	//get Player by auth0_id
+	@GetMapping("/auth0/{id}")
+	@ResponseStatus(HttpStatus.OK)  // 200
+	@PreAuthorize("hasAuthority('get:player')")
+	public Player getPlayerByAuth0_id(@PathVariable("id") String auth0_id) {
+		return playerService.getPlayerByAuthid(auth0_id);
+	}
+	
 	//delete Player by id
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
