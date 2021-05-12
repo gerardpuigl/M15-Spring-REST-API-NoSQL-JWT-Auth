@@ -1,4 +1,4 @@
-package com.itacademy.dicegame.domain.diceGame;
+package com.itacademy.dicegame.dto;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,58 +15,41 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.itacademy.dicegame.domain.player.Player;
 
-@Document(collection = "DiceGame")
-public class DiceGame {
+public class DiceGameDTO {
 	
-	@Id
-	@NotNull
 	private UUID id;
 
-	@CreatedDate
 	private Date creationDate;
 
-	@Version 
-	private int version;
-	
-	// Player who played
-	@DBRef
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id") //retorna només id
-    @JsonIdentityReference(alwaysAsId = true) //retorna només id
-	private Player player;
+	private UUID player;
 
 
-	public DiceGame() {
-	}
-	
-	public DiceGame(Player player) {
-		this.player=player;
+	public DiceGameDTO() {
 	}
 
 	public UUID getId() {
 		return id;
 	}
-	
+
 	public void setId(UUID id) {
 		this.id = id;
-	}
-
-	public Player getPlayer() {
-		return player;
 	}
 
 	public Date getCreationDate() {
 		return creationDate;
 	}
-	
-	public boolean getResult() {
-		return false;
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
-	
-	@JsonIgnore
-	public boolean isNew() {
-		return (getId() == null);
+
+	public UUID getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(UUID player) {
+		this.player = player;
 	}
 	
 }

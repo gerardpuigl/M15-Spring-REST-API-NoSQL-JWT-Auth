@@ -1,8 +1,6 @@
-package com.itacademy.dicegame.domain.diceGame;
+package com.itacademy.dicegame.dto;
 
 import org.springframework.stereotype.Component;
-
-import com.itacademy.dicegame.domain.player.Player;
 
 @Component
 public class DiceGameFactory {
@@ -10,13 +8,13 @@ public class DiceGameFactory {
 	public DiceGameFactory() {
 	}
 
-	public DiceGame getGame(Player player, String typeGame) {
+	public DiceGameDTO getGame(PlayerDTO player, String typeGame) {
 		if (typeGame.equals(GameType.OneDiceGame)) {
-			return new OneDiceGame(player);
+			return new OneDiceGame();
 		} else if (typeGame.equals(GameType.TwoDiceGame)) {
-			return new TwoDiceGame(player);
+			return new TwoDiceGame();
 		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
-			return new ThreeDiceGame(player);
+			return new ThreeDiceGame();
 		}
 		return null;
 	}

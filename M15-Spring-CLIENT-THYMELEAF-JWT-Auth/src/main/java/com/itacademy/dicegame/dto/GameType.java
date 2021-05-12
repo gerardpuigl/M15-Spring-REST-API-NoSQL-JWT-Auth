@@ -1,4 +1,4 @@
-package com.itacademy.dicegame.domain.diceGame;
+package com.itacademy.dicegame.dto;
 
 public class GameType
 {
