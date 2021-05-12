@@ -29,6 +29,10 @@ public class Player {
 	@Id
 	private UUID id;
 
+	private String auth0_id;
+	
+	private String auth0_email;	
+	
 	@NotBlank
 	private String name;
 
@@ -79,12 +83,32 @@ public class Player {
 		this.anonimus = anonimus;
 	}
 
+	public boolean isAnonimus() {
+		return anonimus;
+	}
+
 	public UUID getId() {
 		return id;
 	}
 
 	public void setId(UUID id) {
 		this.id = id;
+	}
+
+	public String getAuth0_id() {
+		return auth0_id;
+	}
+
+	public void setAuth0_id(String auth0_id) {
+		this.auth0_id = auth0_id;
+	}
+
+	public String getAuth0_email() {
+		return auth0_email;
+	}
+
+	public void setAuth0_email(String auth0_email) {
+		this.auth0_email = auth0_email;
 	}
 
 	public Date getCreationDate() {
