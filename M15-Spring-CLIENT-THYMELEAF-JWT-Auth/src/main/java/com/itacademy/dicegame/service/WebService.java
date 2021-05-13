@@ -56,4 +56,14 @@ public class WebService {
 		
 	}
 
+	public void deleteplayer(PlayerDTO player, OidcUser auth0User) {
+		webClient.delete()
+		.uri("/players/" + player.getId())
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToMono(String.class)
+		.block();		
+	}
+
 }

@@ -23,7 +23,7 @@ public class AuthenticatorDiceGame {
 	public Model checkDataBasePlayer(Model model, OidcUser authUser, PlayerDTO player) {
 		model.addAttribute("profile", authUser.getClaims());
 		try {
-			if (player.getAuth0id() == null)
+			if (player.getAuth0id() == null || player.getId() ==null)
 				player = webservice.getPlayerByIdAuth0(authUser);
 			if (!player.getAuth0id().equals(authUser.getSubject()))
 				player = webservice.getPlayerByIdAuth0(authUser);

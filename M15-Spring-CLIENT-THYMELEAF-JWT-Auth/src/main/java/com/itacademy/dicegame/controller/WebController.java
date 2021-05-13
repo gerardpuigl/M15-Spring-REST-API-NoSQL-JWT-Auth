@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,11 +83,23 @@ public class WebController {
 	
 	// updateplayer
 	@PostMapping("/editplayer")
-	public String postEditedPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser, @ModelAttribute("editplayer") PlayerDTO player) {
-		model.addAttribute("profile", oidcUser.getClaims());
-		webservice.updatePlayer(player, oidcUser);
+	public String postEditedPlayer(Model model, @AuthenticationPrincipal OidcUser authUser, @ModelAttribute("editplayer") PlayerDTO player) {
+		model.addAttribute("profile", authUser.getClaims());
+		webservice.updatePlayer(player, authUser);
 		model.addAttribute("player", player);
 		return "redirect:/profile";
+	}
+	
+	// deleteplayer
+	@GetMapping("/deleteplayer")
+	public String deleplayer(Model model, @AuthenticationPrincipal OidcUser authUser, @ModelAttribute("player") PlayerDTO player) {
+			if (authUser != null) {
+				model = authenticator.checkDataBasePlayer(model,authUser,player);
+				webservice.deleteplayer(player, authUser);
+				model.addAttribute("prfile", null);
+				model.addAttribute("player",null);
+			}
+	return "redirect:/logout";		
 	}
 	
 	//game selector	
