@@ -2,12 +2,15 @@ package com.itacademy.dicegame.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itacademy.dicegame.domain.player.Player;
+import com.itacademy.dicegame.domain.player.PlayerDTO;
 import com.itacademy.dicegame.persistence.PlayerRepository;
+import com.itacademy.dicegame.utils.DTOConverter;
 
 @Service
 public class PlayerService {
@@ -15,14 +18,17 @@ public class PlayerService {
 	@Autowired
 	private PlayerRepository playerRepository;
 	
+	@Autowired
+	private DTOConverter dtoConverter;
+	
 	// create Player
-	public Player createPlayer(Player player) {
+	public PlayerDTO createPlayer(Player player) {
 		playerRepository.save(player);
 		return getPlayerById(player.getId());
 	}
 
 	// modify Player
-	public Player modifyPlayer(Player player) {
+	public PlayerDTO modifyPlayer(Player player) {
 		Player playerDb = playerRepository.findById(player.getId()).get();
 		playerDb.setName(player.getName());
 		playerRepository.save(playerDb);
@@ -30,7 +36,12 @@ public class PlayerService {
 	}
 
 	// get One Player by id
-	public Player getPlayerById(UUID idPlayer) {
+	public PlayerDTO getPlayerById(UUID idPlayer) {
+		return dtoConverter.convertToDto(playerRepository.findById(idPlayer).get());
+	}
+	
+	// get One Player with all information
+	private Player getCompletedPlayerById(UUID idPlayer) {
 		return playerRepository.findById(idPlayer).get();
 	}
 	
@@ -40,15 +51,16 @@ public class PlayerService {
 	}
 
 	// get all players
-	public List<Player> getAll() {
-		return playerRepository.findAll();
+	public List<PlayerDTO> getAll() {
+		return playerRepository.findAll().stream()
+				.map(p->dtoConverter.convertToDto(p))
+				.collect(Collectors.toList());
 	}
 
 	// delete player
 	public String deleteById(UUID idPlayer) {
-		playerRepository.delete(getPlayerById(idPlayer));
+		playerRepository.delete(getCompletedPlayerById(idPlayer));
 		return "Usuari eliminat correctament";
 	}
 	
-
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itacademy.dicegame.domain.player.Player;
+import com.itacademy.dicegame.domain.player.PlayerDTO;
 import com.itacademy.dicegame.service.PlayerService;
 
 @RestController
@@ -35,7 +36,7 @@ public class PlayerController {
 	@PostMapping("")
 	@ResponseStatus(HttpStatus.CREATED)  // 201
 	@PreAuthorize("hasAuthority('create:player')")
-	public Player createplayer(@Valid @RequestBody Player player) {
+	public PlayerDTO createplayer(@Valid @RequestBody Player player) {
 		return playerService.createPlayer(player);
 	}
 	
@@ -43,7 +44,7 @@ public class PlayerController {
 	@PutMapping("")
 	@ResponseStatus(HttpStatus.ACCEPTED)  // 202
 	@PreAuthorize("hasAuthority('update:player')")
-	public Player modifyPlayer(@Valid @RequestBody Player player) {
+	public PlayerDTO modifyPlayer(@Valid @RequestBody Player player) {
 		return playerService.modifyPlayer(player);
 	}
 
@@ -51,7 +52,7 @@ public class PlayerController {
 	@GetMapping("")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:player')")
-	public List<Player> getPlayersList() {
+	public List<PlayerDTO> getPlayersList() {
 		return playerService.getAll();
 	}
 	
@@ -59,7 +60,7 @@ public class PlayerController {
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:player')")
-	public Player getPlayerById(@PathVariable("id") UUID idPlayer) {
+	public PlayerDTO getPlayerById(@PathVariable("id") UUID idPlayer) {
 		return playerService.getPlayerById(idPlayer);
 	}
 	
