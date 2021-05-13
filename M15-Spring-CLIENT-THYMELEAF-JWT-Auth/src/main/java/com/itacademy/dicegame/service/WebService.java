@@ -15,7 +15,10 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class WebService {
-
+/*
+ * Servici responsable to consum api Rest
+ * 
+ */
 	@Value("${host.api.url}")
 	private String host;
 	

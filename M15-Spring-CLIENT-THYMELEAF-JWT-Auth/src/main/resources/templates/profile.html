@@ -13,14 +13,13 @@
                         <img th:src="${profile.get('picture')}" class="rounded-circle img-fluid profile-picture"/>
                     </div>
                     <div class="col-md text-center text-md-left">
-                        <h2 th:text="${profile.get('name')}"/>
+                        <h2 th:text="${player.name}"/>
                         <p class="lead text-muted" th:text="${profile.get('email')}"/>
                     </div>
+
                 </div>
 
-                <div class="row">
-                    <pre class="rounded"><code class="json" id="profileJsonEl" th:text="${profileJson}"></code></pre>
-                </div>
+
             </div>
         </div>
     </div>
