@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="layouts/default">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layouts/default">
 
 <div id="page" layout:fragment="content">
     <div class="container">
@@ -10,15 +8,92 @@
             <div class="container">
                 <div class="row align-items-center profile-header">
                     <div class="col-md-2 mb-3">
-                        <img th:src="${profile.get('picture')}" class="rounded-circle img-fluid profile-picture"/>
+                        <img th:src="${profile.get('picture')}" class="rounded-circle img-fluid profile-picture" />
                     </div>
                     <div class="col-md text-center text-md-left">
-                        <h2 th:text="${player.name}"/>
-                        <p class="lead text-muted" th:text="${profile.get('email')}"/>
+                        <h2 th:text="${player.name}" />
+                        <p class="lead text-muted" th:text="${profile.get('email')}" />
+                        <p class="lead text-muted" th:text="${profile.get('sub')}" />
                     </div>
 
                 </div>
+            </div>
+            <div class="row align-items-center  mt-4">
+                <div class="col-md-2 mb-3">
+                </div>
+                <div class="col-md-8 text-center text-md-left">
+                    <h4>La teva informació:</h4>
 
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend w-25">
+                                <span class="input-group-text w-100">UUID</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.id}" name="auth0id"
+                                readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend w-25">
+                                <span class="input-group-text w-100">Email</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.auth0email}" name="auth0email"
+                                readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend w-25">
+                                <span class="input-group-text w-100">Nom</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.name}" name="name" readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend w-25">
+                                <span class="input-group-text w-100">Ets anònim?</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.anonimus}" name="anonimus"
+                                readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend w-25">
+                                <span class="input-group-text w-100">Data de creació</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.creationDate}"
+                                name="creationDate" readonly>
+                        </div>
+                    <form method="Get" th:action="@{'/editplayer'}">
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-success">Editar Perfil</button>
+                        </div>
+                    </form>
+                    
+                        <h4>Percentatges de victoria:</h4>
+                    
+                    <div class="input-group mt-3 mb-3">
+                        
+                        <div class="input-group-prepend w-50">
+                            <span class="input-group-text w-100">Victories al Joc d'un Dau</span>
+                        </div>
+                        <input class="form-control" type="text" th:value="${player.winPercentageOneDice} + '%'"
+                            name="winPercentageOneDice" readonly>
+                        <button class="btn btn-success">Esborrar les tirades</button>
+                    </div>
+                    <div class="input-group mt-3 mb-3">
+                        <div class="input-group-prepend w-50">
+                            <span class="input-group-text w-100">Victories al Joc de Dos Daus</span>
+                        </div>
+                        <input class="form-control" type="text" th:value="${player.winPercentageTwoDice} + '%'"
+                            name="winPercentageTwoDice" readonly>
+                        <button class="btn btn-success">Esborrar les tirades</button>
+                    </div>
+                    <div class="input-group mt-3 mb-3">
+                        <div class="input-group-prepend w-50">
+                            <span class="input-group-text w-100">Victories al Joc de Tres Daus</span>
+                        </div>
+                        <input class="form-control" type="text" th:value="${player.winPercentageThreeDice} + '%'"
+                            name="winPercentageThreeDice" readonly>
+                        <button class="btn btn-success">Esborrar les tirades</button>
+                    </div>
+
+
+                </div>
 
             </div>
         </div>

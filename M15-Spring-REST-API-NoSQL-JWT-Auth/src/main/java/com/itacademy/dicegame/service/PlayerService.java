@@ -31,6 +31,7 @@ public class PlayerService {
 	public PlayerDTO modifyPlayer(Player player) {
 		Player playerDb = playerRepository.findById(player.getId()).get();
 		playerDb.setName(player.getName());
+		playerDb.setAnonimus(player.isAnonimus());
 		playerRepository.save(playerDb);
 		return getPlayerById(player.getId());
 	}

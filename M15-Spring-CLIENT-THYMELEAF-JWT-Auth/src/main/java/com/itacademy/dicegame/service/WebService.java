@@ -25,24 +25,35 @@ public class WebService {
     @Autowired
     WebClient webClient;
 	
-	public PlayerDTO getPlayerByIdAuth0(OidcUser principal) {
+	public PlayerDTO getPlayerByIdAuth0(OidcUser auth0User) {
 		PlayerDTO player = webClient.get()
-		.uri("/players/auth0/" + principal.getSubject())
+		.uri("/players/auth0/" + auth0User.getSubject())
 		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + principal.getIdToken().getTokenValue())
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
 		.bodyToMono(PlayerDTO.class).block();
 		return player;
 	}
 	
-	public void postPlayerByIdAuth0(PlayerDTO player,OidcUser principal) {
+	public void postNewPlayer(PlayerDTO player,OidcUser auth0User) {
 		PlayerDTO playerdb = webClient.post()
 		.uri("/players")
 		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + principal.getIdToken().getTokenValue())
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.body(Mono.just(player), PlayerDTO.class)
 		.retrieve()
 		.bodyToMono(PlayerDTO.class).block();
+	}
+
+	public void updatePlayer(PlayerDTO player, OidcUser auth0User) {
+		PlayerDTO playerdb = webClient.put()
+		.uri("/players")
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.body(Mono.just(player), PlayerDTO.class)
+		.retrieve()
+		.bodyToMono(PlayerDTO.class).block();
+		
 	}
 
 }

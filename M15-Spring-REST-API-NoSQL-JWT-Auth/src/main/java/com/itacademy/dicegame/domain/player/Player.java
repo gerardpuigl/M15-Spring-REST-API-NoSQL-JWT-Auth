@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -72,9 +71,6 @@ public class Player {
 	}
 
 	public String getName() {
-		if (anonimus) {
-			return "anònim";
-		}
 		return name;
 	}
 

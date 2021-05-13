@@ -57,12 +57,11 @@ public class WebController {
 	@PostMapping("/newplayer")
 	public String postNewPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser, @ModelAttribute("newplayer") PlayerDTO player) {
 		model.addAttribute("profile", oidcUser.getClaims());
-		webservice.postPlayerByIdAuth0(player, oidcUser);
+		webservice.postNewPlayer(player, oidcUser);
 		model.addAttribute("player", player);
 		return "redirect:/";
 	}
-	
-	
+		
 	// Check the user profile
 	@GetMapping("/profile")
     public String profile(Model model, @AuthenticationPrincipal OidcUser authUser, @ModelAttribute("player") PlayerDTO player) {
@@ -71,6 +70,24 @@ public class WebController {
 		}
         return "profile";
     }
+	
+	// edit player menu
+	@GetMapping("/editplayer")
+    public String editplayer(Model model, @AuthenticationPrincipal OidcUser authUser, @ModelAttribute("player") PlayerDTO player) {
+		if (authUser != null) {
+			model = authenticator.checkDataBasePlayer(model,authUser,player);
+		}
+        return "editplayer";
+    }
+	
+	// updateplayer
+	@PostMapping("/editplayer")
+	public String postEditedPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser, @ModelAttribute("editplayer") PlayerDTO player) {
+		model.addAttribute("profile", oidcUser.getClaims());
+		webservice.updatePlayer(player, oidcUser);
+		model.addAttribute("player", player);
+		return "redirect:/profile";
+	}
 	
 	//game selector	
 	@GetMapping("/diceGames")

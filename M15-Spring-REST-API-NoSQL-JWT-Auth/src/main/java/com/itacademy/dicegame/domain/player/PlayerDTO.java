@@ -39,6 +39,9 @@ public class PlayerDTO {
 	}
 
 	public String getName() {
+		if (anonimus) {
+		return "Anònim";
+	}
 		return name;
 	}
 
