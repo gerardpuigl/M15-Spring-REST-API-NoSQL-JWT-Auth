@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
@@ -29,8 +30,10 @@ public class Player {
 	@Id
 	private UUID id;
 
+
 	private String auth0id;
 	
+
 	private String auth0email;	
 	
 	@NotBlank

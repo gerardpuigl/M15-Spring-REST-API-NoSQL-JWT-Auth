@@ -7,30 +7,30 @@
             <h1 class="mb-4">Nou usuari</h1>
             <p>Sembla que és el primer cop que entres. Sisplau completa aquest formulari per continuar:</p>
 
-            <form th:object="${player}" method="POST" th:action="@{'/newplayer'}">
+            <form th:object="${newplayer}" method="POST" th:action="@{'/newplayer'}">
                 <div class="input-group mt-3 mb-3">
                     <div class="input-group-prepend w-25">
                         <span class="input-group-text w-100">Auth0_id</span>
                     </div>
-                    <input class="form-control" type="text" th:value="${player.auth0id}" name="auth0id" readonly>
+                    <input class="form-control" type="text" th:value="${newplayer.auth0id}" name="auth0id" readonly>
                 </div>
                 <div class="input-group mt-3 mb-3">
                     <div class="input-group-prepend w-25">
                         <span class="input-group-text w-100">Email</span>
                     </div>
-                    <input class="form-control" type="text" th:value="${player.auth0email}" name="auth0email" readonly>
+                    <input class="form-control" type="text" th:value="${newplayer.auth0email}" name="auth0email" readonly>
                 </div>
                 <div class="input-group mt-3 mb-3">
                     <div class="input-group-prepend w-25">
                         <span class="input-group-text w-100">Nom</span>
                     </div>
-                    <input class="form-control" type="text" th:value="${player.name}" name="name" required>
+                    <input class="form-control" type="text" th:value="${newplayer.name}" name="name" required>
                 </div>
                 <div class="input-group mt-3 mb-3">
                     <div class="input-group-prepend w-25">
                         <span class="input-group-text w-100">Voleu ser anonim?</span>
                     </div>
-                    <input class="form-control" type="checkbox" th:value="${player.anonimus}" name="anonimus">
+                    <input class="form-control" type="checkbox" th:value="${newplayer.anonimus}" name="anonimus">
                 </div>
                 <button type="button" class="btn btn-secondary">Cancel·lar</button>
                 <button type="submit" class="btn btn-success">Guardar</button>

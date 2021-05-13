@@ -10,8 +10,8 @@
 
             <div class="mt-5">
                 <div class="text-center hero my-5" sec:authorize="isAuthenticated()">
-                    <h1 class="mb-4" th:text="'Benvingut ' +${profile.get('nickname')} + '.'"></h1>
-                    <p>Acabes d'entrar al teu espai personal autenticat amb una plataforma externa,<br>
+                    <h1 class="mb-4" th:text="'Benvingut ' +${player.name} + '.'"></h1>
+                    <p>Acabes d'entrar al teu espai personal,<br>
                         les jugades que realitzis en aquest espai seran registrades dins el teu compte.</p>
                     <p>Per jugar ves a la secció corresponent al menú superior.</p>
                     
