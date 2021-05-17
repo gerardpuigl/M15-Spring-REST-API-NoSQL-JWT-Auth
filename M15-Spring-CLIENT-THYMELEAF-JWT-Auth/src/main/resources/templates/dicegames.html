@@ -3,9 +3,9 @@
 
 <div id="page" layout:fragment="content">
     <div class="container">
-        <div class="mt-5">
+        <div class="mt-5 text-center align-items-center ">
             <div class="hero my-5" sec:authorize="isAuthenticated()">
-                <h2>Game One Dice</h2>
+                <h2><a type="text" th:href="@{'/dicegames/onedice'}" >Game One Dice</a></h2>
                 <h2>Game Two Dices</h2>
                 <h2>Game Three Dices</h2>
             </div>

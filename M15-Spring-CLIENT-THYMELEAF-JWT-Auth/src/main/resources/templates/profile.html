@@ -10,7 +10,7 @@
                     <div class="col-md-2 mb-3">
                         <img th:src="${profile.get('picture')}" class="rounded-circle img-fluid profile-picture" />
                     </div>
-                    <div class="col-md text-center text-md-left">
+                    <div class="col-md text-center text-md-start">
                         <h2 th:text="${player.name}" />
                         <p class="lead text-muted" th:text="${profile.get('email')}" />
                         <p class="lead text-muted" th:text="${profile.get('sub')}" />
@@ -21,7 +21,7 @@
             <div class="row align-items-center  mt-4">
                 <div class="col-md-2 mb-3">
                 </div>
-                <div class="col-md-8 text-center text-md-left">
+                <div class="col-md-8 text-center text-md-start">
                     <h4>La teva informació:</h4>
 
                         <div class="input-group mt-3 mb-3">
@@ -59,7 +59,7 @@
                                 name="creationDate" readonly>
                         </div>
                     <form method="Get" th:action="@{'/editplayer'}">
-                        <div class="text-right">
+                        <div class="text-end">
                             <button type="submit" class="btn btn-success">Editar Perfil</button>
                         </div>
                     </form>

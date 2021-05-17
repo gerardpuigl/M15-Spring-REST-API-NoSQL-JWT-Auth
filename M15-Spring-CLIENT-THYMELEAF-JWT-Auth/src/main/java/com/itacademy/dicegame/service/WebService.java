@@ -9,6 +9,8 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.itacademy.dicegame.dto.DiceGameDTO;
+import com.itacademy.dicegame.dto.OneDiceGame;
 import com.itacademy.dicegame.dto.PlayerDTO;
 
 import reactor.core.publisher.Mono;
@@ -63,6 +65,16 @@ public class WebService {
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
 		.bodyToMono(String.class)
+		.block();		
+	}
+
+	public OneDiceGame throwonedice(PlayerDTO player, OidcUser auth0User) {
+		return webClient.post()
+		.uri("/players/"+ player.getId() + "/games/OneDiceGame")
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToMono(OneDiceGame.class)
 		.block();		
 	}
 

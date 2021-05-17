@@ -22,12 +22,12 @@
                 </button>
     
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item mr-3">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item me-3">
                             <a href="/" class="nav-link">Home</a>
                         </li>
-                        <li class="nav-item mr-3">
-                            <a href="/diceGames" class="nav-link">Dice Games</a>
+                        <li class="nav-item me-3">
+                            <a href="/dicegames" class="nav-link">Dice Games</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav d-none d-md-block">
@@ -49,14 +49,14 @@
                                 <!-- Profile image should be set to the profile picture from the id token -->
                                 <img th:src="${profile.get('picture')}"  alt="Profile picture" class="nav-user-profile rounded-circle" width="50"/>
                             </a>
-                            <div class="dropdown-menu dropdown-menu-left">
+                            <div class="dropdown-menu dropdown-menu-end">
                                 <!-- Show the user's full name from the id token here -->
                                 <div class="dropdown-header" th:text="${profile.get('name')}"></div>
                                 <a href="/profile" class="dropdown-item dropdown-profile">
-                                    <i class="fas fa-user mr-3"></i> Profile
+                                    <i class="fas fa-user me-3"></i> Profile
                                 </a>
                                 <a id="qsLogoutBtn" th:href="@{/logout}" class="dropdown-item">
-                                    <i class="fas fa-power-off mr-3"></i> Log out
+                                    <i class="fas fa-power-off me-3"></i> Log out
                                 </a>
                             </div>
                         </li>
@@ -75,18 +75,18 @@
                         <li class="nav-item">
                             <span class="user-info">
                             <!-- Profile image should be set to the profile picture from the id token -->
-                                <img th:src="${profile.get('picture')}" alt="Profile picture" class="nav-user-profile d-inline-bloc rounded-circle mr-3" width="50"/>
+                                <img th:src="${profile.get('picture')}" alt="Profile picture" class="nav-user-profile d-inline-bloc rounded-circle me-3" width="50"/>
                                 <!-- Show the user's full name from the id token here-->
                                 <h6 class="d-inline-block" th:text="${profile.get('name')}"></h6>
                             </span>
                         </li>
                         <li>
-                            <i class="fas fa-user mr-3"></i>
+                            <i class="fas fa-user me-3"></i>
                             <a th:href="@{/profile}"> Profile</a>
                         </li>
     
                         <li>
-                            <i class="fas fa-power-off mr-3"></i>
+                            <i class="fas fa-power-off me-3"></i>
                             <a th:href="@{/logout}"> Log out</a>
                         </li>
                     </ul>

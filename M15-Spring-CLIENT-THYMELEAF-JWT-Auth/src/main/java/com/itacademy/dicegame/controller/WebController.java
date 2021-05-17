@@ -5,12 +5,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.itacademy.dicegame.dto.OneDiceGame;
 import com.itacademy.dicegame.dto.PlayerDTO;
 import com.itacademy.dicegame.service.WebService;
 import com.itacademy.dicegame.utils.AuthenticatorDiceGame;
@@ -69,6 +69,7 @@ public class WebController {
 		if (authUser != null) {
 			model = authenticator.checkDataBasePlayer(model,authUser,player);
 		}
+		model.addAttribute("player", webservice.getPlayerByIdAuth0(authUser));
         return "profile";
     }
 	
@@ -96,22 +97,42 @@ public class WebController {
 			if (authUser != null) {
 				model = authenticator.checkDataBasePlayer(model,authUser,player);
 				webservice.deleteplayer(player, authUser);
-				model.addAttribute("prfile", null);
+				model.addAttribute("profile", null);
 				model.addAttribute("player",null);
 			}
 	return "redirect:/logout";		
 	}
 	
 	//game selector	
-	@GetMapping("/diceGames")
+	@GetMapping("/dicegames")
 	public String diceGames(Model model, @AuthenticationPrincipal OidcUser authUser, @ModelAttribute("player") PlayerDTO player) {
 		if (authUser != null) {
 			model = authenticator.checkDataBasePlayer(model,authUser,player);
 		}
-		return "diceGames";
+		return "dicegames";
 	}
 
+	//start onedicegame
+	@GetMapping("/dicegames/onedice")
+	public String onedicegame(Model model, @AuthenticationPrincipal OidcUser authUser, @ModelAttribute("player") PlayerDTO player) {
+		if (authUser != null) {
+			model = authenticator.checkDataBasePlayer(model,authUser,player);
+		}
+		return "/dicegames/onedice/throw";
+	}
 	
+	//throw dices onedicegame
+	@GetMapping("/dicegames/onedice/throw")
+	public String throwdice(Model model, @AuthenticationPrincipal OidcUser authUser, @ModelAttribute("player") PlayerDTO player) {
+	if (authUser != null) {
+		model = authenticator.checkDataBasePlayer(model,authUser,player);
+	}
+	OneDiceGame dicethrow = webservice.throwonedice(player, authUser);
+	model.addAttribute("lastplay", dicethrow);
+	model.addAttribute("player", webservice.getPlayerByIdAuth0(authUser));
+	return "/dicegames/onedice/throw";
+
+}
 	
 }
 
