@@ -51,14 +51,23 @@ public class WebService {
 	}
 
 	public void updatePlayer(PlayerDTO player, OidcUser auth0User) {
-		PlayerDTO playerdb = webClient.put()
+		webClient.put()
 		.uri("/players")
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.body(Mono.just(player), PlayerDTO.class)
 		.retrieve()
 		.bodyToMono(PlayerDTO.class).block();
-		
+	}
+
+	public void deletePlayerGamesByType(PlayerDTO player, OidcUser auth0User, String gameType) {
+		webClient.delete()
+		.uri("/players/"+ player.getId() + "/games/" + gameType)
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToMono(String.class)
+		.block();
 	}
 
 	public void deleteplayer(PlayerDTO player, OidcUser auth0User) {
@@ -89,13 +98,15 @@ public class WebService {
 		.retrieve()
 		.bodyToFlux(DiceGameDTO.class)
 		.buffer().blockLast();
-		Collections.reverse(gamelist);
+		if(gamelist != null) Collections.reverse(gamelist);
 		return gamelist;
 	}
 	
 	public List<DiceGameDTO> getLast10DiceGames(PlayerDTO player, OidcUser auth0User, String gameType){
-		List<DiceGameDTO> gamelist =getAllGames(player, auth0User, gameType);
-		return gamelist.stream().limit(10).collect(Collectors.toList());
+		List<DiceGameDTO> gamelist = getAllGames(player, auth0User, gameType);
+		if(gamelist != null) gamelist.stream().limit(10).collect(Collectors.toList());
+		return gamelist;
 		}
+
 	
 }

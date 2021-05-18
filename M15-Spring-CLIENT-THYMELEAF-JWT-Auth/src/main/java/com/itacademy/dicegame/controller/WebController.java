@@ -93,9 +93,21 @@ public class WebController {
 		model.addAttribute("profile", authUser.getClaims());
 		webservice.updatePlayer(player, authUser);
 		model.addAttribute("player", player);
-		return "redirect:/player/profile";
+		return "redirect:/profile";
 	}
 
+	//delete all player's games for one Type
+	@GetMapping("/dicegames/{gameType}/delete")
+	public String deletePlayerGamesByType(Model model, @AuthenticationPrincipal OidcUser authUser,
+			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
+		if (authUser != null) {
+			model = authenticator.checkDataBasePlayer(model, authUser, player);
+		}
+		webservice.deletePlayerGamesByType(player, authUser, gameType);
+		return "redirect:/profile";
+	}
+	
+	
 	// deleteplayer
 	@GetMapping("/deleteplayer")
 	public String deleplayer(Model model, @AuthenticationPrincipal OidcUser authUser,
@@ -144,7 +156,6 @@ public class WebController {
 		model.addAttribute("player", webservice.getPlayerByIdAuth0(authUser));
 		model.addAttribute("allgames", webservice.getLast10DiceGames(player, authUser, gameType));
 		return "/dicegames/play";
-
 	}
 
 }

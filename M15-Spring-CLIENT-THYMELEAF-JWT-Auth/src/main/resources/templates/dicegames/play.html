@@ -48,10 +48,10 @@
         </div>
 
         <!-- Last 10 rolls for Game Type -->
-        <div class="allgames text-center">
+        <div class="allgames text-center" th:if = "${allgames != null}" >
             <h3>Les teves últimes 10 tirades:</h3>
             <table id="allgames" class="table table-hover table-striped col-md-12">
-                <thead>
+                <thead >
                     <tr>
                         <th th:each="roll,iter : ${allgames[0].rolls}" th:text = "${'Dau ' + (iter.index + 1)}">Tirades</th>
                         <th>Resultat</th>

@@ -73,7 +73,7 @@
                         </div>
                         <input class="form-control" type="text" th:value="${player.winPercentageOneDice} + '%'"
                             name="winPercentageOneDice" readonly>
-                        <button class="btn btn-success">Esborrar les tirades</button>
+                        <a th:href = "@{'/dicegames/OneDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
                     </div>
                     <div class="input-group mt-3 mb-3">
                         <div class="input-group-prepend w-50">
@@ -81,7 +81,7 @@
                         </div>
                         <input class="form-control" type="text" th:value="${player.winPercentageTwoDice} + '%'"
                             name="winPercentageTwoDice" readonly>
-                        <button class="btn btn-success">Esborrar les tirades</button>
+                        <a th:href = "@{'/dicegames/TwoDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
                     </div>
                     <div class="input-group mt-3 mb-3">
                         <div class="input-group-prepend w-50">
@@ -89,7 +89,7 @@
                         </div>
                         <input class="form-control" type="text" th:value="${player.winPercentageThreeDice} + '%'"
                             name="winPercentageThreeDice" readonly>
-                        <button class="btn btn-success">Esborrar les tirades</button>
+                        <a th:href = "@{'/dicegames/ThreeDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
                     </div>
 
 
