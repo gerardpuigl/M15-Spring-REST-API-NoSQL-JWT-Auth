@@ -104,7 +104,7 @@ public class DiceGameService {
 		if (typeGame.equals(GameType.OneDiceGame)) {
 			return playerRepository.findTopByOrderByWinPercentageOneDiceDesc();
 		} else if (typeGame.equals(GameType.TwoDiceGame)) {
-			return playerRepository.findTopByOrderByWinPercentageOneDiceDesc();
+			return playerRepository.findTopByOrderByWinPercentageTwoDiceDesc();
 		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
 			return playerRepository.findTopByOrderByWinPercentageThreeDiceDesc();
 		}

@@ -104,7 +104,7 @@ public class WebService {
 	
 	public List<DiceGameDTO> getLast10DiceGames(PlayerDTO player, OidcUser auth0User, String gameType){
 		List<DiceGameDTO> gamelist = getAllGames(player, auth0User, gameType);
-		if(gamelist != null) gamelist.stream().limit(10).collect(Collectors.toList());
+		if(gamelist != null) gamelist = gamelist.stream().limit(10).collect(Collectors.toList());
 		return gamelist;
 		}
 

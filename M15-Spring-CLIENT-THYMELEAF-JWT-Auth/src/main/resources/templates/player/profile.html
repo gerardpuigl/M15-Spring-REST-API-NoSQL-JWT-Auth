@@ -21,39 +21,39 @@
             </div>
             <!-- User APP info -->
             <div class="row align-items-center  mt-4">
-                <div class="col-md-8 text-center offset-2 text-md-start">
+                <div class="col-md-8 text-center offset-md-2 text-md-start">
                     <h4>La teva informació:</h4>
 
                         <div class="input-group mt-3 mb-3">
-                            <div class="input-group-prepend w-25">
-                                <span class="input-group-text w-100">UUID</span>
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">UUID</span>
                             </div>
                             <input class="form-control" type="text" th:value="${player.id}" name="auth0id"
                                 readonly>
                         </div>
                         <div class="input-group mt-3 mb-3">
-                            <div class="input-group-prepend w-25">
-                                <span class="input-group-text w-100">Email</span>
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Email</span>
                             </div>
                             <input class="form-control" type="text" th:value="${player.auth0email}" name="auth0email"
                                 readonly>
                         </div>
                         <div class="input-group mt-3 mb-3">
-                            <div class="input-group-prepend w-25">
-                                <span class="input-group-text w-100">Nom</span>
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Nom</span>
                             </div>
                             <input class="form-control" type="text" th:value="${player.name}" name="name" readonly>
                         </div>
                         <div class="input-group mt-3 mb-3">
-                            <div class="input-group-prepend w-25">
-                                <span class="input-group-text w-100">Ets anònim?</span>
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Ets anònim?</span>
                             </div>
                             <input class="form-control" type="text" th:value="${player.anonimus? 'Si':'No'}" name="anonimus"
                                 readonly>
                         </div>
                         <div class="input-group mt-3 mb-3">
-                            <div class="input-group-prepend w-25">
-                                <span class="input-group-text w-100">Data de creació</span>
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Data de creació</span>
                             </div>
                             <input class="form-control" type="text" th:value="${player.creationDate}"
                                 name="creationDate" readonly>
@@ -68,33 +68,30 @@
                     
                     <div class="input-group mt-3 mb-3">
                         
-                        <div class="input-group-prepend w-50">
-                            <span class="input-group-text w-100">Victories al Joc d'un Dau</span>
+                        <div class="input-group-prepend  col-md-6">
+                            <span class="input-group-text">Victories al Joc d'un Dau</span>
                         </div>
                         <input class="form-control" type="text" th:value="${player.winPercentageOneDice} + '%'"
                             name="winPercentageOneDice" readonly>
                         <a th:href = "@{'/dicegames/OneDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
                     </div>
                     <div class="input-group mt-3 mb-3">
-                        <div class="input-group-prepend w-50">
-                            <span class="input-group-text w-100">Victories al Joc de Dos Daus</span>
+                        <div class="input-group-prepend  col-md-6">
+                            <span class="input-group-text">Victories al Joc de Dos Daus</span>
                         </div>
                         <input class="form-control" type="text" th:value="${player.winPercentageTwoDice} + '%'"
                             name="winPercentageTwoDice" readonly>
                         <a th:href = "@{'/dicegames/TwoDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
                     </div>
                     <div class="input-group mt-3 mb-3">
-                        <div class="input-group-prepend w-50">
-                            <span class="input-group-text w-100">Victories al Joc de Tres Daus</span>
+                        <div class="input-group-prepend col-md-6">
+                            <span class="input-group-text">Victories al Joc de Tres Daus</span>
                         </div>
                         <input class="form-control" type="text" th:value="${player.winPercentageThreeDice} + '%'"
                             name="winPercentageThreeDice" readonly>
                         <a th:href = "@{'/dicegames/ThreeDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
                     </div>
-
-
                 </div>
-
             </div>
             <div class="text-center">
                 <a type="button" th:href="@{'/deleteplayer'}" class="btn btn-danger"
