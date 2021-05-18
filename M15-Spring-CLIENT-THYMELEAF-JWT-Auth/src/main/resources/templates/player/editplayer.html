@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layouts/default">
+
+<div id="page" layout:fragment="content">
+    <div class="container">
+        <div class="mt-5">
+            <div class="container">
+                <!-- User Auth0 info -->
+                <div class="row align-items-center profile-header">
+                    <div class="col-md-2 mb-3">
+                        <img th:src="${profile.get('picture')}" class="rounded-circle img-fluid profile-picture" />
+                    </div>
+                    <div class="col-md text-center text-md-start">
+                        <h2 th:text="${player.name}" />
+                        <p class="lead text-muted" th:text="${profile.get('email')}" />
+                        <p class="lead text-muted" th:text="${profile.get('sub')}" />
+                    </div>
+
+                </div>
+            </div>
+            <!-- Edit user Form -->
+            <div class="row align-items-center  mt-4">
+                <div class="col-md-8 text-center offset-2 text-md-start">
+                    <h4>La teva informació:</h4>
+                    <form th:object="${player}" method="POST" th:action="@{'/editplayer'}">
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend w-25">
+                                <span class="input-group-text w-100">UUID</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.id}" name="id"
+                                readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend w-25">
+                                <span class="input-group-text w-100">Nom</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.name}" name="name">
+                        </div>
+                        <div class="form-check form-switch offset-3 text-start">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" th:checked="${player.anonimus}" name="anonimus">                        
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Voleu ser anonim? </label>
+                        </div>
+                        <div class="text-end">
+                            <a type="button" th:href="@{'/profile'}" class="btn btn-secondary">Cancel·lar</a>
+                            <button type="submit" class="btn btn-success">Editar Perfil</button>
+                        </div>
+                    </form>
+                
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

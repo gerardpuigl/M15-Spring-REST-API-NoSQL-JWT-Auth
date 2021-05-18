@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<div id="page" layout:fragment="content">
+    <div class="container">
+        <div class="mt-5">
+            <h1 class="mb-4">Nou usuari</h1>
+            <p>Sembla que és el primer cop que entres. Sisplau completa aquest formulari per continuar:</p>
+            <form th:object="${newplayer}" method="POST" th:action="@{'/newplayer'}">
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text w-100">Auth0_id</span>
+                    </div>
+                    <input class="form-control" type="text" th:value="${newplayer.auth0id}" name="auth0id" readonly>
+                </div>
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text w-100">Email</span>
+                    </div>
+                    <input class="form-control" type="text" th:value="${newplayer.auth0email}" name="auth0email" readonly>
+                </div>
+                <div class="input-group mt-3 mb-3">
+                    <div class="input-group-prepend w-25">
+                        <span class="input-group-text w-100">Nom</span>
+                    </div>
+                    <input class="form-control" type="text" th:value="${newplayer.name}" name="name" required>
+                </div>
+                <div class="form-check form-switch offset-3 text-start">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" th:checked="${player.anonimus}" name="anonimus">                        
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Voleu ser anonim? </label>
+                </div>
+                <button type="button" class="btn btn-secondary">Cancel·lar</button>
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</html>

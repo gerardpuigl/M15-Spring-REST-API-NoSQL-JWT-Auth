@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<div id="page" layout:fragment="content">
+    <div id="only-public" class="mt-5 text-center align-middle">
+        <div class="container">
+            <h1 class="mb-4">
+                Autentificat per poder jugar
+            </h1>
+            <a th:href="@{/oauth2/authorization/auth0}" id="qsLoginBtn" class="btn btn-primary btn-margin">Login</a>
+        </div>
+    </div>
+</div>
+
+</html>

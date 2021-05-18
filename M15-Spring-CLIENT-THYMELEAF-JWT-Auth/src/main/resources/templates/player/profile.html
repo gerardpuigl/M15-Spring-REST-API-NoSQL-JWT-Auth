@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorator="layouts/default">
+
+<div id="page" layout:fragment="content">
+    <div class="container">
+        <div class="mt-5">
+            <div class="container">
+                <!-- User Auth0 info -->
+                <div class="row align-items-center profile-header">
+                    <div class="col-md-2 mb-3">
+                        <img th:src="${profile.get('picture')}" class="rounded-circle img-fluid profile-picture" />
+                    </div>
+                    <div class="col-md text-center text-md-start">
+                        <h2 th:text="${player.name}" />
+                        <p class="lead text-muted" th:text="${profile.get('email')}" />
+                        <p class="lead text-muted" th:text="${profile.get('sub')}" />
+                    </div>
+
+                </div>
+            </div>
+            <!-- User APP info -->
+            <div class="row align-items-center  mt-4">
+                <div class="col-md-8 text-center offset-md-2 text-md-start">
+                    <h4>La teva informació:</h4>
+
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">UUID</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.id}" name="auth0id"
+                                readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Email</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.auth0email}" name="auth0email"
+                                readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Nom</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.name}" name="name" readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Ets anònim?</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.anonimus? 'Si':'No'}" name="anonimus"
+                                readonly>
+                        </div>
+                        <div class="input-group mt-3 mb-3">
+                            <div class="input-group-prepend col-md-3">
+                                <span class="input-group-text">Data de creació</span>
+                            </div>
+                            <input class="form-control" type="text" th:value="${player.creationDate}"
+                                name="creationDate" readonly>
+                        </div>
+                    <form method="Get" th:action="@{'/editplayer'}">
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success">Editar Perfil</button>
+                        </div>
+                    </form>
+                    
+                        <h4>Percentatges de victoria:</h4>
+                    
+                    <div class="input-group mt-3 mb-3">
+                        
+                        <div class="input-group-prepend  col-md-6">
+                            <span class="input-group-text">Victories al Joc d'un Dau</span>
+                        </div>
+                        <input class="form-control" type="text" th:value="${player.winPercentageOneDice} + '%'"
+                            name="winPercentageOneDice" readonly>
+                        <a th:href = "@{'/dicegames/OneDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
+                    </div>
+                    <div class="input-group mt-3 mb-3">
+                        <div class="input-group-prepend  col-md-6">
+                            <span class="input-group-text">Victories al Joc de Dos Daus</span>
+                        </div>
+                        <input class="form-control" type="text" th:value="${player.winPercentageTwoDice} + '%'"
+                            name="winPercentageTwoDice" readonly>
+                        <a th:href = "@{'/dicegames/TwoDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
+                    </div>
+                    <div class="input-group mt-3 mb-3">
+                        <div class="input-group-prepend col-md-6">
+                            <span class="input-group-text">Victories al Joc de Tres Daus</span>
+                        </div>
+                        <input class="form-control" type="text" th:value="${player.winPercentageThreeDice} + '%'"
+                            name="winPercentageThreeDice" readonly>
+                        <a th:href = "@{'/dicegames/ThreeDiceGame/delete'}" class="btn btn-success">Esborrar les tirades</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a type="button" th:href="@{'/deleteplayer'}" class="btn btn-danger"
+                onclick="return confirm('Confirma que vols eliminar aquest usuari? ( Si elimines l\'usuari no podràs recuperar les teves jugades.)')">Eliminar Usuari</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

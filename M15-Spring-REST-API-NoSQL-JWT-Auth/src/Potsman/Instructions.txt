@@ -1,0 +1,15 @@
+PostMan Request for MongoDB with Auth0:
+
+Requeriments: 
+
+  - MongoDB available at localhost:22017 (if you have another url you should configurate in MongoDB properties file inside program)
+  - Run the program in eclipse with Spring Boot.
+
+PostMan configuration:
+
+  - Use "M15_Dice Game- No authetication.postman_environment" to check the security works. (Return 401 code)
+
+  - Use "M15_Dice Game- Bearer Token.postman_environment" to pass Auth0 security:
+	- id should changed with one of the existing or created Player's id inside repository. (use Get All Players to get one)
+	- If you can't pass the security provably you need to update "Auth0_Token" with Bearer code inside Auth0. (ask to the Auth0 Propety)
+	- You can test three DiceGame option changing Current Value with: OneDiceGame, TwoDiceGame or ThreeDiceGame.
