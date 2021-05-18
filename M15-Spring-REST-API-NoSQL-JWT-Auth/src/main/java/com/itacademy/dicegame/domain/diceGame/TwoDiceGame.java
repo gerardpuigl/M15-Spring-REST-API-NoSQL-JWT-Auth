@@ -8,12 +8,7 @@ import com.itacademy.dicegame.domain.player.Player;
 @NoRepositoryBean
 public class TwoDiceGame extends DiceGame {
 
-	// First Dice Roll
-	//private int firstRoll;
-
-	// Second Dice Roll
-	//private int secondRoll;
-	
+	//Array with dice rolls
 	private int[] rolls= new int[2];
 
 	// Result (boolean)

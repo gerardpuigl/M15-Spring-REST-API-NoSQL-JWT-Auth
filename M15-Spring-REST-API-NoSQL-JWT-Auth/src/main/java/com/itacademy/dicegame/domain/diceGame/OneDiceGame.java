@@ -1,6 +1,5 @@
 package com.itacademy.dicegame.domain.diceGame;
 
-
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -10,13 +9,10 @@ import com.itacademy.dicegame.domain.player.Player;
 @NoRepositoryBean
 public class OneDiceGame extends DiceGame{
 
-	// First Dice Roll
-	//private int firstRoll;
-
+	//Array with dice rolls
 	private int[] rolls= new int[1];
 	
 	// Result (boolean)
-	
 	private boolean result;
 
 	@Transient

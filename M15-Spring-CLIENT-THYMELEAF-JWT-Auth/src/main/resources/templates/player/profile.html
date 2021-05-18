@@ -48,7 +48,7 @@
                             <div class="input-group-prepend w-25">
                                 <span class="input-group-text w-100">Ets anònim?</span>
                             </div>
-                            <input class="form-control" type="text" th:value="${player.anonimus}" name="anonimus"
+                            <input class="form-control" type="text" th:value="${player.anonimus? 'Si':'No'}" name="anonimus"
                                 readonly>
                         </div>
                         <div class="input-group mt-3 mb-3">

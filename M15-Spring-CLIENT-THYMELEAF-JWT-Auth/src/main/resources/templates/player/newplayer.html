@@ -26,11 +26,9 @@
                     </div>
                     <input class="form-control" type="text" th:value="${newplayer.name}" name="name" required>
                 </div>
-                <div class="input-group mt-3 mb-3">
-                    <div class="input-group-prepend w-25">
-                        <span class="input-group-text w-100">Voleu ser anonim?</span>
-                    </div>
-                    <input class="form-control" type="checkbox" th:value="${newplayer.anonimus}" name="anonimus">
+                <div class="form-check form-switch offset-3 text-start">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" th:checked="${player.anonimus}" name="anonimus">                        
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Voleu ser anonim? </label>
                 </div>
                 <button type="button" class="btn btn-secondary">Cancel·lar</button>
                 <button type="submit" class="btn btn-success">Guardar</button>

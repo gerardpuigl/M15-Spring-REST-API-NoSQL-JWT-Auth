@@ -9,16 +9,7 @@ import com.itacademy.dicegame.domain.player.Player;
 @NoRepositoryBean
 public class ThreeDiceGame extends DiceGame {
 
-	
-	// First Dice Roll
-	//private int firstRoll;
-
-	// Second Dice Roll
-	//private int secondRoll;
-	
-	// Third Dice Roll
-	//private int thridRoll;
-	
+	//Array with dice rolls
 	private int[] rolls= new int[3];
 	
 	// Result (boolean)
