@@ -51,7 +51,7 @@ public class WebController {
 		player.setAuth0id(oidcUser.getSubject());
 		player.setAuth0email(oidcUser.getEmail());
 		model.addAttribute("newplayer", player);
-		return "newplayer";
+		return "/player/newplayer";
 	}
 
 	// Post new player in DB system
@@ -70,7 +70,7 @@ public class WebController {
 			model = authenticator.checkDataBasePlayer(model,authUser,player);
 		}
 		model.addAttribute("player", webservice.getPlayerByIdAuth0(authUser));
-        return "profile";
+        return "/player/profile";
     }
 	
 	// edit player menu
@@ -79,7 +79,7 @@ public class WebController {
 		if (authUser != null) {
 			model = authenticator.checkDataBasePlayer(model,authUser,player);
 		}
-        return "editplayer";
+        return "/player/editplayer";
     }
 	
 	// updateplayer
@@ -88,7 +88,7 @@ public class WebController {
 		model.addAttribute("profile", authUser.getClaims());
 		webservice.updatePlayer(player, authUser);
 		model.addAttribute("player", player);
-		return "redirect:/profile";
+		return "redirect:/player/profile";
 	}
 	
 	// deleteplayer
@@ -109,7 +109,7 @@ public class WebController {
 		if (authUser != null) {
 			model = authenticator.checkDataBasePlayer(model,authUser,player);
 		}
-		return "dicegames";
+		return "/dicegames/dicegames";
 	}
 
 	//start onedicegame
@@ -119,7 +119,7 @@ public class WebController {
 			model = authenticator.checkDataBasePlayer(model,authUser,player);
 		}
 		model.addAttribute("allgames",	webservice.getLast10DiceGames(player, authUser));
-		return "/dicegames/onedice/throw";
+		return "/dicegames/play";
 	}
 	
 	//throw dices onedicegame
@@ -132,7 +132,7 @@ public class WebController {
 	model.addAttribute("lastplay", dicethrow);
 	model.addAttribute("player", webservice.getPlayerByIdAuth0(authUser));
 	model.addAttribute("allgames",	webservice.getLast10DiceGames(player, authUser));
-	return "/dicegames/onedice/throw";
+	return "/dicegames/play";
 
 }
 	
