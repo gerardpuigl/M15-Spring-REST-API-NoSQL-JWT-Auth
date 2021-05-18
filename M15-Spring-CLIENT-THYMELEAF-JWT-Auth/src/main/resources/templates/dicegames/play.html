@@ -2,71 +2,73 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
 
 <div id="page" layout:fragment="content">
-    <div class="container">
-        <!-- Title & Wellcome for Game Type-->
-        <div th:if="${#strings.equals( gameType,'OneDiceGame')}" class="text-center mt-5 mb-5">
-            <h1>Joc d'un dau</h1>
-            <p> Treu un 6 i guanya la partida!</p>
-        </div>
-        <div th:if="${#strings.equals( gameType,'TwoDiceGame')}" class="text-center mt-5 mb-5">
-            <h1>Joc de dos daus</h1>
-            <p> Treu un 7 i guanya la partida!</p>
-        </div>
-        <div th:if="${#strings.equals( gameType,'ThreeDiceGame')}" class="text-center mt-5 mb-5">
-            <h1>Joc de tres daus</h1>
-            <p> Treu un 7 o un 14 i guanya la partida!</p>
-        </div>
-        <!-- Throw Dices button for Game Type -->
-        <div class="text-center mt-5 mb-5">
-            <a type="button" th:href="@{'/dicegames/' + ${gameType} + '/throw'}" class="btn btn-success btn-lg"
-                style="width: 300px;">Tirar els Daus</a>
-        </div>
-        <!-- If you come from dicegames menu -->
-        <div th:if="${lastplay == null}" class="row text-center mt-5 mb-5">
-            <p>Tira els daus per jugar.</p>
-        </div>
-        <!-- If you throw dices -->
-        <div th:if="${lastplay != null}" class="row justify-content-center text-center mt-5 mb-5">
-            <div class="col col-md-2" th:each="roll : ${lastplay.rolls}" style="width: 100%; max-width: 140px;">
-                <img class="fade-in-image" th:src="'/images/dices/dice' + ${roll} + '.jpg'"
-                    style="width: 100%; max-width: 140px; max-height: 160px; ">
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-8 ">
+            <!-- Title & Wellcome for Game Type-->
+            <div th:if="${#strings.equals( gameType,'OneDiceGame')}" class="text-center mt-5 mb-5">
+                <h1>Joc d'un dau</h1>
+                <p> Treu un 6 i guanya la partida!</p>
             </div>
-            <div class="fade-in-text">
-                <h1 th:text="${lastplay.isResult} ? 'Has guanyat!!' : 'Has perdut'"></h1>
+            <div th:if="${#strings.equals( gameType,'TwoDiceGame')}" class="text-center mt-5 mb-5">
+                <h1>Joc de dos daus</h1>
+                <p> Treu un 7 i guanya la partida!</p>
             </div>
-        </div>
-
-        <!-- Win percentage for Game Type -->
-        <div class="input-group mt-3 mb-3">
-            <div class="input-group-prepend col-md-6">
-                <span class="input-group-text">El teu percentatge de victories</span>
+            <div th:if="${#strings.equals( gameType,'ThreeDiceGame')}" class="text-center mt-5 mb-5">
+                <h1>Joc de tres daus</h1>
+                <p> Treu un 7 o un 14 i guanya la partida!</p>
             </div>
-            <input th:if="${#strings.equals( gameType,'OneDiceGame')}" class="form-control" type="text"
-                th:value="${player.winPercentageOneDice} + '%'" name="winPercentageOneDice" readonly>
-            <input th:if="${#strings.equals( gameType,'TwoDiceGame')}" class="form-control" type="text"
-                th:value="${player.winPercentageTwoDice} + '%'" name="winPercentageTwoDice" readonly>
-            <input th:if="${#strings.equals( gameType,'ThreeDiceGame')}" class="form-control" type="text"
-                th:value="${player.winPercentageThreeDice} + '%'" name="winPercentageThreeDice" readonly>
-        </div>
-
-        <!-- Last 10 rolls for Game Type -->
-        <div class="allgames text-center" th:if="${allgames != null}">
-            <h3>Les teves últimes 10 tirades:</h3>
-            <table id="allgames" class="table table-hover table-striped col-md-12">
-                <thead>
-                    <tr>
-                        <th th:each="roll,iter : ${allgames[0].rolls}" th:text="${'Dau ' + (iter.index + 1)}">Tirades
-                        </th>
-                        <th>Resultat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="game : ${allgames}">
-                        <td th:each="roll : ${game.rolls}" th:text="${roll}"></td>
-                        <td th:text="${game.isResult} ? 'Victoria' : 'Derrota'"></td>
-                    </tr>
-                </tbody>
-            </table>
+            <!-- Throw Dices button for Game Type -->
+            <div class="text-center mt-5 mb-5">
+                <a type="button" th:href="@{'/dicegames/' + ${gameType} + '/throw'}" class="btn btn-success btn-lg"
+                    style="width: 300px;">Tirar els Daus</a>
+            </div>
+            <!-- If you come from dicegames menu -->
+            <div th:if="${lastplay == null}" class="row text-center mt-5 mb-5">
+                <p>Tira els daus per jugar.</p>
+            </div>
+            <!-- If you throw dices -->
+            <div th:if="${lastplay != null}" class="row justify-content-center text-center mt-5 mb-5">
+                <div class="col col-md-2" th:each="roll : ${lastplay.rolls}" style="width: 100%; max-width: 140px;">
+                    <img class="fade-in-image" th:src="'/images/dices/dice' + ${roll} + '.jpg'"
+                        style="width: 100%; max-width: 140px; max-height: 160px; ">
+                </div>
+                <div class="fade-in-text">
+                    <h1 th:text="${lastplay.isResult} ? 'Has guanyat!!' : 'Has perdut'"></h1>
+                </div>
+            </div>
+    
+            <!-- Win percentage for Game Type -->
+            <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend col-md-6">
+                    <span class="input-group-text">El teu percentatge de victories</span>
+                </div>
+                <input th:if="${#strings.equals( gameType,'OneDiceGame')}" class="form-control" type="text"
+                    th:value="${player.winPercentageOneDice} + '%'" name="winPercentageOneDice" readonly>
+                <input th:if="${#strings.equals( gameType,'TwoDiceGame')}" class="form-control" type="text"
+                    th:value="${player.winPercentageTwoDice} + '%'" name="winPercentageTwoDice" readonly>
+                <input th:if="${#strings.equals( gameType,'ThreeDiceGame')}" class="form-control" type="text"
+                    th:value="${player.winPercentageThreeDice} + '%'" name="winPercentageThreeDice" readonly>
+            </div>
+    
+            <!-- Last 10 rolls for Game Type -->
+            <div class="text-center" th:if="${allgames != null}">
+                <h3>Les teves últimes 10 tirades:</h3>
+                <table id="allgames" class="table table-hover table-striped col-md-12">
+                    <thead>
+                        <tr>
+                            <th th:each="roll,iter : ${allgames[0].rolls}" th:text="${'Dau ' + (iter.index + 1)}">Tirades
+                            </th>
+                            <th>Resultat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="game : ${allgames}">
+                            <td th:each="roll : ${game.rolls}" th:text="${roll}"></td>
+                            <td th:text="${game.isResult} ? 'Victoria' : 'Derrota'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
