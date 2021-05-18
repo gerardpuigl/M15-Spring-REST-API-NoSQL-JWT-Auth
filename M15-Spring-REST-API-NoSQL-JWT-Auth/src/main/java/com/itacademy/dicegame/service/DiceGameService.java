@@ -2,6 +2,7 @@ package com.itacademy.dicegame.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,18 @@ public class DiceGameService {
 
 	// get all games from a player
 	public List<DiceGame> getAllGames(UUID idPlayer, String typeGame) {
-		return diceGameRepository.findByPlayer_idIs(idPlayer);
+		
+		List<DiceGame> diceGameList = diceGameRepository.findByPlayer_idIs(idPlayer);
+		
+		if (typeGame.equals(GameType.OneDiceGame)) {
+			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == OneDiceGame.class).collect(Collectors.toList());
+		} else if (typeGame.equals(GameType.TwoDiceGame)) {
+			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == TwoDiceGame.class).collect(Collectors.toList());
+		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
+			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == ThreeDiceGame.class).collect(Collectors.toList());
+		}
+		
+		return diceGameList;
 	}
 
 	// delete all games from a player

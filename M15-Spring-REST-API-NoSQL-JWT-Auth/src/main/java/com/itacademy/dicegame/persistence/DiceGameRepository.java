@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
+import com.itacademy.dicegame.domain.diceGame.OneDiceGame;
 
 @Repository
 public interface DiceGameRepository extends MongoRepository<DiceGame, UUID> {

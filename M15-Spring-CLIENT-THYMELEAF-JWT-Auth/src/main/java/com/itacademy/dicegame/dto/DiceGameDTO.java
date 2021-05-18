@@ -11,7 +11,10 @@ public class DiceGameDTO {
 
 	private UUID player;
 
+	private int[] rolls;
 
+	private boolean result;
+	
 	public DiceGameDTO() {
 	}
 
@@ -37,6 +40,22 @@ public class DiceGameDTO {
 
 	public void setPlayer(UUID player) {
 		this.player = player;
+	}
+	
+	public int[] getRolls() {
+		return rolls;
+	}
+
+	public void setRolls(int[] rolls) {
+		this.rolls = rolls;
+	}
+	
+	public boolean isResult() {
+		return result;
+	}
+
+	public void setResult(boolean result) {
+		this.result = result;
 	}
 	
 }

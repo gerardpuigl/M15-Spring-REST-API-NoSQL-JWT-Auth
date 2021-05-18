@@ -1,10 +1,9 @@
 package com.itacademy.dicegame.service;
 
 import java.util.Collections;
-import java.util.List;import java.util.stream.Collector;
+import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.Converters.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.itacademy.dicegame.dto.DiceGameDTO;
-import com.itacademy.dicegame.dto.OneDiceGame;
 import com.itacademy.dicegame.dto.PlayerDTO;
 
 import reactor.core.publisher.Mono;
@@ -73,30 +71,30 @@ public class WebService {
 		.block();		
 	}
 
-	public OneDiceGame throwonedice(PlayerDTO player, OidcUser auth0User) {
+	public DiceGameDTO throwonedice(PlayerDTO player, OidcUser auth0User, String gameType) {
 		return webClient.post()
-		.uri("/players/"+ player.getId() + "/games/OneDiceGame")
+		.uri("/players/"+ player.getId() + "/games/" + gameType)
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
-		.bodyToMono(OneDiceGame.class)
+		.bodyToMono(DiceGameDTO.class)
 		.block();		
 	}
 
-	public List<OneDiceGame> getAllGames(PlayerDTO player, OidcUser auth0User) {
-		List<OneDiceGame> gamelist = webClient.get()
-		.uri("/players/"+ player.getId() + "/games/OneDiceGame")
+	public List<DiceGameDTO> getAllGames(PlayerDTO player, OidcUser auth0User, String gameType) {
+		List<DiceGameDTO> gamelist = webClient.get()
+		.uri("/players/"+ player.getId() + "/games/" + gameType)
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
-		.bodyToFlux(OneDiceGame.class)
+		.bodyToFlux(DiceGameDTO.class)
 		.buffer().blockLast();
 		Collections.reverse(gamelist);
 		return gamelist;
 	}
 	
-	public List<OneDiceGame> getLast10DiceGames(PlayerDTO player, OidcUser auth0User){
-		List<OneDiceGame> gamelist =getAllGames(player, auth0User);
+	public List<DiceGameDTO> getLast10DiceGames(PlayerDTO player, OidcUser auth0User, String gameType){
+		List<DiceGameDTO> gamelist =getAllGames(player, auth0User, gameType);
 		return gamelist.stream().limit(10).collect(Collectors.toList());
 		}
 	
