@@ -4,22 +4,22 @@ package com.itacademy.dicegame.dto;
 public class OneDiceGame extends DiceGameDTO{
 
 	// First Dice Roll
-	private int firstRoll;
-
+	private int[] rolls;
+	
 	// Result (boolean)
 	private boolean result;
 	
 	public OneDiceGame() {
 	}
-
-	public int getFirstRoll() {
-		return firstRoll;
+	
+	public int[] getRolls() {
+		return rolls;
 	}
 
-	public void setFirstRoll(int firstRoll) {
-		this.firstRoll = firstRoll;
-	}
-
+	public void setRolls(int[] rolls) {
+		this.rolls = rolls;
+	}	
+	
 	public boolean isResult() {
 		return result;
 	}

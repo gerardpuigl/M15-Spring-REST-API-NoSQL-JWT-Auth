@@ -9,10 +9,12 @@ import com.itacademy.dicegame.domain.player.Player;
 public class TwoDiceGame extends DiceGame {
 
 	// First Dice Roll
-	private int firstRoll;
+	//private int firstRoll;
 
 	// Second Dice Roll
-	private int secondRoll;
+	//private int secondRoll;
+	
+	private int[] rolls= new int[2];
 
 	// Result (boolean)
 	private boolean result;
@@ -26,22 +28,22 @@ public class TwoDiceGame extends DiceGame {
 	
 	public TwoDiceGame(Player player) {
 		super(player);
-		firstRoll = dice.roll();
-		secondRoll = dice.roll();
+		rolls[0] = dice.roll();
+		rolls[1] = dice.roll();
 		result = result();
 	}
 
 	private boolean result() {
-		if(firstRoll+secondRoll==7) return true;
+		if(rolls[0]+rolls[1]==7) return true;
 		return false;
 	}
 
-	public int getFirstRoll() {
-		return firstRoll;
+	public int[] getRolls() {
+		return rolls;
 	}
 
-	public int getSecondRoll() {
-		return secondRoll;
+	public void setRolls(int[] rolls) {
+		this.rolls = rolls;
 	}
 
 	public boolean getResult() {

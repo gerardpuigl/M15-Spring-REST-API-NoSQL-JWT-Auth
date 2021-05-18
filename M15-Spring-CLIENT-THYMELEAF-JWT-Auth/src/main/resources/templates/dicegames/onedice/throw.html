@@ -3,31 +3,20 @@
 
 <div id="page" layout:fragment="content">
     <div class="container">
-
-        <div class="text-center mt-5 mb-5" >
+        <div class="text-center mt-5 mb-5">
             <h1>One Dice Game</h1>
             <p> Treu un 6 i guanya la partida</p>
-
         </div>
 
         <div th:if="${lastplay == null}" class="row text-center mt-5 mb-5">
             <p>Tira els daus per jugar.</p>
         </div>
-        <div th:if="${lastplay != null}" class="row text-center mt-5 mb-5">
-            <h1 th:text="${lastplay.isResult} ? 'Has guanyat!!' : 'Has perdut!!'"></h1>
-            <div class="lastplay">
-                <table id="lastplay" class="table table-hover table-striped col-md-12">
-                    <thead>
-                        <tr>
-                            <th>Has tret un</th>
-                            <th>Resultat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <td th:text="${lastplay.firstRoll}"></td>
-                        <td th:text="${lastplay.isResult} ? 'Victoria' : 'Derrota'"></td>
-                    </tbody>
-                </table>
+        <div th:if="${lastplay != null}" class="row mt-5 mb-5">
+            <div th:each="roll : ${lastplay.rolls}" class ="justify-content-center">
+                <img th:src="'/images/dices/dice' + ${roll} + '.jpg'" style="width: 150px; height: 150px;">
+            </div>
+            <div class="center-text">
+                <h1 th:text="${lastplay.isResult} ? 'Has guanyat!!' : 'Has perdut!!'"></h1>
             </div>
         </div>
         <div class="row mt-5 mb-5">
@@ -41,7 +30,23 @@
             <input class="form-control" type="text" th:value="${player.winPercentageOneDice} + '%'"
                 name="winPercentageOneDice" readonly>
         </div>
-
+        <div class="allgames text-center">
+            <h3>Les teves últimes 10 tirades:</h3>
+            <table id="allgames" class="table table-hover table-striped col-md-12">
+                <thead>
+                    <tr>
+                        <th>Tirades</th>
+                        <th>Resultat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="game : ${allgames}">
+                        <td th:each="roll : ${game.rolls}" th:text="${roll}"></td>
+                        <td th:text="${game.isResult} ? 'Victoria' : 'Derrota'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

@@ -118,6 +118,7 @@ public class WebController {
 		if (authUser != null) {
 			model = authenticator.checkDataBasePlayer(model,authUser,player);
 		}
+		model.addAttribute("allgames",	webservice.getLast10DiceGames(player, authUser));
 		return "/dicegames/onedice/throw";
 	}
 	
@@ -130,6 +131,7 @@ public class WebController {
 	OneDiceGame dicethrow = webservice.throwonedice(player, authUser);
 	model.addAttribute("lastplay", dicethrow);
 	model.addAttribute("player", webservice.getPlayerByIdAuth0(authUser));
+	model.addAttribute("allgames",	webservice.getLast10DiceGames(player, authUser));
 	return "/dicegames/onedice/throw";
 
 }

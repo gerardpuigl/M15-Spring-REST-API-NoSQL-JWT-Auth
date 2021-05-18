@@ -3,41 +3,21 @@ package com.itacademy.dicegame.dto;
 
 public class ThreeDiceGame extends DiceGameDTO {
 
-	private int firstRoll;
-
-	private int secondRoll;
-	
-	private int thridRoll;
+	private int[] rolls;
 	
 	private boolean result;
 	
 	public ThreeDiceGame() {
 	}
 
-	public int getFirstRoll() {
-		return firstRoll;
+	public int[] getRolls() {
+		return rolls;
 	}
 
-	public void setFirstRoll(int firstRoll) {
-		this.firstRoll = firstRoll;
-	}
-
-	public int getSecondRoll() {
-		return secondRoll;
-	}
-
-	public void setSecondRoll(int secondRoll) {
-		this.secondRoll = secondRoll;
-	}
-
-	public int getThridRoll() {
-		return thridRoll;
-	}
-
-	public void setThridRoll(int thridRoll) {
-		this.thridRoll = thridRoll;
-	}
-
+	public void setRolls(int[] rolls) {
+		this.rolls = rolls;
+	}	
+	
 	public boolean isResult() {
 		return result;
 	}

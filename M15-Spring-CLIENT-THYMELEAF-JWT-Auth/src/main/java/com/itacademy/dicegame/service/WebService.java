@@ -1,5 +1,10 @@
 package com.itacademy.dicegame.service;
 
+import java.util.Collections;
+import java.util.List;import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import org.modelmapper.Converters.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -78,4 +83,21 @@ public class WebService {
 		.block();		
 	}
 
+	public List<OneDiceGame> getAllGames(PlayerDTO player, OidcUser auth0User) {
+		List<OneDiceGame> gamelist = webClient.get()
+		.uri("/players/"+ player.getId() + "/games/OneDiceGame")
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToFlux(OneDiceGame.class)
+		.buffer().blockLast();
+		Collections.reverse(gamelist);
+		return gamelist;
+	}
+	
+	public List<OneDiceGame> getLast10DiceGames(PlayerDTO player, OidcUser auth0User){
+		List<OneDiceGame> gamelist =getAllGames(player, auth0User);
+		return gamelist.stream().limit(10).collect(Collectors.toList());
+		}
+	
 }

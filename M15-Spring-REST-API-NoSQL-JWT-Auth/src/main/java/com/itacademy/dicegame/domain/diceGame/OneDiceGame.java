@@ -11,9 +11,12 @@ import com.itacademy.dicegame.domain.player.Player;
 public class OneDiceGame extends DiceGame{
 
 	// First Dice Roll
-	private int firstRoll;
+	//private int firstRoll;
 
+	private int[] rolls= new int[1];
+	
 	// Result (boolean)
+	
 	private boolean result;
 
 	@Transient
@@ -25,20 +28,23 @@ public class OneDiceGame extends DiceGame{
 	
 	public OneDiceGame(Player player) {
 		super(player);
-		firstRoll = dice.roll();
+		rolls[0] = dice.roll();
 		result = result();
 		
 	}
 
 	private boolean result() {
-		if(firstRoll==6) return true;
+		if(rolls[0]==6) return true;
 		return false;
 	}
 
-			
-	public int getFirstRoll() {
-		return firstRoll;
+	public int[] getRolls() {
+		return rolls;
 	}
+
+	public void setRolls(int[] rolls) {
+		this.rolls = rolls;
+	}	
 
 	public boolean getResult() {
 		return result;
