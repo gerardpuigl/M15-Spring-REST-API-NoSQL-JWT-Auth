@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import com.itacademy.dicegame.dto.PlayerDTO;
-import com.itacademy.dicegame.service.WebService;
+import com.itacademy.dicegame.service.WebPlayerService;
 
 @Component
 public class AuthenticatorDiceGame {
@@ -18,7 +18,7 @@ public class AuthenticatorDiceGame {
  *  
  */	
 	@Autowired
-	WebService webservice;
+	WebPlayerService webservice;
 
 	public Model checkDataBasePlayer(Model model, OidcUser authUser, PlayerDTO player) {
 		model.addAttribute("profile", authUser.getClaims());

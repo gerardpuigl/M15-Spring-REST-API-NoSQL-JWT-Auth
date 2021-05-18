@@ -7,25 +7,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.itacademy.dicegame.dto.DiceGameDTO;
-import com.itacademy.dicegame.dto.GameType;
 import com.itacademy.dicegame.dto.PlayerDTO;
-import com.itacademy.dicegame.service.WebService;
+import com.itacademy.dicegame.service.WebPlayerService;
 import com.itacademy.dicegame.utils.AuthenticatorDiceGame;
 
 @Controller
 @SessionAttributes("player")
-public class WebController {
+public class WebPlayerController {
 	/**
 	 * Controller View
 	 * 
 	 */
 	@Autowired
-	WebService webservice;
+	WebPlayerService webservice;
 
 	@Autowired
 	AuthenticatorDiceGame authenticator;
@@ -96,18 +93,6 @@ public class WebController {
 		model.addAttribute("player", player);
 		return "redirect:/profile";
 	}
-
-	//delete all player's games for one Type
-	@GetMapping("/dicegames/{gameType}/delete")
-	public String deletePlayerGamesByType(Model model, @AuthenticationPrincipal OidcUser authUser,
-			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
-		if (authUser != null) {
-			model = authenticator.checkDataBasePlayer(model, authUser, player);
-		}
-		webservice.deletePlayerGamesByType(player, authUser, gameType);
-		return "redirect:/profile";
-	}
-	
 	
 	// deleteplayer
 	@GetMapping("/deleteplayer")
@@ -122,59 +107,4 @@ public class WebController {
 		return "redirect:/logout";
 	}
 
-	// game selector
-	@GetMapping("/dicegames")
-	public String diceGames(Model model, @AuthenticationPrincipal OidcUser authUser,
-			@ModelAttribute("player") PlayerDTO player) {
-		if (authUser != null) {
-			model = authenticator.checkDataBasePlayer(model, authUser, player);
-		}
-		return "/dicegames/dicegames";
-	}
-
-	// start game
-	@GetMapping("/dicegames/{gameType}")
-	public String onedicegame(Model model, @AuthenticationPrincipal OidcUser authUser,
-			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
-		if (authUser != null) {
-			model = authenticator.checkDataBasePlayer(model, authUser, player);
-		}
-		model.addAttribute("gameType", gameType);
-		model.addAttribute("allgames", webservice.getLast10DiceGames(player, authUser, gameType));
-		return "/dicegames/play";
-	}
-
-	// throw dices
-	@GetMapping("/dicegames/{gameType}/throw")
-	public String throwdice(Model model, @AuthenticationPrincipal OidcUser authUser,
-			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
-		if (authUser != null) {
-			model = authenticator.checkDataBasePlayer(model, authUser, player);
-		}
-		DiceGameDTO dicethrow = webservice.throwonedice(player, authUser, gameType);
-		model.addAttribute("gameType", gameType);
-		model.addAttribute("lastplay", dicethrow);
-		model.addAttribute("player", webservice.getPlayerByIdAuth0(authUser));
-		model.addAttribute("allgames", webservice.getLast10DiceGames(player, authUser, gameType));
-		return "/dicegames/play";
-	}
-
-	// General game Stadistics
-	@GetMapping("/dicegames/stadistics")
-	public String generalStadistics(Model model, @AuthenticationPrincipal OidcUser authUser,
-			@ModelAttribute("player") PlayerDTO player) {
-		if (authUser != null) {
-			model = authenticator.checkDataBasePlayer(model, authUser, player);
-		}
-		model.addAttribute("oneDiceWinner", webservice.getWinner(player, authUser, GameType.OneDiceGame));
-		model.addAttribute("oneDiceLoser", webservice.getLoser(player, authUser, GameType.OneDiceGame));
-		model.addAttribute("oneDiceAverage", webservice.getAverage(player, authUser, GameType.OneDiceGame));
-		model.addAttribute("twoDiceWinner", webservice.getWinner(player, authUser, GameType.TwoDiceGame));
-		model.addAttribute("twoDiceLoser", webservice.getLoser(player, authUser, GameType.TwoDiceGame));
-		model.addAttribute("twoDiceAverage", webservice.getAverage(player, authUser, GameType.TwoDiceGame));
-		model.addAttribute("threeDiceWinner", webservice.getWinner(player, authUser, GameType.ThreeDiceGame));
-		model.addAttribute("threeDiceLoser", webservice.getLoser(player, authUser, GameType.ThreeDiceGame));
-		model.addAttribute("threeDiceAverage", webservice.getAverage(player, authUser, GameType.ThreeDiceGame));
-		return "/dicegames/stadistics";
-	}
 }

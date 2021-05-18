@@ -2,7 +2,6 @@ package com.itacademy.dicegame.service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +56,6 @@ public class DiceGameService {
 		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
 			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == ThreeDiceGame.class).collect(Collectors.toList());
 		}
-		
 		return diceGameList;
 	}
 
@@ -83,7 +81,6 @@ public class DiceGameService {
 		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
 			diceGameList = diceGameList.stream().filter(dg -> dg.getClass() == ThreeDiceGame.class).collect(Collectors.toList());
 		}
-
 		return calculateWinPercentage.fromList(diceGameList);
 	}
 
@@ -109,6 +106,5 @@ public class DiceGameService {
 			return playerRepository.findTopByOrderByWinPercentageThreeDiceDesc();
 		}
 		return null;
-		
 	}
 }
