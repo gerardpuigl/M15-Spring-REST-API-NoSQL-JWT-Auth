@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<div id="page" layout:fragment="content">
+    <div class="container">
+
+        <!-- One Dice General Stadistics-->
+        <div class="row text-center mt-5 mb-5">
+            <h1>Joc d'un Dau</h1>
+        </div>
+        <h3>Millor Jugador d'un Dau</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" th:text="${oneDiceWinner.name}"></span>
+            </div>
+            <input class="form-control" type="text" th:value="${oneDiceWinner.winPercentageOneDice} + '%'"
+                name="winPercentageOneDice" readonly>
+        </div>
+        <h3>Pitjor Jugador d'un Dau</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" th:text="${oneDiceLoser.name}"></span>
+            </div>
+            <input class="form-control" type="text" th:value="${oneDiceLoser.winPercentageOneDice} + '%'"
+                name="winPercentageOneDice" readonly>
+        </div>
+        <h3>Percentatge mitja de tots els jugadors</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" >Percentatge de victories</span>
+            </div>
+            <input class="form-control" type="text" th:value="${oneDiceAverage} + '%'"
+                name="winPercentageOneDice" readonly>
+        </div>
+
+        <!-- Two Dice General Stadistics-->
+        <div class="row text-center mt-5 mb-5">
+            <h1>Joc de dos daus</h1>
+        </div>
+        <h3>Millor Jugador de dos daus</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" th:text="${twoDiceWinner.name}"></span>
+            </div>
+            <input class="form-control" type="text" th:value="${twoDiceWinner.winPercentageTwoDice} + '%'"
+                name="winPercentagetwoDice" readonly>
+        </div>
+        <h3>Pitjor Jugador de dos daus</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" th:text="${twoDiceLoser.name}"></span>
+            </div>
+            <input class="form-control" type="text" th:value="${twoDiceLoser.winPercentageTwoDice} + '%'"
+                name="winPercentagetwoDice" readonly>
+        </div>
+        <h3>Percentatge mitja de tots els jugadors</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" >Percentatge de victories</span>
+            </div>
+            <input class="form-control" type="text" th:value="${twoDiceAverage} + '%'"
+                name="winPercentagetwoDice" readonly>
+        </div>
+
+        <!-- One Dice General Stadistics-->
+        <div class="row text-center mt-5 mb-5">
+            <h1>Joc de tres daus</h1>
+        </div>
+        <h3>Millor Jugador de tres daus</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" th:text="${threeDiceWinner.name}"></span>
+            </div>
+            <input class="form-control" type="text" th:value="${threeDiceWinner.winPercentageThreeDice} + '%'"
+                name="winPercentageThreeDice" readonly>
+        </div>
+        <h3>Pitjor Jugador de tres daus</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" th:text="${threeDiceLoser.name}"></span>
+            </div>
+            <input class="form-control" type="text" th:value="${threeDiceLoser.winPercentageThreeDice} + '%'"
+                name="winPercentageThreeDice" readonly>
+        </div>
+        <h3>Percentatge mitja de tots els jugadors</h3>
+        <div class="input-group mt-3 mb-3">
+            <div class="input-group-prepend w-50">
+                <span class="input-group-text w-100" >Percentatge de victories</span>
+            </div>
+            <input class="form-control" type="text" th:value="${threeDiceAverage} + '%'"
+                name="winPercentageThreeDice" readonly>
+        </div>
+
+    </div>
+</div>
+
+</html>

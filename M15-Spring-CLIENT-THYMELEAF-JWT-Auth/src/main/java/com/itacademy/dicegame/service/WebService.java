@@ -41,7 +41,7 @@ public class WebService {
 	}
 	
 	public void postNewPlayer(PlayerDTO player,OidcUser auth0User) {
-		PlayerDTO playerdb = webClient.post()
+		webClient.post()
 		.uri("/players")
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
@@ -108,5 +108,33 @@ public class WebService {
 		return gamelist;
 		}
 
-	
+	public PlayerDTO getWinner(PlayerDTO player, OidcUser auth0User, String gameType) {
+		PlayerDTO winner = webClient.get()
+		.uri("/players/ranking/winner/" + gameType)
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToMono(PlayerDTO.class).block();
+		return winner;
+	}
+
+	public PlayerDTO getLoser(PlayerDTO player, OidcUser auth0User, String gameType) {
+		PlayerDTO loser = webClient.get()
+		.uri("/players/ranking/loser/" + gameType)
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToMono(PlayerDTO.class).block();
+		return loser;
+	}
+
+	public double getAverage(PlayerDTO player, OidcUser auth0User, String gameType) {
+		double average = webClient.get()
+		.uri("/players/ranking/" + gameType)
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToMono(Double.class).block();
+		return average;
+	}	
 }

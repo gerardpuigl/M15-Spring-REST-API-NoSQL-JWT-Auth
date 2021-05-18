@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.itacademy.dicegame.dto.DiceGameDTO;
+import com.itacademy.dicegame.dto.GameType;
 import com.itacademy.dicegame.dto.PlayerDTO;
 import com.itacademy.dicegame.service.WebService;
 import com.itacademy.dicegame.utils.AuthenticatorDiceGame;
@@ -158,4 +159,22 @@ public class WebController {
 		return "/dicegames/play";
 	}
 
+	// General game Stadistics
+	@GetMapping("/dicegames/stadistics")
+	public String generalStadistics(Model model, @AuthenticationPrincipal OidcUser authUser,
+			@ModelAttribute("player") PlayerDTO player) {
+		if (authUser != null) {
+			model = authenticator.checkDataBasePlayer(model, authUser, player);
+		}
+		model.addAttribute("oneDiceWinner", webservice.getWinner(player, authUser, GameType.OneDiceGame));
+		model.addAttribute("oneDiceLoser", webservice.getLoser(player, authUser, GameType.OneDiceGame));
+		model.addAttribute("oneDiceAverage", webservice.getAverage(player, authUser, GameType.OneDiceGame));
+		model.addAttribute("twoDiceWinner", webservice.getWinner(player, authUser, GameType.TwoDiceGame));
+		model.addAttribute("twoDiceLoser", webservice.getLoser(player, authUser, GameType.TwoDiceGame));
+		model.addAttribute("twoDiceAverage", webservice.getAverage(player, authUser, GameType.TwoDiceGame));
+		model.addAttribute("threeDiceWinner", webservice.getWinner(player, authUser, GameType.ThreeDiceGame));
+		model.addAttribute("threeDiceLoser", webservice.getLoser(player, authUser, GameType.ThreeDiceGame));
+		model.addAttribute("threeDiceAverage", webservice.getAverage(player, authUser, GameType.ThreeDiceGame));
+		return "/dicegames/stadistics";
+	}
 }
