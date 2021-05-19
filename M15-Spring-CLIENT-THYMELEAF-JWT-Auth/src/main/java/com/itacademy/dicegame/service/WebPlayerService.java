@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Service
 public class WebPlayerService {
 /*
- * Servici responsable to consum api Rest
+ * Service responsable to consum api Rest
  * 
  */
 	@Value("${host.api.url}")

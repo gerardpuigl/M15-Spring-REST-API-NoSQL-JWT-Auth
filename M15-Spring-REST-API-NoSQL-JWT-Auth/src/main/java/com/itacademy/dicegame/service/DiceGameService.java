@@ -1,7 +1,9 @@
 package com.itacademy.dicegame.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,11 @@ import com.itacademy.dicegame.domain.diceGame.OneDiceGame;
 import com.itacademy.dicegame.domain.diceGame.ThreeDiceGame;
 import com.itacademy.dicegame.domain.diceGame.TwoDiceGame;
 import com.itacademy.dicegame.domain.player.Player;
+import com.itacademy.dicegame.domain.player.PlayerDTO;
 import com.itacademy.dicegame.persistence.DiceGameRepository;
 import com.itacademy.dicegame.persistence.PlayerRepository;
 import com.itacademy.dicegame.utils.CalculateWinPercentage;
+import com.itacademy.dicegame.utils.DTOConverter;
 
 @Service
 public class DiceGameService {
@@ -26,6 +30,9 @@ public class DiceGameService {
 
 	@Autowired
 	private PlayerRepository playerRepository;
+	
+	@Autowired
+	private DTOConverter dtoConverter;
 	
 	@Autowired
 	private DiceGameFactory diceGameFactory;
@@ -85,26 +92,48 @@ public class DiceGameService {
 	}
 
 	// get player with worse win percentage
-	public Player getLoser(String typeGame) {
+	public PlayerDTO getLoser(String typeGame) {
+		Player player = new Player();
+		
 		if (typeGame.equals(GameType.OneDiceGame)) {
-			return playerRepository.findTopByOrderByWinPercentageOneDice();
+			player = playerRepository.findTopByOrderByWinPercentageOneDice();
 		} else if (typeGame.equals(GameType.TwoDiceGame)) {
-			return playerRepository.findTopByOrderByWinPercentageTwoDice();
+			player = playerRepository.findTopByOrderByWinPercentageTwoDice();
 		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
-			return playerRepository.findTopByOrderByWinPercentageThreeDice();
+			player = playerRepository.findTopByOrderByWinPercentageThreeDice();
 		}
-		return null;
+		return dtoConverter.convertToDto(player);
 	}
 	
 	// get player the best win percentage
-	public Player getWinner(String typeGame) {
+	public PlayerDTO getWinner(String typeGame) {
+		Player player = new Player();
 		if (typeGame.equals(GameType.OneDiceGame)) {
-			return playerRepository.findTopByOrderByWinPercentageOneDiceDesc();
+			player = playerRepository.findTopByOrderByWinPercentageOneDiceDesc();
 		} else if (typeGame.equals(GameType.TwoDiceGame)) {
-			return playerRepository.findTopByOrderByWinPercentageTwoDiceDesc();
+			player = playerRepository.findTopByOrderByWinPercentageTwoDiceDesc();
 		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
-			return playerRepository.findTopByOrderByWinPercentageThreeDiceDesc();
+			player = playerRepository.findTopByOrderByWinPercentageThreeDiceDesc();
 		}
-		return null;
+		return dtoConverter.convertToDto(player);
+	}
+	
+	// get player rankings
+	public List<PlayerDTO> getRanking(String typeGame) {
+		List<PlayerDTO> playerRanking= null;
+		if (typeGame.equals(GameType.OneDiceGame)) {
+			playerRanking = playerRepository.findByOrderByWinPercentageOneDiceDesc()
+					.stream().map(player->dtoConverter.convertToDto(player))
+					.collect(Collectors.toList());
+		} else if (typeGame.equals(GameType.TwoDiceGame)) {
+			playerRanking = playerRepository.findByOrderByWinPercentageTwoDiceDesc()
+					.stream().map(player->dtoConverter.convertToDto(player))
+					.collect(Collectors.toList());
+		} else if (typeGame.equals(GameType.ThreeDiceGame)) {
+			playerRanking = playerRepository.findByOrderByWinPercentageThreeDiceDesc()
+					.stream().map(player->dtoConverter.convertToDto(player))
+					.collect(Collectors.toList());
+		}		
+		return playerRanking;
 	}
 }

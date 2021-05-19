@@ -27,7 +27,7 @@ public class WebDiceGameController {
 	@Autowired
 	WebPlayerService webPlayerServices;
 
-		@Autowired
+	@Autowired
 	WebDiceGameService webDiceGameServices;
 
 	@Autowired
@@ -38,7 +38,7 @@ public class WebDiceGameController {
 		return new PlayerDTO();
 	}
 	
-	//delete all player's games for one Type
+	// Delete all player's games for one game type
 	@GetMapping("/dicegames/{gameType}/delete")
 	public String deletePlayerGamesByType(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
@@ -49,7 +49,7 @@ public class WebDiceGameController {
 		return "redirect:/profile";
 	}
 
-	// game selector
+	// Show choose game page
 	@GetMapping("/dicegames")
 	public String diceGames(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player) {
@@ -59,7 +59,7 @@ public class WebDiceGameController {
 		return "/dicegames/dicegames";
 	}
 
-	// start game
+	// Entry in game page
 	@GetMapping("/dicegames/{gameType}")
 	public String onedicegame(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
@@ -71,7 +71,7 @@ public class WebDiceGameController {
 		return "/dicegames/play";
 	}
 
-	// throw dices
+	// Throw dices in game page
 	@GetMapping("/dicegames/{gameType}/throw")
 	public String throwdice(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
@@ -86,7 +86,7 @@ public class WebDiceGameController {
 		return "/dicegames/play";
 	}
 
-	// General game Stadistics
+	// General Stadistics
 	@GetMapping("/dicegames/stadistics")
 	public String generalStadistics(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player) {
@@ -104,4 +104,17 @@ public class WebDiceGameController {
 		model.addAttribute("threeDiceAverage", webDiceGameServices.getAverage(player, authUser, GameType.ThreeDiceGame));
 		return "/dicegames/stadistics";
 	}
+	
+	// Rankings by GameType
+	@GetMapping("/dicegames/ranking/{gameType}")
+	public String ranking(Model model, @AuthenticationPrincipal OidcUser authUser,
+			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
+		if (authUser != null) {
+			model = authenticator.checkDataBasePlayer(model, authUser, player);
+		}
+		model.addAttribute("gameType", gameType);
+		model.addAttribute("ranking", webDiceGameServices.getRanking(player, authUser, gameType));
+		return "/dicegames/ranking";
+	}
+	
 }

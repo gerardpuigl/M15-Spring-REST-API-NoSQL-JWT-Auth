@@ -20,9 +20,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        http.authorizeRequests()
                // allow all users to access the home pages and the static images directory
                .mvcMatchers("/", "/images/**").permitAll()
-               // all other requests must be authenticated
-//               .mvcMatchers("/api/**").authenticated()
-//               .mvcMatchers("/diceGames").authenticated()
                .anyRequest().authenticated()
                .and().oauth2Login()
                .and().logout()
@@ -32,11 +29,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                .addLogoutHandler(logoutHandler);
     }
 
-// If using HS256, create a Bean to specify the HS256 should be used. By default, RS256 will be used.
-//    @Bean
-//    public JwtDecoderFactory<ClientRegistration> idTokenDecoderFactory() {
-//        OidcIdTokenDecoderFactory idTokenDecoderFactory = new OidcIdTokenDecoderFactory();
-//        idTokenDecoderFactory.setJwsAlgorithmResolver(clientRegistration -> MacAlgorithm.HS256);
-//        return idTokenDecoderFactory;
-//    }
 }

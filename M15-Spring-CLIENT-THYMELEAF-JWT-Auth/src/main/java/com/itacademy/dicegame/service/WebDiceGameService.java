@@ -85,14 +85,26 @@ public class WebDiceGameService {
 		.bodyToMono(PlayerDTO.class).block();
 		return loser;
 	}
-
+	
+	public List<PlayerDTO> getRanking(PlayerDTO player, OidcUser auth0User, String gameType) {
+		List<PlayerDTO> ranking = webClient.get()
+		.uri("/players/ranking/" + gameType)
+		.accept(MediaType.APPLICATION_JSON)
+		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
+		.retrieve()
+		.bodyToFlux(PlayerDTO.class)
+		.buffer().blockLast();
+		return ranking;
+	}
+	
 	public double getAverage(PlayerDTO player, OidcUser auth0User, String gameType) {
 		double average = webClient.get()
-		.uri("/players/ranking/" + gameType)
+		.uri("/players/average/" + gameType)
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
 		.bodyToMono(Double.class).block();
 		return average;
 	}	
+	
 }

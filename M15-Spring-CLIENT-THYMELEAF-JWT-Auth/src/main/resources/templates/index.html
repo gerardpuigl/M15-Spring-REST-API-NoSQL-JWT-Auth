@@ -3,25 +3,32 @@
 
 <div id="page" layout:fragment="content">
     <div class="container">
-        <div class="mt-5">
 
+        <div class="row justify-content-center mt-5">
             <!-- UnAuthenticated Welcome -->
-            <div class="text-center hero my-5" sec:authorize="!isAuthenticated()">
-                <h1 class="mb-4">Benvinguts a la pàgina de Dice Games</h1>
+            <div class="col text-center my-5" sec:authorize="!isAuthenticated()">
+                <h1 class=" mb-4">Benvinguts a la pàgina de Dice Games</h1>
             </div>
 
             <!-- Authenticated Welcome -->
-            <div class="mt-5">
-                <div class="text-center hero my-5" sec:authorize="isAuthenticated()">
-                    <h1 class="mb-4" th:text="'Benvingut ' +${player.name} + '.'"></h1>
-                    <p>Acabes d'entrar al teu espai personal,<br>
-                        les jugades que realitzis en aquest espai seran registrades dins el teu compte.</p>
-                    <p>Per jugar ves a la secció corresponent al menú superior.</p>
-                    
-                </div>
+            <div class="col text-center" sec:authorize="isAuthenticated()">
+                <h1 class="mb-4" th:text="'Benvingut ' +${player.name} + '.'"></h1>
+                <p>Acabes d'entrar al teu espai personal, les jugades que<br>
+                    realitzis en aquest espai seran registrades dins el teu compte.<br><br>
+
+                    Pots consultar el Ranking amb tots els jugadors <br>
+                    i veure les estadístiques dels millors jugadors.</p>
             </div>
+
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-3 mt-5 ">
+                <a type="button" class="btn btn-outline-success btn-lg w-100" th:href="@{'/dicegames'}">Jugar</a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
             <!-- Common image -->
-            <div class="text-center hero my-5" >
+            <div class=" col text-center my-5">
                 <img src="images/Rolling-Dice-772x603.jpeg">
             </div>
         </div>

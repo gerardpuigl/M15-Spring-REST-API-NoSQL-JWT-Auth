@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
 import com.itacademy.dicegame.domain.player.Player;
+import com.itacademy.dicegame.domain.player.PlayerDTO;
 import com.itacademy.dicegame.service.DiceGameService;
 
 @RestController
@@ -59,23 +60,31 @@ public class DiceGameController {
 	@GetMapping("/ranking/{gameType}")
 	@PreAuthorize("hasAuthority('get:player')")
 	@ResponseStatus(HttpStatus.OK)  // 200
-	public double getRankingList(@PathVariable("gameType") String gameType){
-		return diceGameService.getPlayersWinPercentage(gameType);
+	public List<PlayerDTO> getRankingList(@PathVariable("gameType") String gameType){
+		return diceGameService.getRanking(gameType);
 	}
 	
-	//get player with worse win percentage
+	//get loser
 	@GetMapping("/ranking/loser/{gameType}")
 	@PreAuthorize("hasAuthority('get:player')")
 	@ResponseStatus(HttpStatus.OK)  // 200
-	public Player getLoser(@PathVariable("gameType") String gameType){
+	public PlayerDTO getLoser(@PathVariable("gameType") String gameType){
 		return diceGameService.getLoser(gameType);
 	}
 	
-	//get Players Ranking
+	//get winner
 	@GetMapping("/ranking/winner/{gameType}")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:player')")
-	public Player getWinner(@PathVariable("gameType") String gameType){
+	public PlayerDTO getWinner(@PathVariable("gameType") String gameType){
 		return diceGameService.getWinner(gameType);
+	}
+	
+	//get Players average
+	@GetMapping("/average/{gameType}")
+	@PreAuthorize("hasAuthority('get:player')")
+	@ResponseStatus(HttpStatus.OK)  // 200
+	public double getaAverage(@PathVariable("gameType") String gameType){
+		return diceGameService.getPlayersWinPercentage(gameType);
 	}
 }

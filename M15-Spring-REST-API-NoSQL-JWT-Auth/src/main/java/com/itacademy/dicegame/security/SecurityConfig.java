@@ -44,7 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	http.authorizeRequests()
 			.anyRequest().authenticated()
-//TODO	INVESTIGAR PERQUE NO DEIXA PASSAR SI TÉ CORS ACTIVAT?????
 //			.and()
 //			.cors()
 //			.configurationSource(corsConfigurationSource())
