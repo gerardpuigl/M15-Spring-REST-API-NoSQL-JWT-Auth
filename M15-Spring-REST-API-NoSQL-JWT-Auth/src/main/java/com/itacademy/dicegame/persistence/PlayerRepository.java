@@ -1,5 +1,6 @@
 package com.itacademy.dicegame.persistence;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -25,4 +26,11 @@ public interface PlayerRepository extends MongoRepository<Player, UUID> {
 	public Player findTopByOrderByWinPercentageThreeDiceDesc();
 	
 	public Player findByAuth0id(String auth0_id);
+	
+	public List<Player> findByOrderByWinPercentageOneDiceDesc();
+	
+	public List<Player>  findByOrderByWinPercentageTwoDiceDesc();
+	
+	public List<Player>  findByOrderByWinPercentageThreeDiceDesc();
+	
 }
