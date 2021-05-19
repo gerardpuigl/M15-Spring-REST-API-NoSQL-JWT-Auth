@@ -27,17 +27,16 @@ public class InitialData {
 	@PostConstruct
 	public void populateIfEmpty() {
 		if (playerRepository.findAll().size() == 0) {
-			createTestPlayer("TestPlayer1", 10);
-			createTestPlayer("TestPlayer2", 7);
-			createTestPlayer("TestPlayer3", 15);
-			// createTestPlayer("Average",300);
+			createTestPlayer("TestPlayer1",false , 10);
+			createTestPlayer("TestPlayer2",false , 7);
+			createTestPlayer("TestPlayer3",false , 15);
+			createTestPlayer("TestPlayer4",true ,12);
 		}
-		;
 	}
 
 	// create un player and "x" random games
-	private void createTestPlayer(String name, int initialGames) {
-		Player player = new Player(name);
+	private void createTestPlayer(String name,boolean anonimus, int initialGames) {
+		Player player = new Player(name, anonimus);
 		playerRepository.save(player);
 
 		for (int i = 0; i < initialGames; i++) {

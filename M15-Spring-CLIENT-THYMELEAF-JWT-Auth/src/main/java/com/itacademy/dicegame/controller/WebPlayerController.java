@@ -42,7 +42,7 @@ public class WebPlayerController {
 		return "index";
 	}
 
-	// Show form for new auth0 acounts that still are not in the Data Base system
+	// Show for new auth0 acounts that still are not in the Data Base system
 	@GetMapping("/newplayer")
 	public String newPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser) {
 		model.addAttribute("profile", oidcUser.getClaims());
@@ -53,7 +53,7 @@ public class WebPlayerController {
 		return "/player/newplayer";
 	}
 
-	// Post new player in DB system
+	// Post new player to API
 	@PostMapping("/newplayer")
 	public String postNewPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser,
 			@ModelAttribute("newplayer") PlayerDTO player) {
@@ -63,7 +63,7 @@ public class WebPlayerController {
 		return "redirect:/";
 	}
 
-	// Check the user profile
+	// User profile
 	@GetMapping("/profile")
 	public String profile(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player) {
@@ -74,7 +74,7 @@ public class WebPlayerController {
 		return "/player/profile";
 	}
 
-	// edit player menu
+	// Edit player form
 	@GetMapping("/editplayer")
 	public String editplayer(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player) {
@@ -84,7 +84,7 @@ public class WebPlayerController {
 		return "/player/editplayer";
 	}
 
-	// updateplayer
+	// Post updateplayer to API
 	@PostMapping("/editplayer")
 	public String postEditedPlayer(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("editplayer") PlayerDTO player) {
@@ -94,7 +94,7 @@ public class WebPlayerController {
 		return "redirect:/profile";
 	}
 	
-	// deleteplayer
+	// Delete player to API
 	@GetMapping("/deleteplayer")
 	public String deleplayer(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player) {
