@@ -96,7 +96,7 @@ public class PlayerControllerTest {
 
 				// check results
 				.andExpect(status().isCreated()) // check status code
-				.andExpect(jsonPath("$.name", is("anònim"))) // check name
+				.andExpect(jsonPath("$.name", is("Anònim"))) // check name
 				.andExpect(jsonPath("$.id", notNullValue())); // check id is not null
 
 		// remove added entity

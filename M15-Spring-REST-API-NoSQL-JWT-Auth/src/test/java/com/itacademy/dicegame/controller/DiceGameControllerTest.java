@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
+import com.itacademy.dicegame.domain.diceGame.OneDiceGame;
 import com.itacademy.dicegame.domain.player.Player;
 import com.itacademy.dicegame.persistence.DiceGameRepository;
 import com.itacademy.dicegame.persistence.PlayerRepository;
@@ -54,8 +55,8 @@ public class DiceGameControllerTest {
 		testPlayer = new Player("TestPlayer");
 		playerRepository.save(testPlayer);
 		
-		testDiceGame1 = new DiceGame(testPlayer);
-		testDiceGame2 = new DiceGame(testPlayer);
+		testDiceGame1 = new OneDiceGame(testPlayer);
+		testDiceGame2 = new OneDiceGame(testPlayer);
 		gamesRepository.save(testDiceGame1);
 		gamesRepository.save(testDiceGame2);
 	}
@@ -86,7 +87,7 @@ public class DiceGameControllerTest {
 		// check results
 		.andExpect(status().isCreated())											//check status
 		.andExpect(jsonPath("$.id").isNotEmpty())									//check all param are not empty
-		.andExpect(jsonPath("$.firstRoll").isNotEmpty())					
+		.andExpect(jsonPath("$.rolls[0]").isNotEmpty())					
 		.andExpect(jsonPath("$.result").isNotEmpty())
 		.andExpect(jsonPath("$.creationDate").isNotEmpty())
 		.andExpect(jsonPath("$.player").isNotEmpty());						
