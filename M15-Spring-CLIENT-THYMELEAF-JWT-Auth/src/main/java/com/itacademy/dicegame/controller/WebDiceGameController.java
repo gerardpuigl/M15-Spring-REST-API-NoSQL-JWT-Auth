@@ -104,4 +104,17 @@ public class WebDiceGameController {
 		model.addAttribute("threeDiceAverage", webDiceGameServices.getAverage(player, authUser, GameType.ThreeDiceGame));
 		return "/dicegames/stadistics";
 	}
+	
+	// Rankings by GameType
+	@GetMapping("/dicegames/ranking/{gameType}")
+	public String ranking(Model model, @AuthenticationPrincipal OidcUser authUser,
+			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
+		if (authUser != null) {
+			model = authenticator.checkDataBasePlayer(model, authUser, player);
+		}
+		model.addAttribute("gameType", gameType);
+		model.addAttribute("ranking", webDiceGameServices.getRanking(player, authUser, gameType));
+		return "/dicegames/ranking";
+	}
+	
 }

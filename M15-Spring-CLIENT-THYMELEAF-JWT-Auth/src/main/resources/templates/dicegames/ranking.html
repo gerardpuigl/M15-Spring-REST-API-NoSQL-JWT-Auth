@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<div id="page" layout:fragment="content">
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-8 ">
+            <!-- Title & Wellcome for Game Type-->
+            <div th:if="${#strings.equals( gameType,'OneDiceGame')}" class="text-center mt-5 mb-5">
+                <h1>Ranking joc d'un dau</h1>
+            </div>
+            <div th:if="${#strings.equals( gameType,'TwoDiceGame')}" class="text-center mt-5 mb-5">
+                <h1>Ranking joc de dos daus</h1>
+            </div>
+            <div th:if="${#strings.equals( gameType,'ThreeDiceGame')}" class="text-center mt-5 mb-5">
+                <h1>Ranking joc de tres daus</h1>
+            </div>
+
+            <!-- Ranking for Game Type -->
+            <div class="text-center" th:if="${ranking != null}">
+                <table id="ranking" class="table table-hover table-striped col-md-12">
+                    <thead>
+                        <tr>
+                            <th>Posició</th>
+                            <th>Nom</th>
+                            <th>Percetatge de Victoria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="player,itr : ${ranking}">
+                            <td th:text="${ (itr.index + 1)}"></td>
+                            <td th:text="${player.name}"></td>
+                            <td th:if="${#strings.equals( gameType,'OneDiceGame')}" 
+                            th:text="${player.winPercentageOneDice}"></td>
+                            <td th:if="${#strings.equals( gameType,'TwoDiceGame')}" 
+                            th:text="${player.winPercentageTwoDice}"></td>
+                            <td th:if="${#strings.equals( gameType,'ThreeDiceGame')}" 
+                            th:text="${player.winPercentageThreeDice}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
