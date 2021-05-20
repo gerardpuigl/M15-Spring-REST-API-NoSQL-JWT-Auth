@@ -22,40 +22,44 @@ public class WebDiceGameService {
  * Servici responsable to consum api Rest
  * 
  */
+	
+	/**
+	 * @Value take parameters from properties files. Change configurated parameters is easier in this way.
+	 */
 	@Value("${host.api.url}")
 	private String host;
 	
     @Autowired
     WebClient webClient;
-	
+    
 	public void deletePlayerGamesByType(PlayerDTO player, OidcUser auth0User, String gameType) {
 		webClient.delete()
-		.uri("/players/"+ player.getId() + "/games/" + gameType)
-		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
-		.retrieve()
-		.bodyToMono(String.class)
-		.block();
+			.uri("/players/"+ player.getId() + "/games/" + gameType)
+			.accept(MediaType.APPLICATION_JSON)
+			.header(HttpHeaders.AUTHORIZATION, player.getStringAccessToken())
+			.retrieve()
+			.bodyToMono(String.class)
+			.block();
 	}
     
 	public DiceGameDTO throwonedice(PlayerDTO player, OidcUser auth0User, String gameType) {
 		return webClient.post()
-		.uri("/players/"+ player.getId() + "/games/" + gameType)
-		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
-		.retrieve()
-		.bodyToMono(DiceGameDTO.class)
-		.block();		
+			.uri("/players/"+ player.getId() + "/games/" + gameType)
+			.accept(MediaType.APPLICATION_JSON)
+			.header(HttpHeaders.AUTHORIZATION, player.getStringAccessToken())
+			.retrieve()
+			.bodyToMono(DiceGameDTO.class)
+			.block();		
 	}
 
 	public List<DiceGameDTO> getAllGames(PlayerDTO player, OidcUser auth0User, String gameType) {
 		List<DiceGameDTO> gamelist = webClient.get()
-		.uri("/players/"+ player.getId() + "/games/" + gameType)
-		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
-		.retrieve()
-		.bodyToFlux(DiceGameDTO.class)
-		.buffer().blockLast();
+			.uri("/players/"+ player.getId() + "/games/" + gameType)
+			.accept(MediaType.APPLICATION_JSON)
+			.header(HttpHeaders.AUTHORIZATION, player.getStringAccessToken())
+			.retrieve()
+			.bodyToFlux(DiceGameDTO.class)
+			.buffer().blockLast();
 		if(gamelist != null) Collections.reverse(gamelist);
 		return gamelist;
 	}
@@ -68,42 +72,42 @@ public class WebDiceGameService {
 
 	public PlayerDTO getWinner(PlayerDTO player, OidcUser auth0User, String gameType) {
 		PlayerDTO winner = webClient.get()
-		.uri("/players/games/" + gameType + "/winner")
-		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
-		.retrieve()
-		.bodyToMono(PlayerDTO.class).block();
+			.uri("/players/games/" + gameType + "/winner")
+			.accept(MediaType.APPLICATION_JSON)
+			.header(HttpHeaders.AUTHORIZATION, player.getStringAccessToken())
+			.retrieve()
+			.bodyToMono(PlayerDTO.class).block();
 		return winner;
 	}
 
 	public PlayerDTO getLoser(PlayerDTO player, OidcUser auth0User, String gameType) {
 		PlayerDTO loser = webClient.get()
-		.uri("/players/games/" + gameType + "/loser")
-		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
-		.retrieve()
-		.bodyToMono(PlayerDTO.class).block();
+			.uri("/players/games/" + gameType + "/loser")
+			.accept(MediaType.APPLICATION_JSON)
+			.header(HttpHeaders.AUTHORIZATION, player.getStringAccessToken())
+			.retrieve()
+			.bodyToMono(PlayerDTO.class).block();
 		return loser;
 	}
 	
 	public List<PlayerDTO> getRanking(PlayerDTO player, OidcUser auth0User, String gameType) {
 		List<PlayerDTO> ranking = webClient.get()
-		.uri("/players/games/" + gameType + "/ranking")
-		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
-		.retrieve()
-		.bodyToFlux(PlayerDTO.class)
-		.buffer().blockLast();
+			.uri("/players/games/" + gameType + "/ranking")
+			.accept(MediaType.APPLICATION_JSON)
+			.header(HttpHeaders.AUTHORIZATION, player.getStringAccessToken())
+			.retrieve()
+			.bodyToFlux(PlayerDTO.class)
+			.buffer().blockLast();
 		return ranking;
 	}
 	
 	public double getAverage(PlayerDTO player, OidcUser auth0User, String gameType) {
 		double average = webClient.get()
-		.uri("/players/games/" + gameType + "/average")
-		.accept(MediaType.APPLICATION_JSON)
-		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
-		.retrieve()
-		.bodyToMono(Double.class).block();
+			.uri("/players/games/" + gameType + "/average")
+			.accept(MediaType.APPLICATION_JSON)
+			.header(HttpHeaders.AUTHORIZATION, player.getStringAccessToken())
+			.retrieve()
+			.bodyToMono(Double.class).block();
 		return average;
 	}	
 	

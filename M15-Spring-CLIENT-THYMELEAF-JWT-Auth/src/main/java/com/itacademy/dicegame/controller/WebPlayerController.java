@@ -58,7 +58,7 @@ public class WebPlayerController {
 	public String postNewPlayer(Model model, @AuthenticationPrincipal OidcUser oidcUser,
 			@ModelAttribute("newplayer") PlayerDTO player) {
 		model.addAttribute("profile", oidcUser.getClaims());
-		webservice.postNewPlayer(player, oidcUser);
+		player = webservice.postNewPlayer(player, oidcUser);
 		model.addAttribute("player", player);
 		return "redirect:/";
 	}
@@ -87,8 +87,10 @@ public class WebPlayerController {
 	// Post updateplayer to API
 	@PostMapping("/editplayer")
 	public String postEditedPlayer(Model model, @AuthenticationPrincipal OidcUser authUser,
-			@ModelAttribute("editplayer") PlayerDTO player) {
+			@ModelAttribute("editplayer") PlayerDTO editPlayer,@ModelAttribute("player") PlayerDTO player) {
 		model.addAttribute("profile", authUser.getClaims());
+		player.setName(editPlayer.getName());
+		player.setAnonimus(editPlayer.isAnonimus());
 		webservice.updatePlayer(player, authUser);
 		model.addAttribute("player", player);
 		return "redirect:/profile";

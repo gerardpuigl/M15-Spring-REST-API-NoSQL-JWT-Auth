@@ -37,7 +37,7 @@ public class ExceptionController {
 	public String fullShopApiError(@RequestBody Exception ex, Model model) {
 		model.addAttribute("errorCode", ex.getClass().getSimpleName());	
 		model.addAttribute("errorMessage", ex.getMessage());
-		return "errorDiceGame";
+		return "error";
 	}
 	
 }

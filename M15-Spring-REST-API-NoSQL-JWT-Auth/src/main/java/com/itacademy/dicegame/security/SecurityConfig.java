@@ -44,13 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 	http.authorizeRequests()
 			.anyRequest().authenticated()
-//			.and()
-//			.cors()
-//			.configurationSource(corsConfigurationSource())
+			.and()
+			.cors()
+			.configurationSource(corsConfigurationSource())
 			.and()
 			.oauth2ResourceServer()
 			.jwt()
-//			.decoder(jwtDecoder())
+			.decoder(jwtDecoder())
 //			.jwtAuthenticationConverter(jwtAuthenticationConverter())
 			;
 }

@@ -9,6 +9,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Version;
 
+import com.itacademy.dicegame.security.AccessToken;
+
 public class PlayerDTO {
 	
 	@Id
@@ -16,7 +18,9 @@ public class PlayerDTO {
 	
 	private String auth0id;
 	
-	private String auth0email;	
+	private String auth0email;
+	
+	private AccessToken accessToken;
 
 	@NotBlank
 	private String name;
@@ -60,6 +64,19 @@ public class PlayerDTO {
 
 	public void setAuth0email(String auth0email) {
 		this.auth0email = auth0email;
+	}
+
+	public AccessToken getAccessToken() {
+		return accessToken;
+	}
+	
+	public String getStringAccessToken() {
+		if(accessToken == null) return null;
+		return accessToken.toString();
+	}
+
+	public void setAccessToken(AccessToken accessToken) {
+		this.accessToken = accessToken;
 	}
 
 	public String getName() {
@@ -117,4 +134,6 @@ public class PlayerDTO {
 	public void setWinPercentageThreeDice(double winPercentageThreeDice) {
 		this.winPercentageThreeDice = winPercentageThreeDice;
 	}
+
+
 }
