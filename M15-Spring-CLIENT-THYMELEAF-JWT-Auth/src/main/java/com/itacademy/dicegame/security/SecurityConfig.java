@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                // allow all users to access the home pages and the static images directory
                .mvcMatchers("/", "/images/**","/css/**").permitAll()
                .anyRequest().authenticated()
+               // show auth0Login by default
                .and().oauth2Login()
                .and().logout()
                // handle logout requests at /logout path
