@@ -26,16 +26,21 @@
                         <li class="nav-item me-3">
                             <a href="/" class="nav-link">Home</a>
                         </li>
-                        <li class="nav-item me-3">
-                            <a href="/dicegames" class="nav-link">Jugar</a>
+                        <li class="nav-item dropdown me-3">
+                            <a href="/dicegames" class="nav-link dropdown-toggle" id="gamesDropDown" data-toggle="dropdown"> Jugar</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a href="/dicegames/OneDiceGame" class="dropdown-item dropdown-games">Joc d'un dau</a>
+                                <a href="/dicegames/TwoDiceGame" class="dropdown-item dropdown-games">Joc de dos dau</a>
+                                <a href="/dicegames/ThreeDiceGame" class="dropdown-item dropdown-games">Joc de tres dau</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown me-3">
-                            <a href="/dicegames" class="nav-link dropdown-toggle" id="gamesDropDown"
+                            <a href="/" class="nav-link dropdown-toggle" id="rankingDropDown"
                             data-toggle="dropdown">Rankings</a>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a href="/dicegames/ranking/OneDiceGame" class="dropdown-item dropdown-games">Ranking un dau</a>
-                                <a href="/dicegames/ranking/TwoDiceGame" class="dropdown-item dropdown-games">Ranking dos dau</a>
-                                <a href="/dicegames/ranking/ThreeDiceGame" class="dropdown-item dropdown-games">Ranking tres dau</a>
+                                <a href="/dicegames/OneDiceGame/ranking" class="dropdown-item dropdown-ranking">Ranking un dau</a>
+                                <a href="/dicegames/TwoDiceGame/ranking" class="dropdown-item dropdown-ranking">Ranking dos dau</a>
+                                <a href="/dicegames/ThreeDiceGame/ranking" class="dropdown-item dropdown-ranking">Ranking tres dau</a>
                             </div>
                         </li>
                         <li class="nav-item me-3">

@@ -38,6 +38,16 @@ public class WebDiceGameController {
 		return new PlayerDTO();
 	}
 	
+	// Show choose game page
+	@GetMapping("/dicegames")
+	public String diceGames(Model model, @AuthenticationPrincipal OidcUser authUser,
+			@ModelAttribute("player") PlayerDTO player) {
+		if (authUser != null) {
+			model = authenticator.checkDataBasePlayer(model, authUser, player);
+		}
+		return "/dicegames/dicegames";
+	}
+	
 	// Delete all player's games for one game type
 	@GetMapping("/dicegames/{gameType}/delete")
 	public String deletePlayerGamesByType(Model model, @AuthenticationPrincipal OidcUser authUser,
@@ -47,16 +57,6 @@ public class WebDiceGameController {
 		}
 		webDiceGameServices.deletePlayerGamesByType(player, authUser, gameType);
 		return "redirect:/profile";
-	}
-
-	// Show choose game page
-	@GetMapping("/dicegames")
-	public String diceGames(Model model, @AuthenticationPrincipal OidcUser authUser,
-			@ModelAttribute("player") PlayerDTO player) {
-		if (authUser != null) {
-			model = authenticator.checkDataBasePlayer(model, authUser, player);
-		}
-		return "/dicegames/dicegames";
 	}
 
 	// Entry in game page
@@ -106,7 +106,7 @@ public class WebDiceGameController {
 	}
 	
 	// Rankings by GameType
-	@GetMapping("/dicegames/ranking/{gameType}")
+	@GetMapping("/dicegames/{gameType}/ranking")
 	public String ranking(Model model, @AuthenticationPrincipal OidcUser authUser,
 			@ModelAttribute("player") PlayerDTO player, @PathVariable("gameType") String gameType) {
 		if (authUser != null) {

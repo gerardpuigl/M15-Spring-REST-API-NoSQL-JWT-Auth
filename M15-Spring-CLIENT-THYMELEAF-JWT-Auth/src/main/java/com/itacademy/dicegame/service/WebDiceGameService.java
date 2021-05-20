@@ -68,7 +68,7 @@ public class WebDiceGameService {
 
 	public PlayerDTO getWinner(PlayerDTO player, OidcUser auth0User, String gameType) {
 		PlayerDTO winner = webClient.get()
-		.uri("/players/ranking/winner/" + gameType)
+		.uri("/players/games/" + gameType + "/winner")
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
@@ -78,7 +78,7 @@ public class WebDiceGameService {
 
 	public PlayerDTO getLoser(PlayerDTO player, OidcUser auth0User, String gameType) {
 		PlayerDTO loser = webClient.get()
-		.uri("/players/ranking/loser/" + gameType)
+		.uri("/players/games/" + gameType + "/loser")
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
@@ -88,7 +88,7 @@ public class WebDiceGameService {
 	
 	public List<PlayerDTO> getRanking(PlayerDTO player, OidcUser auth0User, String gameType) {
 		List<PlayerDTO> ranking = webClient.get()
-		.uri("/players/ranking/" + gameType)
+		.uri("/players/games/" + gameType + "/ranking")
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
@@ -99,7 +99,7 @@ public class WebDiceGameService {
 	
 	public double getAverage(PlayerDTO player, OidcUser auth0User, String gameType) {
 		double average = webClient.get()
-		.uri("/players/average/" + gameType)
+		.uri("/players/games/" + gameType + "/average")
 		.accept(MediaType.APPLICATION_JSON)
 		.header(HttpHeaders.AUTHORIZATION, "Bearer " + auth0User.getIdToken().getTokenValue())
 		.retrieve()
