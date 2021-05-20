@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+
+<div id="page" layout:fragment="content">
+    <div class="container">
+        <div class="mt-5">
+            <h1 th:text="${status + ': ' + error + '!'}">Error!</h1>
+            <h2 th:text="${message}">Error Message</h2>
+        </div>
+        <p>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button"
+                aria-expanded="false" aria-controls="collapseExample">Error Details
+            </a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <h1>Error Details Page</h1>
+                <table>
+                    <tr scope = "row">
+                        <td scope = "col-6" >Date</td>
+                        <td scope = "col-6" th:text="${timestamp}" ></td>
+                    </tr>
+                    <tr scope = "row">
+                        <td scope = "col-6" >Path</td>
+                        <td scope = "col-6" th:text="${path}" ></td>
+                    </tr>
+                    <tr scope = "row">
+                        <td scope = "col-6" >Error</td>
+                        <td scope = "col-6" th:text="${error}" ></td>
+                    </tr>
+                    <tr scope = "row">
+                        <td scope = "col-6" >Status</td>
+                        <td scope = "col-6" th:text="${status}" ></td>
+                    </tr>
+                    <tr scope = "row">
+                        <td scope = "col-6" >Message</td>
+                        <td scope = "col-6" th:text="${message}" ></td>
+                    </tr>
+                    <tr scope = "row">
+                        <td scope = "col-6" >Exception</td>
+                        <td scope = "col-6" th:text="${exception}" ></td>
+                    </tr>
+                    <tr scope = "row">
+                        <td scope = "col-6" >Trace</td>
+                        <td scope = "col-6" th:text="${trace}">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

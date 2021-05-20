@@ -57,7 +57,7 @@ public class DiceGameController {
 	}
 	
 	//get Players Ranking
-	@GetMapping("/ranking/{gameType}")
+	@GetMapping("/games/{gameType}/ranking")
 	@PreAuthorize("hasAuthority('get:player')")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	public List<PlayerDTO> getRankingList(@PathVariable("gameType") String gameType){
@@ -65,7 +65,7 @@ public class DiceGameController {
 	}
 	
 	//get loser
-	@GetMapping("/ranking/loser/{gameType}")
+	@GetMapping("/games/{gameType}/loser")
 	@PreAuthorize("hasAuthority('get:player')")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	public PlayerDTO getLoser(@PathVariable("gameType") String gameType){
@@ -73,7 +73,7 @@ public class DiceGameController {
 	}
 	
 	//get winner
-	@GetMapping("/ranking/winner/{gameType}")
+	@GetMapping("/games/{gameType}/winner")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	@PreAuthorize("hasAuthority('get:player')")
 	public PlayerDTO getWinner(@PathVariable("gameType") String gameType){
@@ -81,7 +81,7 @@ public class DiceGameController {
 	}
 	
 	//get Players average
-	@GetMapping("/average/{gameType}")
+	@GetMapping("/games/{gameType}/average")
 	@PreAuthorize("hasAuthority('get:player')")
 	@ResponseStatus(HttpStatus.OK)  // 200
 	public double getaAverage(@PathVariable("gameType") String gameType){
