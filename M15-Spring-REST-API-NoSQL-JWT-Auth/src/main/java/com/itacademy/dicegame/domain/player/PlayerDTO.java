@@ -10,7 +10,7 @@ public class PlayerDTO {
 	private UUID id;
 	
 //	private String auth0id;
-//	
+
 //	private String auth0email;	
 
 	private String name;

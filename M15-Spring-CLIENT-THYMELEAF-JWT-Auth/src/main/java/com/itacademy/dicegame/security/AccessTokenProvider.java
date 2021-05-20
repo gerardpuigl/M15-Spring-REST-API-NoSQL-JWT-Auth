@@ -1,7 +1,5 @@
 package com.itacademy.dicegame.security;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Component;
@@ -13,6 +11,9 @@ import com.mashape.unirest.http.Unirest;
 @Component
 public class AccessTokenProvider {
 
+	/**
+	 * This Class request the AccessToken to API to be used in the requests.
+	 */
 	@Value("${auth0.client-id}")
 	private String clientId;
 

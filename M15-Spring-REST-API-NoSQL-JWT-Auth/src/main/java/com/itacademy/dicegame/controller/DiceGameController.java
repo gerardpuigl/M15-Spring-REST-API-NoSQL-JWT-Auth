@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itacademy.dicegame.domain.diceGame.DiceGame;
-import com.itacademy.dicegame.domain.player.Player;
 import com.itacademy.dicegame.domain.player.PlayerDTO;
 import com.itacademy.dicegame.service.DiceGameService;
 
