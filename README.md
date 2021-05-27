@@ -16,7 +16,7 @@
 
 ## Introduction:
 
-Complet Project with Rest API & Rest Client in Spring with Spring Data JPA conected to NoSQL DataBase & Secutiry with Auth0. Frontend with Thymeleaf, HTML + CSS & Boostrap.
+Complet Project with Rest API & Rest Client in Spring with Spring Data JPA conected to NoSQL DataBase & Secutiry with Auth0 external service. Frontend with Thymeleaf, HTML + CSS & Boostrap.
 
 This app is divided in two diferent projects, one act as Rest API Service and the other as Rest Client that consum the API and show the web. In this way a real system of requests is simulated.
 
@@ -33,10 +33,10 @@ This app is divided in two diferent projects, one act as Rest API Service and th
 To run the project, follow the steps below:
 
 1) Donwload the content in this repository.
-2) Load the two projects in your IDE. (tested in eclipse)
-3) The Rest API need to have a MongoDB database enabled in your machine at localhost: 27017 (or modify the project properties file with with the right location)
+2) Load the two projects in your IDE. (tested in Eclipse)
+3) The Rest API need to have a MongoDB database enabled in your machine at localhost: 27017 (or modify the project properties file with the url of your MongoDB)
 4) Run both projects at the same time. One acts as a Client and the other as a Rest API. In this way a real system of requests is simulated.
-5) To start the web you need to go to the url http://localhost:3000/, the API use the port 8080 but it does not matter because everything is done internally by the client.
+5) To start the web you need to go to http://localhost:3000/, the API use the port 8080 (it's important to have it free or modify the both project with other port)
 
 
 ## Exercise Description [in Catalan]
