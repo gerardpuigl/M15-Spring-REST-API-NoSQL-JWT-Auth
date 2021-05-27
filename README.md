@@ -1,4 +1,4 @@
-## Exercici Spring Rest API & Rest Client & NoSQL & JWT Auth (M15)
+## Spring Rest API & Rest Client & NoSQL & JWT Auth (M15)
 
 <p align="right">
   <img src="https://github.com/GerardPuigl/TechnologyStackIcons/blob/main/Logos/spring-long.svg" title="spring-long" alt="spring-long" height="35px"/>
@@ -14,19 +14,32 @@
   <img src="https://github.com/GerardPuigl/TechnologyStackIcons/blob/main/Logos/visual-studio-code.svg" title="visual-studio-code" alt="visual-studio-code" height="35px"/>
 </p>
 
-## Instruccions:
+## Introduction:
 
-Per poder fer funcionar la web segiu els passos següents:
+Complet Project with Rest API & Rest Client in Spring with Spring Data JPA conected to NoSQL DataBase & Secutiry with Auth0. Frontend with Thymeleaf, HTML + CSS & Boostrap.
 
-1) Carregar els dos projecte que hi ha al repository GIT
+This app is divided in two diferent projects, one act as Rest API Service and the other as Rest Client that consum the API and show the web. In this way a real system of requests is simulated.
 
-2) Tenir una base de dades de MongoDB activada al localhost:27017, (o modificar l'arxiu de propietats del projecte Rest API amb el port que tingui MongoDB)
+<p align="center">
+  <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/03%20Index%20Authenticated.jpg" title="AuthenticatedLangindPage" alt="AuthenticatedLangindPage" />
+    <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/02%20auth0%20Authentication.jpg" title="ExternalAutheticationService" alt="ExternalAutheticationService" />
+  <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/04%20Two%20Dice%20Game.jpg" title="GamePage" alt="GamePage" />
+  <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/05%20Raking.jpg" title="RakingPage" alt="RakingPage" />
+  <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/07%20User%20Profile.jpg" title="UserProfilePage" alt="UserProfilePage" />
+</p>
 
-3) Fer funcionar els dos projectes a la vegada. Un fa de Client i l'altre de Rest API. D'aquesta manera es simula un sistema de peticions real. 
+## How to run:
 
-4) Per iniciar la web cal anar a la url http://localhost:3000/, l'API arranca al 8080 però no importa ja que tot ho fa internament el client.
+To run the project, follow the steps below:
 
-## Descripció
+1) Donwload the content in this repository.
+2) Load the two projects in your IDE. (tested in eclipse)
+3) The Rest API need to have a MongoDB database enabled in your machine at localhost: 27017 (or modify the project properties file with with the right location)
+4) Run both projects at the same time. One acts as a Client and the other as a Rest API. In this way a real system of requests is simulated.
+5) To start the web you need to go to the url http://localhost:3000/, the API use the port 8080 but it does not matter because everything is done internally by the client.
+
+
+## Exercise Description [in Catalan]
 
 Exercici per crear una web de Joc de Daus completa.
 
