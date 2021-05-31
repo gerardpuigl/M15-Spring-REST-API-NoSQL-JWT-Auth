@@ -25,6 +25,7 @@ This app is divided in two diferent projects, one act as Rest API Service and th
     <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/02%20auth0%20Authentication.jpg" title="ExternalAutheticationService" alt="ExternalAutheticationService" />
   <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/04%20Two%20Dice%20Game.jpg" title="GamePage" alt="GamePage" />
   <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/05%20Raking.jpg" title="RakingPage" alt="RakingPage" />
+  <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/06%20statistics.jpg" title="StatisticsPage" alt="StatisticsPage" />
   <img src="https://github.com/gerardpuigl/M15-Spring-REST-API-NoSQL-JWT-Auth/blob/main/Screenshots/07%20User%20Profile.jpg" title="UserProfilePage" alt="UserProfilePage" />
 </p>
 
